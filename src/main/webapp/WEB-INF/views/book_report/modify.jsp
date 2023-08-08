@@ -6,7 +6,7 @@
 		<div class="col-12">
 			<div class="card">
 				<div class="card-body">
-					<form action="${ctxPath}/book_report/modify" method="post">
+					<form class="modifyForm" action="${ctxPath}/book_report/modify" method="post">
 
 						<div class="form-group">
 							<label>제목</label>
@@ -24,7 +24,7 @@
 						<button type="button" data-oper='remove' class="btn btn-danger">삭제</button>
 						<button type="button" data-oper='list' class="btn btn-info">목록</button>
 						
-						<input type="hidden" name="bno"  value="${report.bno}">
+						<input type="hidden" name="bno" id="bno" value="${report.bno}">
 					</form>						
 				</div>
 			</div>
@@ -36,19 +36,21 @@
 
 <script>
 $(function(){
-	let modifyReport= $('form')	
-// 	console.log(modifyReport);
+	let modifyForm= $('.modifyForm')	
+	console.log("modifyForm 작동");
+	
 	$('button').click(function(){
-		let operation = $(this).data('oper')
-
+	let operation = $(this).data('oper')
+		modifyForm.append($('<input/>',{type : 'hidden', name : 'pageNum', value : '${criteria.pageNum}'}))
+				  .append($('<input/>',{type : 'hidden', name : 'amount', value : '${criteria.amount}'}))
 		if(operation=='list'){ // 목록으로
-			self.location = '${ctxPath}/book_report/list'
-			return
+			modifyForm.attr('action','${ctxPath}/book_report/list')
+					  .attr('method','get')
 		} else if(operation=='remove'){ // 삭제처리
-			modifyReport.attr('action','${ctxPath}/book_report/remove')
-						.submit()
+			modifyForm.attr('action','${ctxPath}/book_report/remove')
+					  .attr('method','post')
 		}
-		modifyReport.submit()
+		modifyForm.submit();
 	})
 })
 </script>

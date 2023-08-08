@@ -1,4 +1,4 @@
-package com.jafa.book_report.domain;
+package com.jafa.common;
 
 import lombok.Getter;
 import lombok.Setter;

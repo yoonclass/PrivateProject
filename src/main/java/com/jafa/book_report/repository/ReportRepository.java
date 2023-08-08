@@ -2,8 +2,8 @@ package com.jafa.book_report.repository;
 
 import java.util.List;
 
-import com.jafa.book_report.domain.Criteria;
 import com.jafa.book_report.domain.ReportVO;
+import com.jafa.common.Criteria;
 
 //데이터베이스와 직접적으로 상호작용하는 인터페이스
 //실제로 데이터베이스에 접근하여 데이터를 조작하고, SQL 쿼리를 실행하여 데이터를 추가, 조회, 수정, 삭제

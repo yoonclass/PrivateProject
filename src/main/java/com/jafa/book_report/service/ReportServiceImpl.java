@@ -4,9 +4,9 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.jafa.book_report.domain.Criteria;
 import com.jafa.book_report.domain.ReportVO;
 import com.jafa.book_report.repository.ReportRepository;
+import com.jafa.common.Criteria;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;

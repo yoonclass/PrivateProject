@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.jafa.book_report.domain.Criteria;
-import com.jafa.book_report.domain.Pagination;
 import com.jafa.book_report.domain.ReportVO;
 import com.jafa.book_report.service.ReportService;
+import com.jafa.common.Criteria;
+import com.jafa.common.Pagination;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -32,8 +32,10 @@ public class ReportController {
 	}
 	
 	@GetMapping("/get")
-	public void get(@RequestParam("bno") Long bno, Model model) {
+	public void get(Long bno, Model model, Criteria criteria) {
 		log.info("/컨트롤러 조회");
+		log.info(bno);
+		log.info(criteria);
 		model.addAttribute("report",service.get(bno));
 	}
 	
@@ -50,28 +52,34 @@ public class ReportController {
 	}
 	
 	@GetMapping("/modify")
-	public void modify(@RequestParam("bno") Long bno, Model model) {
-		log.info("컨트롤러 수정 시작");
+	public void modify(@RequestParam("bno") Long bno, Model model, Criteria criteria) {
+		log.info("컨트롤러 수정 Get");
+		log.info(bno);
+		log.info(criteria);
 		model.addAttribute("report",service.get(bno));
 	}
 	
 	@PostMapping("/modify")
-	public String modify(ReportVO vo, RedirectAttributes rttr) {
+	public String modify(ReportVO vo, RedirectAttributes rttr, Criteria criteria) {
 		log.info("/컨트롤러 수정 완료 : "+vo);
 		if(service.modify(vo)) {
 			rttr.addFlashAttribute("result", vo.getBno());
 			rttr.addFlashAttribute("operation", "modify");
 		}
+		rttr.addAttribute("pageNum",criteria.getPageNum());
+		rttr.addAttribute("amount",criteria.getAmount());
 		return "redirect:/book_report/list";
 	}
 	
 	@PostMapping("/remove")
-	public String remove(Long bno, RedirectAttributes rttr) {
+	public String remove(Long bno, RedirectAttributes rttr, Criteria criteria) {
 		log.info("(controller)remove : " + bno);
 		if(service.remove(bno)) {
 			rttr.addFlashAttribute("result", bno);
 			rttr.addFlashAttribute("operation", "remove");
 		}
+		rttr.addAttribute("pageNum",criteria.getPageNum());
+		rttr.addAttribute("amount",criteria.getAmount());
 		return "redirect:/book_report/list"; 
 	}
 }

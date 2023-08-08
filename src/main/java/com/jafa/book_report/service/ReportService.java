@@ -2,8 +2,8 @@ package com.jafa.book_report.service;
 
 import java.util.List;
 
-import com.jafa.book_report.domain.Criteria;
 import com.jafa.book_report.domain.ReportVO;
+import com.jafa.common.Criteria;
 
 //비즈니스 로직을 구현하는 인터페이스
 //로직은 서비스 단에서 처리하여, 컨트롤러나 다른 레이어에 적합한 결과를 제공

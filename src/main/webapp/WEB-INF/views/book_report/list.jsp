@@ -66,7 +66,6 @@
 			</div>
 		</div>
 	</div>
-</div>
 
 <form id="listForm" action="${ctxPath}/book_report/list" method="get">
 	<input type="hidden" name="pageNum" value="${page.criteria.pageNum}">

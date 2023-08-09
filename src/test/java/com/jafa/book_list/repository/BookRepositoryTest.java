@@ -25,5 +25,4 @@ public class BookRepositoryTest {
 	public void test() {
 		mapper.getList().forEach(book->log.info(book));
 	}
-
 }

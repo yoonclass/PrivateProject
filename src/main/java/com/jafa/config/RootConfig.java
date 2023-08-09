@@ -59,8 +59,7 @@ public class RootConfig {
 		factory.setDataSource(dataSource());
 		factory.setMapperLocations(new PathMatchingResourcePatternResolver()
 				.getResources("classpath:mappers/**/*Mapper.xml"));
-		factory.setTypeAliasesPackage("com.jafa.book_list.domain");
-		factory.setTypeAliasesPackage("com.jafa.book_report.domain");
+		factory.setTypeAliasesPackage("com.jafa.*.domain");
 		return factory;
 	}
 

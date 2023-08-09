@@ -9,16 +9,16 @@ public interface BookRepository {
 	List<BookVO> getList();
 	
 	//도서 추가
-	void insert(BookVO report);
+	void insert(BookVO book);
 	
 	//도서 추가 후 PK값 반환받기
-	Integer insertSelectKey(BookVO report);
+	Integer insertSelectKey(BookVO book);
 	
 	//특정 도서조회
 	BookVO read(Long bno);
 
 	//도서 수정	
-	int update(BookVO report);
+	int update(BookVO book);
 	
 	//도서 삭제
 	int delete(Long bno);

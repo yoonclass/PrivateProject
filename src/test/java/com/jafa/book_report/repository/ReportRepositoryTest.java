@@ -27,14 +27,6 @@ public class ReportRepositoryTest {
 	private ReportRepository mapper;
 	
 	@Test
-	public void searchTest() {
-		Criteria criteria = new Criteria();
-		criteria.setPageNum(1);
-		
-	}
-	
-	
-	@Test
 	@Ignore
 	public void test() {
 		Criteria criteria = new Criteria();

@@ -43,10 +43,10 @@ public class ReportController {
 	public void register() {}
 	
 	@PostMapping("/register")
-	public String register(ReportVO vo, RedirectAttributes rttr) {
-		log.info("register: " + vo);
-		service.register(vo);
-		rttr.addFlashAttribute("result", vo.getBno());
+	public String register(ReportVO report, RedirectAttributes rttr) {
+		log.info("register: " + report);
+		service.register(report);
+		rttr.addFlashAttribute("result", report.getBno());
 		rttr.addFlashAttribute("operation", "register");
 		return "redirect:/book_report/list";
 	}
@@ -60,10 +60,10 @@ public class ReportController {
 	}
 	
 	@PostMapping("/modify")
-	public String modify(ReportVO vo, RedirectAttributes rttr, Criteria criteria) {
-		log.info("/컨트롤러 수정 완료 : "+vo);
-		if(service.modify(vo)) {
-			rttr.addFlashAttribute("result", vo.getBno());
+	public String modify(ReportVO report, RedirectAttributes rttr, Criteria criteria) {
+		log.info("/컨트롤러 수정 완료 : "+report);
+		if(service.modify(report)) {
+			rttr.addFlashAttribute("result", report.getBno());
 			rttr.addFlashAttribute("operation", "modify");
 		}
 		rttr.addAttribute("pageNum",criteria.getPageNum());

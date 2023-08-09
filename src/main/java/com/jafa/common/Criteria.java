@@ -12,9 +12,10 @@ import lombok.ToString;
 public class Criteria {
 	private int pageNum; // 현재 페이지
 	private int amount; // 한 페이지당 게시물 수
-
-	private String type;
-	private String keyword;
+	
+	private String boardType;//게시판 타입
+	private String type;//타입
+	private String keyword;//키워드
 	
 	public Criteria() {
 		this(1,10);	//1페이지, 한 페이지당 게시물 수는 10개
@@ -32,7 +33,7 @@ public class Criteria {
 	public int getMinRow() {
 		return (pageNum-1)*amount;
 	}
-
+	
 	public String[] getTypes() { // collection="types"
 		return type == null ? new String[] {} : type.split("");
 	}

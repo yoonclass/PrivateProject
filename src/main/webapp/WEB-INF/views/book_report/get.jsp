@@ -62,6 +62,10 @@
 	</div>
 </div>
 
+<div class="row mt-3">
+	<div class="col-12 pagination_wrap"></div>
+</div>
+
 <!-- 댓글작성 -->	
 <div class="my-3 replyWriterForm">
 	<textarea  rows="6" placeholder="댓글을 작성해주세요" 

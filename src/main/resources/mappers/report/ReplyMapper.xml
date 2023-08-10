@@ -25,10 +25,24 @@
 	</update>
 	
 	<select id="getList" resultType="replyVO">
-		select *
-		from tbl_reply
-		where bno = #{bno}
-		order by rno desc
+		<![CDATA[
+		select * from(
+			select rownum as rn, bno, rno, reply, replyer, replyDate, updateDate
+			FROM(
+				select /*+INDEX_DESC(tbl_reply rno)*/
+					rownum as rn, bno, rno, reply, replyer, replyDate, updateDate
+				from tbl_reply
+				where bno = #{bno}
+				ORDER BY rno DESC
+				)
+			where rownum <= #{criteria.maxRow} 
+		) 
+		where rn > #{criteria.minRow} 
+		]]>
+	</select>
+	
+	<select id="getReplyCount" resultType="int">
+		select count(rno) from tbl_reply where bno = #{bno}
 	</select>
     
 </mapper>

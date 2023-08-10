@@ -20,4 +20,6 @@ public interface ReplyRepository {
 	List<ReplyVO> getList(	//게시물별 댓글 조회
 			@Param("bno") Long bno, 
 			@Param("criteria") Criteria criteria);
+	
+	int getReplyCount(Long bno); // 하나의 게시물에 달린 댓글 수
 }

@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.jafa.book_report.AppTest;
+import com.jafa.book_report.domain.ReplyPageDTO;
 import com.jafa.book_report.domain.ReplyVO;
 import com.jafa.common.Criteria;
 
@@ -18,10 +19,10 @@ public class ReplyServiceImplTest extends AppTest{
 
 	
 	@Test
-	@Ignore
+//	@Ignore
 	public void testList() {
-		replyService.getList(new Criteria(), 1L)
-			.forEach(r->log.info(r));
+		ReplyPageDTO replyPageDTO = replyService.getList(new Criteria(), 1L);
+		log.info(replyPageDTO);
 	}
 	
 	@Test

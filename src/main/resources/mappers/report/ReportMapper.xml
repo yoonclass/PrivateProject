@@ -9,7 +9,7 @@
 		<![CDATA[
 		select * from 
 		(select /*+INDEX_DESC(tbl_report bno*/
-			ROWNUM as rn, bno, title, content, writer, regDate, updateDate
+			ROWNUM as rn, bno, title, content, writer, replyCnt, regDate, updateDate
 			FROM tbl_report where ROWNUM <= #{maxRow} ORDER BY bno DESC) 
 		where rn > #{minRow}
 		]]>
@@ -51,4 +51,9 @@
 	<select id="getTotalCount" resultType="int">
 		select count(bno) from tbl_report
 	</select>
+	
+<!-- 	댓글 수 업데이트 -->
+	<update id="updateReplyCnt">
+	  	update tbl_report set replyCnt = replyCnt + #{amount} where bno = #{bno}
+	</update>
 </mapper>

@@ -2,6 +2,8 @@ package com.jafa.book_report.repository;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.jafa.book_report.domain.ReportVO;
 import com.jafa.common.Criteria;
 
@@ -29,4 +31,9 @@ public interface ReportRepository {
 	
 	//전체 게시물 수
 	int getTotalCount();
+	
+	//댓글 수 업데이트
+	void updateReplyCnt(
+			@Param("bno") Long bno, 
+			@Param("amount") int amount);
 }

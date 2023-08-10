@@ -21,7 +21,7 @@ public class ReplyRepositoryTest extends AppTest{
 	ReplyRepository replyRepository;
 	
 	@Test
-//	@IgnoreC
+	@Ignore
 	public void insertTest() {
 		//IntStream.rangeClosed(1, 10).forEach(i->{			
 			ReplyVO vo = ReplyVO.builder()
@@ -62,5 +62,10 @@ public class ReplyRepositoryTest extends AppTest{
 	public void getListTest() {
 		replyRepository.getList(1L, new Criteria())
 			.forEach(r -> log.info(r));
+	}
+	
+	@Test
+	public void getReplyCount() {
+		replyRepository.getReplyCount(1L);
 	}
 }

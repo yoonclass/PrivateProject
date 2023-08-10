@@ -20,16 +20,17 @@ var replyService = {
 		});
 	},
 	
-	//댓글 목록 조회
+	//댓글 목록 조회 
+	//getList라는 함수를 정의하고, 서버로부터 댓글 목록을 조회하는 Ajax 요청을 보냅니다.
 	getList : function(param, callback, error){
-		let bno = param.bno;
+		let bno = param.bno;	
 		let page = param.page || 1;
 		
 		$.ajax({
 			type : 'get', 
-			url : `${ctxPath}/replies/pages/${page}/${bno}`, 
-			success : function(result){
-				if(callback) callback(result);
+			url : `${ctxPath}/replies/pages/${bno}/${page}`, 
+			success : function(replyPageDTO){
+				if(callback) callback(replyPageDTO.replyCount, replyPageDTO.list);
 			}, 
 			error : function(xhr, status, er){
 				if(error) error(er);

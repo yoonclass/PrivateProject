@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.jafa.book_report.domain.ReplyPageDTO;
 import com.jafa.book_report.domain.ReplyVO;
 import com.jafa.book_report.service.ReplyService;
 import com.jafa.common.Criteria;
@@ -36,7 +37,7 @@ public class ReplyController {
 	
 	// 특정게시물에 존재하는 댓글 리스트
 	@GetMapping("/pages/{bno}/{page}")
-	public ResponseEntity<List<ReplyVO>> getList(
+	public ResponseEntity<ReplyPageDTO> getList(
 			@PathVariable Integer page, @PathVariable Long bno){
 		Criteria criteria = new Criteria(page,10);
 		return new ResponseEntity<>(replyService.getList(criteria, bno),HttpStatus.OK); 

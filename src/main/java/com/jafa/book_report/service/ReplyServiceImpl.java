@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.jafa.book_report.domain.ReplyPageDTO;
 import com.jafa.book_report.domain.ReplyVO;
 import com.jafa.book_report.repository.ReplyRepository;
 import com.jafa.common.Criteria;
@@ -36,7 +37,9 @@ public class ReplyServiceImpl implements ReplyService {
 	}
 
 	@Override
-	public List<ReplyVO> getList(Criteria criteria, Long bno) {
-		return replyRepository.getList(bno, criteria);
+	public ReplyPageDTO getList(Criteria criteria, Long bno) {
+		return new ReplyPageDTO(
+				replyRepository.getReplyCount(bno),
+				replyRepository.getList(bno, criteria));
 	}
 }

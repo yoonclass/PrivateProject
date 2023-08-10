@@ -2,12 +2,52 @@ $(function(){
 	
 	let bnoValue = $('[name="bno"]').val() //페이지 내에서 name 속성이 "bno"인 요소의 값을 가져와 bnoValue 변수에 저장
 	let replyContainer = $('.chat');	//클래스가 "chat"인 요소를 선택하여 replyContainer 변수(댓글 표시될 컨테이너)에 저장
-	let showList = function(page){	//댓글 표시하는 함수이며, page 매개변수로 현재 페이지 번호 받음
 	
+	let pageNum = 1
+	let paginationWrap = $('.pagination_wrap')
+	
+	let showReplyPage = function(replyCount){
+		let endNum = Math.ceil(pageNum/10.0)*10	
+		let startNum = endNum - 9
+		let tempEndNum = Math.ceil(replyCount/10.0)
+		
+			let prev = startNum!=1
+			let next = endNum<tempEndNum
+			if(endNum>tempEndNum) endNum=tempEndNum	
+		
+		let pagination = '<ul class="pagination">';
+		
+		//이전 버튼
+		if(prev){
+			pagination += `<li class="page-item">
+				<a class="page-link" href="${startNum-1}">이전</a><li>`
+		}
+			for(let pageLink=startNum; pageLink<= endNum ; pageLink++){ // 페이지 버튼
+		let active = (pageNum==pageLink) ? 'active':''; // 현재페이지버튼 활성화
+		pagination += `<li class="page-item ${active}">
+				<a class="page-link" href="${pageLink}">${pageLink}</a></li>`
+		}
+		if(next){ // 다음 버튼 
+			pagination += `<li class="page-item">
+					<a class="page-link" href="${endNum+1}">다음</a></li>`
+		}
+		pagination += '</ul>'
+		paginationWrap.html(pagination);
+	}
+	
+	let showList = function(page){	//댓글 표시하는 함수이며, page 매개변수로 현재 페이지 번호 받음
 	let param = {bno:bnoValue, page : page||1};
+	console.log(param);
 	//요청에 필요한 파라미터를 객체 형태로 생성, bnoValue와 현재 페이지 번호인 page(기본값:1)를 포함
 		
-		replyService.getList(param,function(list){	//댓글 목록 가져옴, 이 때 param은 콜백 함수 내에서 처리됨
+		replyService.getList(param,function(replyCount,list){	//댓글 목록 가져옴, 이 때 param은 콜백 함수 내에서 처리됨
+			
+			//댓글이 존재하지 않을 경우
+			if(replyCount==0){
+				replyContainer.html('등록된 댓글이 없습니다.');
+				return
+			}
+			
 			let replyList='';
 			$.each(list,function(idx,elem){	//idx : 인덱스 값 //elem : 댓글 정보
 			
@@ -36,13 +76,19 @@ $(function(){
 					 </div>
 					</li>`				
 			});
-			replyContainer.html(replyList);
-			//생성한 댓글 목록 HTML 코드를 replyContainer에 설정하여 화면에 표시
+			replyContainer.html(replyList);	//생성한 댓글 목록을 replyContainer에 설정하여 화면에 표시
+			showReplyPage(replyCount); //해당 게시물의 전체 댓글 개수에 따라서 페이지를 표시
 		});
 	}
 	showList(1);
-	//페이지가 로드될 때 showList 함수를 호출하여 첫 번째 페이지의 댓글 목록을 표시
+	//페이지가 로드될 때 showList 함수를 호출
 	
+	// 페이지 이동 이벤트
+	paginationWrap.on('click','li a', function(e){
+		e.preventDefault();
+		pageNum = $(this).attr('href');
+		showList(pageNum);
+	});
 	
 	// 댓글 추가 
 	$('.submit button').click(function(){
@@ -75,7 +121,7 @@ $(function(){
 			replyService.remove(rno,function(result){
 				if(result=='success'){
 					alert(rno+'번 댓글을 삭제하였습니다.');
-					showList(1); // 목록 갱신
+					showList(pageNum); // 목록 갱신
 				} else {
 					alert('댓글 삭제 실패');
 				}
@@ -115,8 +161,8 @@ $(function(){
 			} 
 			// 수정 처리  메소드 호출
 			replyService.update(replyVO, function(result){
-				alert(result);
-				showList(1); // 목록 갱신
+				alert(rno+'번 댓글을 수정하였습니다.');
+				showList(pageNum); // 목록 갱신
 			});
 		})			
 		return; 

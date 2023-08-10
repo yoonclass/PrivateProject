@@ -28,7 +28,8 @@
 							<tr>
 								<td>${report.bno}</td>
 									<td>
-									<a class="move" href="${report.bno}">${report.title }</a>
+									<a class="move" href="${report.bno}">${report.title }
+									${report.replyCnt == 0 ? '': [report.replyCnt]}</a>
 									</td>
 								<td>${report.writer }</td>
 								<td>1</td>

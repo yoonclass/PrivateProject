@@ -19,7 +19,7 @@ public class ReplyServiceImplTest extends AppTest{
 
 	
 	@Test
-//	@Ignore
+	@Ignore
 	public void testList() {
 		ReplyPageDTO replyPageDTO = replyService.getList(new Criteria(), 1L);
 		log.info(replyPageDTO);

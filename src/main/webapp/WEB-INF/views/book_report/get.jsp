@@ -31,7 +31,7 @@
 	</div>
 </div>
 
-<h3 class="mt-5">댓글</h3>
+<h3 class="mt-5">댓글${report.replyCnt == 0 ? '': [report.replyCnt]}</h3>
 <div class="row">
 	<div class="col-12">
 		<ul class="list-group chat">

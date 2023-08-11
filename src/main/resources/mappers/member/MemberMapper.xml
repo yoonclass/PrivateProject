@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jafa.member.repository.MemberRepository">
+	
+	<select id="selectById" resultType="memberVO">
+		select memberId, memberPwd,memberName, memberEmail, enabled
+		from tbl_member where memberId=#{memberId}
+	</select>
+	
+	<insert id="insert">
+		insert into tbl_member(memberId,memberPwd,memberName,memberEmail)
+		values(#{memberId},#{memberPwd},#{memberName},#{memberEmail})
+	</insert>
+	
+	<select id="selectByEmail" resultType="String">
+		select memberId from tbl_member where memberEmail=#{memberEmail}
+	</select>
+	
+	<update id="updatePwd">
+		update tbl_member set
+			memberPwd = #{memberPwd} 
+		where memberId = #{memberId}
+	</update>
+	
+	<delete id="delete">
+		delete from tbl_member where memberId=#{memberId}
+	</delete>
+	
+</mapper>

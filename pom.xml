@@ -108,7 +108,7 @@
 		    <artifactId>log4jdbc-log4j2-jdbc4.1</artifactId>
 		    <version>1.16</version>
 		</dependency>
-<!-- 		보안관련 설정 
+<!-- 		보안관련 설정 -->
 		<dependency>
 		    <groupId>net.coobird</groupId>
 		    <artifactId>thumbnailator</artifactId>
@@ -134,7 +134,7 @@
 		    <artifactId>spring-security-taglibs</artifactId>
 		    <version>5.1.5.RELEASE</version>
 		</dependency>
-		
+<!-- 		메일 -->
 		<dependency>
 		  <groupId>javax.mail</groupId>
 		  <artifactId>mail</artifactId>
@@ -145,7 +145,7 @@
 		  <artifactId>spring-context-support</artifactId>
 		  <version>5.3.9</version>
 		</dependency>
--->
+
   </dependencies>
   
   <build>

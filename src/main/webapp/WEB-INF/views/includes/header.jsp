@@ -17,10 +17,25 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>var ctxPath = '${ctxPath}'</script>
+<script>
+let ctxPath = '${ctxPath}'
 
+$(function(){
+	$('.logout').click(function(e){
+		e.preventDefault();
+		//post 요청을 보낼 form을 동적으로 생성
+		let form = $('<form>',{action:$(this).attr('href'), method:'post'});
+		//CSRF 토큰 전송
+		form.append($('<input>',{type:'hidden',name:'${_csrf.parameterName}', value:'${_csrf.token}'}))
+			.appendTo('body')
+			.submit();
+	});
+})
+</script>
 </head>
+
 <body>
-<nav class="navbar navbar-expand-sm bg-light">
+<nav class="navbar navbar-expand-sm bg-light" justify-content-between">
     <ul class="navbar-nav">
         <li class="nav-item">
             <a class="nav-link" href="${ctxPath == '' ? '/': ctxPath}">홈</a>
@@ -34,5 +49,20 @@
         <li class="nav-item">
             <a class="nav-link" href="${ctxPath}/visitor/list">방명록</a>
         </li>
+        
+    <ul class="navbar-nav">
+	  	<li class="nav-item">
+	        <a class="nav-link" href="${ctxPath}/login">로그인</a>
+	    </li>
+    	<li class="nav-item">
+       		<a class="nav-link logout" href="${ctxPath}/member/logout">로그아웃</a>
+     	</li>
+     	
+<!--      	form으로 post요청 처리하기 -->
+<!-- 	<form method="post" action="${ctxPath}/member/logout" class="logout"> 
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">	 
+			<button type="submit" class="nav-link logout-button">로그아웃</button> 	 
+ 	    </form> -->
     </ul>
 </nav>
+

@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h1>비번 변경</h1>
+
 </body>
 </html>

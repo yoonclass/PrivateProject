@@ -27,7 +27,7 @@ import com.zaxxer.hikari.HikariDataSource;
 @MapperScan("com.jafa.*.repository")	//myBatis의 mapper 인터페이스들이 위치하는 패키지 지정
 @PropertySource(value="classpath:database/db.properties")	//DB연결 정보, classpath 내에 위치하는 properties 파일 지정
 @EnableTransactionManagement	//트랜잭션 관리 활성화 @Transactional 사용 가능
-//@Import({SecurityConfig.class})
+@Import({SecurityConfig.class})
 public class RootConfig {
 
 	@Value("${db.driver}")

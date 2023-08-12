@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h1>ID/PWD 찾기</h1>
+
 </body>
 </html>

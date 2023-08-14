@@ -5,6 +5,9 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!-- 사용자 정의 태그 라이브러리를 JSP 페이지에서 사용할 수 있도록 선언 -->
 <%@ taglib prefix="tf" tagdir="/WEB-INF/tags"%>
+<!-- 현재 사용자의 인증 정보를 가져오기 위한 태그 -->
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
 <c:set var="ctxPath" value="${pageContext.request.contextPath}"/>
 
 <!DOCTYPE html>
@@ -18,7 +21,11 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>var ctxPath = '${ctxPath}'</script>
 <script>
-let ctxPath = '${ctxPath}'
+let duplicateLogin = '${duplicateLogin}'
+
+	if(duplicateLogin){
+		alert(duplicateLogin);
+	}
 
 $(function(){
 	$('.logout').click(function(e){
@@ -51,13 +58,16 @@ $(function(){
         </li>
         
     <ul class="navbar-nav">
+    	<sec:authorize access="isAnonymous()">
 	  	<li class="nav-item">
 	        <a class="nav-link" href="${ctxPath}/login">로그인</a>
 	    </li>
+	    </sec:authorize>
+	    <sec:authorize access="isAuthenticated()">
     	<li class="nav-item">
        		<a class="nav-link logout" href="${ctxPath}/member/logout">로그아웃</a>
      	</li>
-     	
+     	</sec:authorize>
 <!--      	form으로 post요청 처리하기 -->
 <!-- 	<form method="post" action="${ctxPath}/member/logout" class="logout"> 
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">	 

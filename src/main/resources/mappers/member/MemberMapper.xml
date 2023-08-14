@@ -4,9 +4,28 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jafa.member.repository.MemberRepository">
 	
-	<select id="selectById" resultType="memberVO">
-		select memberId, memberPwd,memberName, memberEmail, enabled
-		from tbl_member where memberId=#{memberId}
+	<resultMap type="memberVO" id="memberMap">
+	    <id property="memberId" column="memberId"/>
+	    <result property="memberId" column="memberId"/>
+	    <result property="memberPwd" column="memberPwd"/>
+	    <result property="memberName" column="memberName"/>
+	    <result property="memberEmail" column="memberEmail"/>
+	    <result property="enabled" column="enabled"/>
+		<collection property="authList" ofType="authVO" resultMap="authMap"/>
+	</resultMap>
+	
+  	<resultMap type="authVO" id="authMap">
+  		<result property="id" column="id"/>
+  		<result property="auth" column="auth"/>
+  	</resultMap>
+	
+	<select id="selectById" resultMap="memberMap">
+		select 
+		    m.memberId, memberPwd, memberName, memberEmail, enabled, 
+		    a.auth
+		from tbl_member m left outer join tbl_member_auth a
+		on m.memberId = a.id
+		where m.memberId = #{memberId}
 	</select>
 	
 	<insert id="insert">

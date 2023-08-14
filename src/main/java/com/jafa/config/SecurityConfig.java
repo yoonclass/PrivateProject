@@ -1,13 +1,29 @@
 package com.jafa.config;
 
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.session.SessionRegistryImpl;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
+import org.springframework.security.web.session.ConcurrentSessionFilter;
+import org.springframework.security.web.session.HttpSessionEventPublisher;
+
+import com.jafa.security.CustomUserDetailService;
 
 import lombok.extern.log4j.Log4j;
 
@@ -20,30 +36,72 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	@Autowired
 	private AuthenticationSuccessHandler authenticationSuccessHandler;
 	
+	@Autowired
+	private AuthenticationFailureHandler authenticationFailureHandler;
+	
+	@Autowired
+	CustomUserDetailService customUserDetailService;
+
+	@Autowired
+	DataSource dataSource;
+	
+	 
 	//특정 URL에 대한 접근권한 설정
 	@Override
 		protected void configure(HttpSecurity http) throws Exception {
-			http.authorizeRequests()
-				.antMatchers("/guest/**").permitAll()
-				.antMatchers("/member/**").access("hasRole('ROLE_MEMBER')")
-				.antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')"); 
-			
-			http.formLogin()
-				.loginPage("/login")
-				.loginProcessingUrl("/member/login")
-				.usernameParameter("memberId")
-				.passwordParameter("memberPwd")
-				.successHandler(authenticationSuccessHandler);
-				
-			http.logout().logoutUrl("/member/logout").invalidateHttpSession(true);
-			http.exceptionHandling().accessDeniedPage("/accessDenied");
+	        http
+	            // 다른 권한 설정
+	        .authorizeRequests()
+	            .antMatchers("/guest/**").permitAll()
+	            .antMatchers("/member/**").access("hasRole('ROLE_MEMBER')")
+	            .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
+	            .and()
+	        .formLogin()
+	            .loginPage("/login")
+	            .loginProcessingUrl("/member/login")
+	            .usernameParameter("memberId")
+	            .passwordParameter("memberPwd")
+	            .successHandler(authenticationSuccessHandler)
+	            .failureHandler(authenticationFailureHandler)
+	            .and()
+	        .rememberMe()
+	        	.key("jafa")
+	        	.tokenRepository(persistentTokenRepository())
+	        	.tokenValiditySeconds(604800)
+	        	.and()
+	        .logout()
+	            .logoutUrl("/member/logout")
+	            .invalidateHttpSession(true)
+	            .deleteCookies("remember-me","JSESSION_ID")
+	            .and()
+	        .exceptionHandling()
+	            .accessDeniedPage("/accessDenied");
+	}
+	
+	@Bean
+	public PersistentTokenRepository persistentTokenRepository() {
+		JdbcTokenRepositoryImpl jdbcTokenRepositoryImpl = new JdbcTokenRepositoryImpl();
+		jdbcTokenRepositoryImpl.setDataSource(dataSource);
+		return jdbcTokenRepositoryImpl;
 	}
 
-	//사용자 정보 추가
+
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.inMemoryAuthentication()
-			.withUser("admin").password("{noop}1234").roles("ADMIN","MEMBER").and()
-			.withUser("YOON").password("{noop}1234").roles("MEMBER");
+		auth.userDetailsService(customUserDetailService)//사용자 정보 조회
+			.passwordEncoder(passwordEncoder());//비밀번호 해시화 설정
 	}
+
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();//비밀번호를 안전하게 해시화(암호화)하는 역할을 수행
+	}
+	
+	//사용자 정보 추가
+		/*@Override
+		protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+			auth.inMemoryAuthentication()
+				.withUser("admin").password("{noop}1234").roles("ADMIN","MEMBER").and()
+				.withUser("YOON").password("{noop}1234").roles("MEMBER");
+		}*/
 }

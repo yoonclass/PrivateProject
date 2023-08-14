@@ -20,9 +20,9 @@ public class MemberRepositoryTest extends AppTest{
 	MemberVO vo = new MemberVO();
 	
 	@Test
-	@Ignore
+//	@Ignore
 	public void selectByIdTest() {
-		vo = memberRepository.selectById("test");
+		vo = memberRepository.selectById("YOON");
 		log.info(vo);
 	}
 

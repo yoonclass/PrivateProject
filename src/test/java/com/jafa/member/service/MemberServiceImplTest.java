@@ -12,7 +12,9 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.jafa.config.RootConfig;
 import com.jafa.config.ServletConfig;
+import com.jafa.member.domain.AuthVO;
 import com.jafa.member.domain.MemberVO;
+import com.jafa.member.repository.AuthRepository;
 
 import lombok.extern.log4j.Log4j;
 
@@ -23,7 +25,10 @@ import lombok.extern.log4j.Log4j;
 public class MemberServiceImplTest {
 
 	@Autowired
-	MemberService memberService;
+	private MemberService memberService;
+	
+	@Autowired
+	private AuthRepository authRepository;
 	
 	@Test
 	@Ignore
@@ -41,15 +46,36 @@ public class MemberServiceImplTest {
 	}
 	
 	@Test
-	@Ignore
+//	@Ignore
 	public void insertTest() {
 		MemberVO vo = new MemberVO();
 			vo = MemberVO.builder()
-					.memberId("admin")
+					.memberId("test")
 					.memberPwd("1234")
-					.memberName("관리자")
-					.memberEmail("admin@test").build();
+					.memberName("사용자")
+					.memberEmail("user@test").build();
 			memberService.join(vo);
+	}
+	
+	@Test
+//	@Ignore
+	public void test() {
+		MemberVO vo = new MemberVO(); 
+		vo.setMemberId("admin");
+		vo.setMemberPwd("1234");
+		vo.setMemberName("관리자");
+		vo.setMemberEmail("admin@test.com");
+		memberService.join(vo);
+		
+		AuthVO authVO = new AuthVO("admin","ROLE_ADMIN");
+		authRepository.insert(authVO);
+	}
+	
+	@Test
+	@Ignore
+	public void test2() {
+		AuthVO vo = new AuthVO("YOON","ROLE_MEMBER");
+		authRepository.insert(vo);
 	}
 	
 	@Test

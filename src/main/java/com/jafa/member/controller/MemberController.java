@@ -2,10 +2,10 @@ package com.jafa.member.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,15 +33,21 @@ public class MemberController {
 			Authentication authentication, RedirectAttributes rttr) {
 		
 		String uri = request.getHeader("Referer"); // 로그인 전 사용자가 보던 페이지
+
 		//uri가 존재하고 login과 접근거부를 포함하고 있지 않다면 이전 페이지로 돌아간다.
 		if(uri!=null && !uri.contains("/login") && !uri.contains("/accessDenied")) {
-			//세션의 prevPage에 uri정보 저장
 			request.getSession().setAttribute("prevPage", uri);
 		} 
 		
-		if(logout!=null) {model.addAttribute("logout","로그아웃");}
-		return "member/login";
-	}
+//		인증정보가 존재한다면~
+		if (authentication!=null) {
+	        rttr.addFlashAttribute("duplicateLogin", "이미 로그인 중입니다.");
+	        return "redirect:/"; // 또는 다른 페이지로 이동
+	    }
+		
+		if(logout!=null) model.addAttribute("logout","로그아웃");
+			return "member/login";
+		}
 	
 	//회원가입================
 	@GetMapping("/member/join")

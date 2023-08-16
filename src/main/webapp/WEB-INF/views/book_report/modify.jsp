@@ -23,7 +23,7 @@
 						<button type="button" data-oper='modify' class="btn btn-light">수정</button>
 						<button type="button" data-oper='remove' class="btn btn-danger">삭제</button>
 						<button type="button" data-oper='list' class="btn btn-info">목록</button>
-						
+						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 						<input type="hidden" name="bno" id="bno" value="${report.bno}">
 					</form>						
 				</div>

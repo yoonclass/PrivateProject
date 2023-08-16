@@ -11,6 +11,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.jafa.book_list.domain.BookVO;
+import com.jafa.common.Criteria;
 import com.jafa.config.RootConfig;
 import com.jafa.config.ServletConfig;
 
@@ -34,8 +35,8 @@ public class BookServiceImplTest {
 
 	@Test
 	@Ignore
-	public void testGetList() {
-		service.getList().forEach(service -> log.info(service));
+	public void testGetList(Criteria criteria) {
+		service.getList(criteria).forEach(service -> log.info(service));
 	}
 	
 	@Test

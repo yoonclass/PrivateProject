@@ -13,7 +13,7 @@ public class Pagination {
 	private int startPage; 
 	private int endPage; 
 	private int tempEndPage;  
-	private int totalCount; // 전체 게시물 수 306개
+	private int totalCount; // 독후감 게시물 수 306개
 	private int displayPageNum = 10;
 	private boolean prev; 
 	private boolean next;

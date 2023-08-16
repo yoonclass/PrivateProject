@@ -60,9 +60,11 @@
 							</li>
 						</c:if>
 					</ul>
+					<sec:authorize access="isAuthenticated()">
 					<div>
 						<button id="regBtn" class="btn btn-xs btn-primary float-right">독후감 쓰기</button>
 					</div>
+					</sec:authorize>
 				</div>
 			</div>
 		</div>

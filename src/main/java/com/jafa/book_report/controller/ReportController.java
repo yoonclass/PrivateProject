@@ -1,5 +1,10 @@
 package com.jafa.book_report.controller;
 
+import java.nio.file.AccessDeniedException;
+
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,13 +27,13 @@ import lombok.extern.log4j.Log4j;
 @RequiredArgsConstructor
 public class ReportController {
 
-	private final ReportService service;
+	private final ReportService reportService;
 	
 	@GetMapping("/list")
 	public void reportList(Model model, Criteria criteria) {
 		log.info("reportList");
-		model.addAttribute("list", service.getList(criteria));
-		model.addAttribute("page", new Pagination(criteria, service.totalCount()));
+		model.addAttribute("list", reportService.getList(criteria));
+		model.addAttribute("page", new Pagination(criteria, reportService.totalCount()));
 	}
 	
 	@GetMapping("/get")
@@ -36,45 +41,57 @@ public class ReportController {
 		log.info("/컨트롤러 조회");
 		log.info(bno);
 		log.info(criteria);
-		model.addAttribute("report",service.get(bno));
+
+		model.addAttribute("report",reportService.get(bno));
 	}
 	
+	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/register")
 	public void register() {}
 	
+	@PreAuthorize("isAuthenticated()")
 	@PostMapping("/register")
 	public String register(ReportVO report, RedirectAttributes rttr) {
 		log.info("register: " + report);
-		service.register(report);
+		reportService.register(report);
 		rttr.addFlashAttribute("result", report.getBno());
 		rttr.addFlashAttribute("operation", "register");
 		return "redirect:/book_report/list";
 	}
 	
+	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/modify")
-	public void modify(@RequestParam("bno") Long bno, Model model, Criteria criteria) {
+	public String modify(@RequestParam("bno") Long bno, Model model, Criteria criteria, Authentication auth) throws AccessDeniedException {
 		log.info("컨트롤러 수정 Get");
-		log.info(bno);
-		log.info(criteria);
-		model.addAttribute("report",service.get(bno));
+		log.info("bno : "+bno);
+		log.info("criteria : "+criteria);
+		
+		ReportVO vo = reportService.get(bno);
+		String username = auth.getName();
+		if(!vo.getWriter().equals(username) &&
+		   !auth.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
+				throw new AccessDeniedException("수정 권한 없음");
+		}
+		model.addAttribute("report",reportService.get(bno));
+		return "book_report/modify";
 	}
 	
+	@PreAuthorize("isAuthenticated() and principal.username== #report.writer")
 	@PostMapping("/modify")
 	public String modify(ReportVO report, RedirectAttributes rttr, Criteria criteria) {
 		log.info("/컨트롤러 수정 완료 : "+report);
-		if(service.modify(report)) {
+		if(reportService.modify(report)) {
 			rttr.addFlashAttribute("result", report.getBno());
 			rttr.addFlashAttribute("operation", "modify");
 		}
-		rttr.addAttribute("pageNum",criteria.getPageNum());
-		rttr.addAttribute("amount",criteria.getAmount());
 		return "redirect:/book_report/list";
 	}
 	
+	@PreAuthorize("isAuthenticated() and principal.username== #report.writer or hasRole('ROLE_ADMIN')")
 	@PostMapping("/remove")
-	public String remove(Long bno, RedirectAttributes rttr, Criteria criteria) {
+	public String remove(ReportVO report, Long bno, RedirectAttributes rttr, Criteria criteria) {
 		log.info("(controller)remove : " + bno);
-		if(service.remove(bno)) {
+		if(reportService.remove(bno)) {
 			rttr.addFlashAttribute("result", bno);
 			rttr.addFlashAttribute("operation", "remove");
 		}

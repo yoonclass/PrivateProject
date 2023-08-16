@@ -9,6 +9,11 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <c:set var="ctxPath" value="${pageContext.request.contextPath}"/>
+<sec:authorize access="isAuthenticated()">
+	<sec:authentication property="principal.memberVO" var="authInfo"/>
+	<sec:authentication property="principal.memberVO.authList" var="authList"/>
+</sec:authorize>
+
 
 <!DOCTYPE html>
 <html>

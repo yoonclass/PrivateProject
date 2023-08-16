@@ -18,10 +18,10 @@ public class CustomUserDetailService implements UserDetailsService{
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		MemberVO vo = memberRepository.selectById(username);	//사용자 정보 DB에서 조회
-		if(vo==null) {	//없다면 예외 발생
+		MemberVO memberVO = memberRepository.selectById(username);	//사용자 정보 DB에서 조회
+		if(memberVO==null) {	//없다면 예외 발생
 			throw new UsernameNotFoundException("User not found with username: " + username);
 		}
-		return new CustomUser(vo);	//CustomeUser클래스를 사용하여 커스텀 사용자 정보 객체로 변환
+		return new CustomUser(memberVO);	//CustomeUser클래스를 사용하여 커스텀 사용자 정보 객체로 변환
 	}
 }

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.jafa.book_list.domain.BookVO;
 import com.jafa.book_list.repository.BookRepository;
+import com.jafa.common.Criteria;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -18,9 +19,9 @@ public class BookServiceImpl implements BookService {
 	private final BookRepository repository;
 	
 	@Override
-	public List<BookVO> getList() {
+	public List<BookVO> getList(Criteria criteria) {
 		log.info("(ServiceImpl)목록을 조회하였습니다 : ");
-		return repository.getList();
+		return repository.getList(criteria);
 	}
 
 	@Override

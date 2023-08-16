@@ -23,8 +23,10 @@
 					<li>수정 ${report.updateDate}</li>
 				</ul>
 				<div class="getBtns">
-					<button data-oper='modify' class="btn btn-light modify">수정페이지</button>
-					<button data-oper='list' class="btn btn-info list">목록으로</button>	
+				<sec:authorize access="isAuthenticated() and principal.username==#report.writer or hasRole('ROLE_ADMIN')">
+					<button data-oper='modify' class="btn btn-light modify">변경</button>
+				</sec:authorize>
+					<button data-oper='list' class="btn btn-info list">목록</button>	
 				</div>					
 			</div>
 		</div>
@@ -68,14 +70,20 @@
 
 <!-- 댓글작성 -->	
 <div class="my-3 replyWriterForm">
-	<textarea  rows="6" placeholder="댓글을 작성해주세요" 
-		maxlength="400" class="replyContent form-control"></textarea>
-	<div class="text-right">
-		<div class="submit p-2">
-			<span class="btn btn-outline-info col-2 replyer">홍길동</span>
-			<button class="btn btn-outline-primary col-3">등록</button>
+	<sec:authorize access="isAnonymous()">
+		<textarea  rows="6" placeholder="로그인한 사용자만 댓글을 쓸 수 있습니다." readonly="readonly" 
+			maxlength="400" class="replyContent form-control"></textarea>
+	</sec:authorize>
+	<sec:authorize access="isAuthenticated()">
+		<textarea  rows="6" placeholder="댓글을 작성해주세요" 
+			maxlength="400" class="replyContent form-control"></textarea>
+		<div class="text-right">
+			<div class="submit p-2">
+				<span class="btn btn-outline-info col-2 replyer">${authInfo.memberId}</span>
+				<button class="btn btn-outline-primary col-3">등록</button>
+			</div>
 		</div>
-	</div>
+	</sec:authorize>
 </div>
 
 <!-- 게시물번호 담음 -->

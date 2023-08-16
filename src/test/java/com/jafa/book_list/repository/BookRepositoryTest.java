@@ -1,5 +1,7 @@
 package com.jafa.book_list.repository;
 
+import java.util.List;
+
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,6 +11,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.jafa.book_list.domain.BookVO;
+import com.jafa.book_report.domain.ReportVO;
+import com.jafa.common.Criteria;
 import com.jafa.config.RootConfig;
 import com.jafa.config.ServletConfig;
 
@@ -24,9 +28,13 @@ public class BookRepositoryTest {
 	private BookRepository mapper;
 	
 	@Test
-	@Ignore
+//	@Ignore
 	public void test() {
-		mapper.getList().forEach(book->log.info(book));
+		Criteria criteria = new Criteria();
+		criteria.setPageNum(3);
+		List<BookVO> list = mapper.getList(criteria);
+		log.info(list.size());
+		list.forEach(test->log.info(test));
 	}
 	
 	@Test

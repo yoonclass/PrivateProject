@@ -35,16 +35,41 @@
 						</c:forEach>
 						</tbody>
 					</table>
-				
-				
+					<!-- 페이징 -->
+					<ul class="pagination justify-content-center">
+						<!-- 시작 페이지 숫자에서 한 페이지에 표시되는 게시물 수만큼 차감하여 이동  -->
+						<c:if test="${page.prev}">
+							<li class="page-item">
+								<a class="page-link" href="${page.startPage-page.displayPageNum}">이전페이지</a>
+							</li>
+						</c:if>
+						<!-- pagelink라는 값이 있을 때 pagelink로 이동 -->
+						<c:forEach begin="${page.startPage}" end="${page.endPage }" var="pagelink">
+							<li class="page-item ${pagelink == page.criteria.pageNum ? 'active':''}">
+								<a class="page-link" href="${pagelink}">${pagelink}</a>
+							</li>
+						</c:forEach>
+						<!--  끝페이지에서 1을 더함 : 다음 페이지 번호-->
+						<c:if test="${page.next }">
+							<li class="page-item">
+								<a class="page-link" href="?pageNum=${page.endPage+1}">[다음페이지]</a>
+							</li>
+						</c:if>
+					</ul>
+					<sec:authorize access="hasRole('ROLE_ADMIN')">
 					<div>
-						<button id="regBtn" class="btn btn-xs btn-primary float-right">도서 추가</button>
+						<button id="regBtn" class="btn btn-xs btn-primary float-right">도서 등록</button>
 					</div>
+					</sec:authorize>
 				</div>
 			</div>
 		</div>
 	</div>
-
+	
+<form id="listForm" action="${ctxPath}/book_list/list" method="get">
+	<input type="hidden" name="pageNum" value="${page.criteria.pageNum}">
+	<input type="hidden" name="amount" value="${page.criteria.amount}">
+</form>
 
 <%@ include file="../includes/footer.jsp"%>
 
@@ -74,6 +99,14 @@ $(function(){
 	let result = "${result}"	//등록,수정,삭제 모델 객체
 	let listForm = $('#listForm');	//페이지 이동 Form
 	
+	//페이지 이동
+	$('.pagination a').click(function(e){	//페이지 모든 a 링크에 이벤트 추가
+		e.preventDefault();	//기본동작 중지
+		let pageNum = $(this).attr('href');	//href 속성값 pageNum에 저장
+		listForm.find('input[name="pageNum"]').val(pageNum)
+		listForm.submit();
+	})
+	
 	// 조회 페이지 이동 
 	$('.move').click(function(e){
 		e.preventDefault();
@@ -83,7 +116,7 @@ $(function(){
 				.submit();
 	});
 	
-	//독후감 쓰기 버튼 누를 경우 등록 페이지로 이동
+	//도서 등록 버튼 누를 경우 등록 페이지로 이동
 	$('#regBtn').on('click',function(){
 		self.location = "${ctxPath}/book_list/register"
 	})

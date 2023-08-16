@@ -22,7 +22,9 @@
 					<li>작성 ${book.regDate}</li>
 				</ul>
 				<div class="getBtns">
-					<button data-oper='modify' class="btn btn-light modify">수정</button>
+				<sec:authorize access="hasRole('ROLE_ADMIN')">
+					<button data-oper='modify' class="btn btn-light modify">변경</button>
+				</sec:authorize>
 					<button data-oper='list' class="btn btn-info list">목록</button>	
 				</div>					
 			</div>

@@ -3,10 +3,11 @@ package com.jafa.book_list.repository;
 import java.util.List;
 
 import com.jafa.book_list.domain.BookVO;
+import com.jafa.common.Criteria;
 
 public interface BookRepository {
 	//도서 목록 조회
-	List<BookVO> getList();
+	List<BookVO> getList(Criteria criteria);
 	
 	//도서 추가
 	void insert(BookVO book);

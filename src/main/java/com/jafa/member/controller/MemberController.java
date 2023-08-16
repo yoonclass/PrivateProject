@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -61,12 +62,14 @@ public class MemberController {
 		return "redirect:/";	//메인 페이지로 돌아감
 	}
 	
+	@PreAuthorize("isAuthenticated()")
 	//비밀번호 변경==================
 	@GetMapping("/changePwd")
 	public String changePwd() {
 		return "member/changePwd";
 	}
 
+	@PreAuthorize("isAuthenticated()")
 	@PostMapping("/changePwd")
 	@ResponseBody
 	public ResponseEntity<String> changePwd(

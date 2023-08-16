@@ -19,8 +19,9 @@
 						</div>
 						<div class="form-group">
 							<label>작성자 </label>
-							<input class="form-control" name="writer"/>
+							<input class="form-control" name="writer" value="${authInfo.memberId}" readonly="readonly"/>
 						</div>
+						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 						<button class="btn btn-light">등록</button>						
 					</form>
 				</div>

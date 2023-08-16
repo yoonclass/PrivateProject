@@ -5,7 +5,7 @@
 
 <div class="container">
 	<div class="jumbotron my-5">
-		<h1>접근이 금지된 페이지 입니다.</h1>
+		<h1>Access Denied</h1>
 	</div>
 </div>
 

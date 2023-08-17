@@ -1,6 +1,7 @@
 package com.jafa.book_list.domain;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.apache.ibatis.type.Alias;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -34,4 +35,6 @@ public class BookVO {
 	
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDateTime updateDate;
+	
+	private List<BookAttachVO> attachList;
 }

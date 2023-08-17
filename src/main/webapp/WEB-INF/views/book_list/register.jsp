@@ -29,4 +29,48 @@
 		</div>
 	</div>
 </div>
+
+<div class="row my-5">
+	<div class="col-lg-12">
+		<div class="card">
+			<div class="card-header">
+				<h4>파일 첨부</h4>
+			</div>
+			<div class="card-body">
+				<div class="uploadDiv">
+					<input type="file" name="uploadFile" multiple="multiple">
+				</div>
+				<div class="uploadResultDiv"> <!-- 파일업로드 결과 보여주기  -->
+					<ul class="list-group"></ul>
+				</div>
+			</div> <!-- panel-body -->
+		</div> <!-- panel end -->
+	</div> <!-- col end -->
+</div><!-- row end -->
 <%@ include file="../includes/footer.jsp" %>
+
+<script>
+$(function(){
+// 파일 업로드 이벤트 
+	$('input[type="file"]').change(function(){
+		let formData = new FormData(); 
+		let files = this.files;
+		
+		for(let f of files){
+			formData.append('uploadFile', f);
+		}
+		
+		$.ajax({
+			url : `${ctxPath}/files/upload`, 
+			type : 'post', 
+			processData : false, 
+			contentType : false, 
+			data : formData, 
+			dataType : 'json', 
+			success : function(result){
+				console.log(result)
+			}
+		})
+	})
+})
+</script>

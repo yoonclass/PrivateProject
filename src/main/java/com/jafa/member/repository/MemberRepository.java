@@ -11,7 +11,7 @@ public interface MemberRepository {
 	
 	//회원 등록
 	void insert(MemberVO vo);
-
+	
 	//이메일로 회원 Id 조회
 	String selectByEmail(String memberEmail); 
 

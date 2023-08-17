@@ -14,12 +14,11 @@
 	<sec:authentication property="principal.memberVO.authList" var="authList"/>
 </sec:authorize>
 
-
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>My Web Site</title>
+<title>What can you do here? :)</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
@@ -27,6 +26,14 @@
 <script>var ctxPath = '${ctxPath}'</script>
 <script>
 let duplicateLogin = '${duplicateLogin}'
+let csrfHeaderName = "${_csrf.headerName}"; 
+let csrfTokenValue = "${_csrf.token}"
+let memberId = "${authInfo.memberId}";
+let auth = "${authList}"
+
+$(document).ajaxSend(function(e, xhr, options){
+	xhr.setRequestHeader(csrfHeaderName,csrfTokenValue);
+})
 
 	if(duplicateLogin){
 		alert(duplicateLogin);
@@ -69,10 +76,14 @@ $(function(){
 	    </li>
 	    </sec:authorize>
 	    <sec:authorize access="isAuthenticated()">
+	    <li class="nav-item">
+		  <a class="nav-link" href="${ctxPath}/myPage">${authInfo.memberId}</a>
+		</li>
     	<li class="nav-item">
        		<a class="nav-link logout" href="${ctxPath}/member/logout">로그아웃</a>
      	</li>
      	</sec:authorize>
+     	
 <!--      	form으로 post요청 처리하기 -->
 <!-- 	<form method="post" action="${ctxPath}/member/logout" class="logout"> 
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">	 

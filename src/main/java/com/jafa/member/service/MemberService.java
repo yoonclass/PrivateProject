@@ -12,9 +12,7 @@ public interface MemberService {
 
 	void join(MemberVO vo);
 	
-	void changePwd(
-			@Param("memberId") String memberId,  
-			@Param("memberPwd") String newPwd);
+	void changePwd(Map<String, String> memberMap);
 
 	void delete(String memberId);
 }

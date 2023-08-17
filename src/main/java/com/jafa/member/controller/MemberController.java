@@ -1,5 +1,9 @@
 package com.jafa.member.controller;
 
+import java.security.Principal;
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +14,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -50,6 +55,37 @@ public class MemberController {
 			return "member/login";
 		}
 	
+	@PreAuthorize("isAuthenticated()")
+	@GetMapping({"/myPage","/myPage/{path}"})
+	public String myPage(Model model, Principal principal,
+			@PathVariable(required = false) String path) {
+		String memberId = principal.getName();
+		if(path==null) {
+			MemberVO memberVO = memberService.read(memberId);
+			model.addAttribute("vo",memberVO);
+			return "member/myPage";
+		}
+		return "member/"+path;
+	}
+	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_MEMBER')")
+	@PostMapping(value = "/member/changePwd", produces = "application/text; charset=utf-8")
+	@ResponseBody
+	public ResponseEntity<String> changePwd(MemberVO memberVO,
+	        @RequestParam String currentPwd, @RequestParam String newPwd) {
+	    try {
+	        Map<String, String> memberMap = new HashMap<>();
+	        memberMap.put("memberId", memberVO.getMemberId());
+	        memberMap.put("newPwd", newPwd);
+	        memberMap.put("currentPwd", currentPwd);
+	        
+	        memberService.changePwd(memberMap);
+	    } catch (PasswordMisMatchException e) {
+	        return new ResponseEntity<String>("비밀번호가 일치하지 않음",HttpStatus.UNAUTHORIZED);
+	    }
+	    return new ResponseEntity<String>("success",HttpStatus.OK);
+	}
+	
 	//회원가입================
 	@GetMapping("/member/join")
 	public String join() {
@@ -61,27 +97,7 @@ public class MemberController {
 		memberService.join(vo);
 		return "redirect:/";	//메인 페이지로 돌아감
 	}
-	
-	@PreAuthorize("isAuthenticated()")
-	//비밀번호 변경==================
-	@GetMapping("/changePwd")
-	public String changePwd() {
-		return "member/changePwd";
-	}
 
-	@PreAuthorize("isAuthenticated()")
-	@PostMapping("/changePwd")
-	@ResponseBody
-	public ResponseEntity<String> changePwd(
-			@RequestParam("memberId") String memberId,
-	        @RequestParam("newPwd") String newPwd) {
-		try {
-	        memberService.changePwd(memberId, newPwd);
-	    } catch (PasswordMisMatchException e) {
-	        return new ResponseEntity<String>("비밀번호가 일치하지 않음", HttpStatus.UNAUTHORIZED);
-	    }
-	    return new ResponseEntity<String>("success", HttpStatus.OK);
-	}
 
 	//Id, Pwd 찾기
 	@GetMapping("/findMemberInfo")

@@ -1,10 +1,10 @@
 package com.jafa.book_report.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,6 +27,7 @@ public class ReplyController {
 	private ReplyService replyService; 
 	
 	//댓글 생성
+	@PreAuthorize("isAuthenticated()")
 	@PostMapping("/new")
 	public ResponseEntity<String> create(@RequestBody ReplyVO vo){
 		int result = replyService.register(vo);
@@ -49,6 +50,7 @@ public class ReplyController {
 	}
 	
 	//댓글 삭제
+	@PreAuthorize("isAuthenticated()")
 	@DeleteMapping("/{rno}")
 	public ResponseEntity<String> remove(@PathVariable Long rno){
 		int result = replyService.remove(rno);
@@ -57,6 +59,7 @@ public class ReplyController {
 	}
 	
 	//댓글 수정
+	@PreAuthorize("isAuthenticated()")
 	@RequestMapping(value = "/{rno}", method = {RequestMethod.PUT, RequestMethod.PATCH})
 	public ResponseEntity<String> modify(
 			@RequestBody ReplyVO vo, @PathVariable Long rno){

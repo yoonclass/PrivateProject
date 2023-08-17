@@ -7,6 +7,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.jafa.error.PasswordMisMatchException;
 import com.jafa.member.domain.AuthVO;
 import com.jafa.member.domain.MemberVO;
 import com.jafa.member.repository.AuthRepository;
@@ -41,9 +42,17 @@ public class MemberServiceImpl implements MemberService {
 		authRepository.insert(authVO);
 	}
 
+	@Transactional
 	@Override
-	public void changePwd(String memberId, String newPwd) {
-		memberRepository.updatePwd(memberId, newPwd);
+	public void changePwd(Map<String, String> memberMap) {
+		String memberId = memberMap.get("memberId");
+		String newPwd = memberMap.get("newPwd");
+		String currentPwd = memberMap.get("currentPwd");
+		MemberVO vo = memberRepository.selectById(memberId);
+		if(!passwordEncoder.matches(currentPwd, vo.getMemberPwd())) {
+			throw new PasswordMisMatchException();
+		}
+		memberRepository.updatePwd(memberId, passwordEncoder.encode(newPwd));
 	}
 
 	@Override

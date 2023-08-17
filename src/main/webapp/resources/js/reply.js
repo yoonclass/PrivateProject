@@ -52,7 +52,8 @@ $(function(){
 			$.each(list,function(idx,elem){	//idx : 인덱스 값 //elem : 댓글 정보
 			
 				//댓글 목록을 reply list에 추가
-				replyList += `<li class="list-group-item" data-rno="${elem.rno}" >
+				replyList += 
+				`<li class="list-group-item" data-rno="${elem.rno}" >
 					<div class="d-flex justify-content-between">
 					  <div class="d-flex">
 					    <div class="user_image mr-3" style="width: 75px">
@@ -60,20 +61,34 @@ $(function(){
 					    </div>
 					    <div class="comment_wrap">
 					      <div class="comment_info">
-					        <span class="userName badge badge-pill badge-info mr-2">홍길동</span>
+					        <span class="userName badge badge-pill badge-info mr-2">${elem.replyer}</span>
 					        <span class="badge badge-dark">${elem.replyDate}</span>
 					      </div>
 					      <div class="comment_content py-2">${elem.reply}</div>
 					    </div>
-					  </div>
-					  <div class="reply_modify">
-					    <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">변경</button>
-					    <div class="dropdown-menu">						   
-					      <a class="dropdown-item" href="modify">수정</a>
-					      <a class="dropdown-item" href="delete">삭제</a>
-					    </div>
-					  </div>
-					 </div>
+					  </div>`
+					      if(memberId == elem.replyer) {
+					        // 사용자 본인의 댓글인 경우 수정/삭제 가능
+					        replyList +=
+					        `<div class="reply_modify">
+					            <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">변경</button>
+					            <div class="dropdown-menu">						   
+					                <a class="dropdown-item" href="modify">수정</a>
+					                <a class="dropdown-item" href="delete">삭제</a>
+					            </div>
+					        </div>`;
+					    } else if(auth.includes('ROLE_ADMIN')) {
+					        // 관리자인 경우 삭제 가능
+					        replyList +=
+					        `<div class="reply_modify">
+					            <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">변경</button>
+					            <div class="dropdown-menu">						   
+					                <a class="dropdown-item" href="delete">삭제</a>
+					            </div>
+					        </div>`;
+					    }
+					  replyList+=
+					 `</div>
 					</li>`				
 			});
 			replyContainer.html(replyList);	//생성한 댓글 목록을 replyContainer에 설정하여 화면에 표시
@@ -116,7 +131,11 @@ $(function(){
 		e.preventDefault();// a태그  기본동작 금지
 		let rno = $(this).closest('li').data('rno'); // 댓글 번호 가져오기
 		let operation = $(this).attr('href');// 수정/삭제 동작 결정
-		
+		let replyer = $(this).closest('li').find('.userName').text();
+		// 작성자가 일치하지 않거나 관리자가 아니면
+		if(replyer!=memberId && !auth.includes('ROLE_ADMIN')){
+			return;
+		}
 		if(operation=='delete'){ // 삭제 처리 
 			replyService.remove(rno,function(result){
 				if(result=='success'){

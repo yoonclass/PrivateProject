@@ -16,6 +16,11 @@
 		    <version>4.0.1</version> <!-- 원하는 버전으로 변경 가능 -->
 		    <scope>provided</scope>
 		</dependency>
+		<dependency>
+		    <groupId>net.coobird</groupId>
+		    <artifactId>thumbnailator</artifactId>
+		    <version>0.4.8</version>
+		</dependency>
 <!--   junit test -->
 	  <dependency>
 		  <groupId>junit</groupId>
@@ -109,11 +114,6 @@
 		    <version>1.16</version>
 		</dependency>
 <!-- 		보안관련 설정 -->
-		<dependency>
-		    <groupId>net.coobird</groupId>
-		    <artifactId>thumbnailator</artifactId>
-		    <version>0.4.8</version>
-		</dependency>
 		<dependency>
 		    <groupId>org.springframework.security</groupId>
 		    <artifactId>spring-security-core</artifactId>

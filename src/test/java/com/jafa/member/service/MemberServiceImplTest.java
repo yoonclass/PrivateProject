@@ -84,7 +84,7 @@ public class MemberServiceImplTest {
 		MemberVO vo = new MemberVO();
 		vo = memberService.read("admin");
 		String newPwd = "1111"; 
-		memberService.changePwd(vo.getMemberId(), newPwd);
+		memberService.changePwd(null);
 		log.info(newPwd);
 	}
 	

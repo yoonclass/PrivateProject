@@ -22,7 +22,7 @@
 							<input class="form-control" name="writer" value="${authInfo.memberId}" readonly="readonly"/>
 						</div>
 						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-						<button class="btn btn-light">등록</button>						
+						<button type="button" class="btn btn-light register">등록</button>						
 					</form>
 				</div>
 			</div>
@@ -47,30 +47,7 @@
 		</div> <!-- panel end -->
 	</div> <!-- col end -->
 </div><!-- row end -->
-<%@ include file="../includes/footer.jsp" %>
 
-<script>
-$(function(){
-// 파일 업로드 이벤트 
-	$('input[type="file"]').change(function(){
-		let formData = new FormData(); 
-		let files = this.files;
-		
-		for(let f of files){
-			formData.append('uploadFile', f);
-		}
-		
-		$.ajax({
-			url : `${ctxPath}/files/upload`, 
-			type : 'post', 
-			processData : false, 
-			contentType : false, 
-			data : formData, 
-			dataType : 'json', 
-			success : function(result){
-				console.log(result)
-			}
-		})
-	})
-})
-</script>
+<script src="${ctxPath}/resources/js/register.js"></script>
+
+<%@ include file="../includes/footer.jsp" %>

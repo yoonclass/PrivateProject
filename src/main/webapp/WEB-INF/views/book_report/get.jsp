@@ -76,11 +76,11 @@
 	</sec:authorize>
 	<sec:authorize access="isAuthenticated()">
 		<textarea  rows="6" placeholder="댓글을 작성해주세요" 
-			maxlength="400" class="replyContent form-control"></textarea>
+			maxlength="400" class="replyContent form-control" name="reply"></textarea>
 		<div class="text-right">
 			<div class="submit p-2">
 				<span class="btn btn-outline-info col-2 replyer">${authInfo.memberId}</span>
-				<button class="btn btn-outline-primary col-3">등록</button>
+				<button class="btn btn-outline-primary col-3 reply">등록</button>
 			</div>
 		</div>
 	</sec:authorize>
@@ -113,6 +113,15 @@ $(function(){
 		}
 		getForm.submit()
 	})
+	
+	//댓글 등록
+    $('.reply').click(function() {
+        var reply = $('[name="reply"]').val(); // 제목 입력란의 값 가져오기
+        if (reply === "") {
+            alert("댓글을 입력해주세요."); // 알림창 띄우기
+            return false; // 등록 취소
+        }
+    });
 })
 </script>
 

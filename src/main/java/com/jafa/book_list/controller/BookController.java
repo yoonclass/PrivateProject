@@ -1,5 +1,9 @@
 package com.jafa.book_list.controller;
 
+import java.util.List;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,8 +11,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.jafa.book_list.domain.BookAttachVO;
 import com.jafa.book_list.domain.BookVO;
 import com.jafa.book_list.service.BookService;
 import com.jafa.common.Criteria;
@@ -46,11 +52,17 @@ public class BookController {
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@PostMapping("/register")
 	public String register(BookVO book, RedirectAttributes rttr) {
-		log.info("register: " + book);
+		log.info(book.getAttachList());
 		bookService.register(book);
 		rttr.addFlashAttribute("result", book.getBno());
 		rttr.addFlashAttribute("operation", "register");
 		return "redirect:/book_list/list";
+	}
+	
+	@GetMapping("/getAttachList")
+	@ResponseBody
+	public ResponseEntity<List<BookAttachVO>> getAttachList(Long bno){
+		return new ResponseEntity<List<BookAttachVO>>(bookService.getAttachList(bno), HttpStatus.OK);
 	}
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")

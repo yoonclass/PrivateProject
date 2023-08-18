@@ -22,7 +22,7 @@
 							<input class="form-control" name="writer" value="${authInfo.memberId}" readonly="readonly"/>
 						</div>
 						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-						<button class="btn btn-light">등록</button>						
+						<button class="btn btn-light register">등록</button>						
 					</form>
 				</div>
 			</div>
@@ -30,3 +30,14 @@
 	</div>
 </div>
 <%@ include file="../includes/footer.jsp" %>
+<script>
+$(function() {
+    $('.register').click(function() {
+        var title = $('[name="title"]').val(); // 제목 입력란의 값 가져오기
+        if (title === "") {
+            alert("제목을 입력해주세요."); // 알림창 띄우기
+            return false; // 등록 취소
+        }
+    });
+});
+</script>

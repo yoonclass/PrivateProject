@@ -1,6 +1,7 @@
 package com.jafa.book_list.controller;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.text.SimpleDateFormat;
@@ -9,8 +10,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.FileCopyUtils;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.jafa.book_list.domain.BookAttachVO;
 
 import lombok.extern.log4j.Log4j;
+import net.coobird.thumbnailator.Thumbnailator;
 
 @Log4j
 @RestController
@@ -48,8 +53,10 @@ public class FileUploadController {
 			attachVO.setUploadPath(getFolder());
 			
 			try {
-				if(checkImageType(saveFile)) {
+				if(checkImageType(saveFile)) {	//저장된 파일의 형태를 체크
 					attachVO.setFileType(true);
+					FileOutputStream tumbnail = new FileOutputStream(new File(uploadPath,"s_"+uuid+"_"+filName));
+					Thumbnailator.createThumbnail(multipartFile.getInputStream(), tumbnail,40,40);
 				}
 					multipartFile.transferTo(saveFile); // 파일 저장
 				list.add(attachVO);
@@ -72,5 +79,35 @@ public class FileUploadController {
 	private String getFolder() {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 		return sdf.format(new Date());  
+	}
+	
+	@GetMapping("/display")
+	public ResponseEntity<byte[]> getFile(String fileName){
+		File file = new File("C:/storage/"+fileName);
+		ResponseEntity<byte[]> result = null; 
+		
+		HttpHeaders headers = new HttpHeaders();
+		try {
+			headers.add("Content-Type", Files.probeContentType(file.toPath()));
+			result = new ResponseEntity<>(
+					FileCopyUtils.copyToByteArray(file), 
+					headers, 
+					HttpStatus.OK);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return result; 
+	}
+	
+	@PostMapping("/deleteFile")
+	public ResponseEntity<String> deleteFile(BookAttachVO vo){
+		File file = new File("C:/storage/"+vo.getUploadPath(),vo.getUuid() + "_" + vo.getFileName());
+		log.info(file);
+		file.delete();
+		if(vo.isFileType()) {
+			file = new File("C:/storage/"+vo.getUploadPath(),"s_"+vo.getUuid() + "_" + vo.getFileName());
+			file.delete();
+		}
+		return new ResponseEntity<String>("success",HttpStatus.OK);
 	}
 }

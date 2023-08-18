@@ -2,8 +2,8 @@ package com.jafa.book_list.service;
 
 import java.util.List;
 
+import com.jafa.book_list.domain.BookAttachVO;
 import com.jafa.book_list.domain.BookVO;
-import com.jafa.book_report.domain.ReportVO;
 import com.jafa.common.Criteria;
 
 public interface BookService {
@@ -23,4 +23,6 @@ public interface BookService {
 	boolean remove(Long bno);
 	
 	int totalCount();
+	
+	List<BookAttachVO> getAttachList(Long bno);
 }

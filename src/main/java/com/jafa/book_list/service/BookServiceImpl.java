@@ -1,6 +1,8 @@
 package com.jafa.book_list.service;
 
+import java.io.File;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -55,6 +57,22 @@ public class BookServiceImpl implements BookService {
 	@Override
 	public boolean modify(BookVO book) {
 		log.info("(ServiceImpl)게시물을 수정하였습니다 : " + book);
+		List<BookAttachVO> attachList = book.getAttachList();
+		
+		if(attachList!=null) {
+			//기존 파일 삭제
+			List<BookAttachVO> delList = attachList.stream().filter(attach ->attach.getBno()!=null).collect(Collectors.toList());
+			deleteFiles(delList); //파일 삭제
+			delList.forEach(attach->{
+				bookAttachRepository.delete(attach.getUuid());//DB기록 삭제
+			});
+			
+			//새로운 파일 삭제
+			attachList.stream().filter(attach -> attach.getBno()==null).forEach(attach->{
+				book.setBno(book.getBno());
+				bookAttachRepository.insert(attach);//DB기록
+			});
+		}
 		return bookRepository.update(book) == 1;
 	}
 
@@ -72,5 +90,21 @@ public class BookServiceImpl implements BookService {
 	@Override
 	public List<BookAttachVO> getAttachList(Long bno) {
 		return bookAttachRepository.selectByBno(bno);
+	}
+
+	@Override
+	public BookAttachVO getAttach(String uuid) {
+		return bookAttachRepository.selectByUuid(uuid);
+	}
+	
+	private void deleteFiles(List<BookAttachVO> delList) {
+		delList.forEach(book->{
+			File file = new File("C:/storage/"+book.getUploadPath(),book.getUuid()+"_"+book.getFileName());
+			file.delete();
+			if(book.isFileType()) {
+				file = new File("C:/storage/"+book.getUploadPath(),"s_"+book.getUuid()+"_"+book.getFileName());
+				file.delete();
+			}
+		});
 	}
 }

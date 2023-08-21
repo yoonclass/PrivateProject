@@ -22,7 +22,12 @@ public interface BookService {
 	//도서 삭제
 	boolean remove(Long bno);
 	
+	//게시물 수
 	int totalCount();
 	
+	//게시물 번호에 해당하는 첨부파일 리스트
 	List<BookAttachVO> getAttachList(Long bno);
+	
+	//첨부파일 UUID에 해당하는 첨부파일
+	BookAttachVO getAttach(String uuid);
 }

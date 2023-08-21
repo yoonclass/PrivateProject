@@ -1,5 +1,7 @@
 package com.jafa.common;
 
+import org.springframework.web.util.UriComponentsBuilder;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -36,5 +38,12 @@ public class Criteria {
 	
 	public String[] getTypes() { // collection="types"
 		return type == null ? new String[] {} : type.split("");
+	}
+
+	public String getListLink() {	// "pageNum"과 "amount"가 포함된 URL 문자열을 생성
+		UriComponentsBuilder builder = UriComponentsBuilder.fromPath("")
+				.queryParam("pageNum",this.pageNum)
+				.queryParam("amount",this.amount);
+		return builder.toUriString();
 	}
 }

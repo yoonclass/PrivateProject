@@ -17,4 +17,8 @@
 		select * from tbl_attach where bno = #{bno}
 	</select>
 	
+	<select id="selectByUuid" resultType="bookAttachVO">
+		select * from tbl_attach where uuid = #{uuid}
+	</select>
+	
 </mapper>

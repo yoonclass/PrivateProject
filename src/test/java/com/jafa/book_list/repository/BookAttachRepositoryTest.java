@@ -23,7 +23,7 @@ public class BookAttachRepositoryTest extends AppTest {
 	@Ignore
 	public void testInsert() {
 		BookAttachVO vo = new BookAttachVO();
-		vo.setBno(2L);
+		vo.setBno(1L);
 		vo.setFileName("test01.txt");
 //		vo.setFileName("test02.txt");
 		vo.setFileType(false);
@@ -41,10 +41,10 @@ public class BookAttachRepositoryTest extends AppTest {
 	}
 	
 	@Test
-	@Ignore
+//	@Ignore
 	public void testDelete() {
 		// 데이터베이스에 저장된 uuid값을 참고
-		String uuid = "0da5280a-f736-4352-8924-89a342ea897c";
+		String uuid = "b134b802-88e9-481c-9aca-8c7d033382cb";
 		bookAttachRepository.delete(uuid);
 	}
 }

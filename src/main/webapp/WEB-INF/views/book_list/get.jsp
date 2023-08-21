@@ -47,19 +47,6 @@
 	</div> <!-- col end -->
 </div><!-- row end -->
 
-<!-- 원본 이미지 모달창 -->
-<div class="modal fade" id="showImage">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-	        <div class="modal-header">
-	            <h4 class="modal-title">원본 이미지 보기</h4>
-	            <button type="button" class="close" data-dismiss="modal">&times;</button>
-	        </div>
-	        <div class="modal-body"></div>
-        </div>
-    </div>
-</div>
-
 <!-- 게시물번호 담음 -->
 <form>
 	<input type="hidden" name="bno" id="bno"  value="${book.bno}">
@@ -88,4 +75,4 @@ $(function(){
 	})
 })
 </script>
-
+<script src="${ctxPath}/resources/js/get.js"></script>

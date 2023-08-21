@@ -6,9 +6,11 @@ import com.jafa.book_list.domain.BookAttachVO;
 
 public interface BookAttachRepository {
 
-	void insert(BookAttachVO vo);
+	void insert(BookAttachVO vo);	//첨부파일 등록
 	
-	void delete(String uuid);
+	void delete(String uuid);	//uuid 첨부파일 삭제
 	
-	List<BookAttachVO> selectByBno(Long bno);
+	List<BookAttachVO> selectByBno(Long bno); //게시물 선택
+	
+	BookAttachVO selectByUuid(String uuid); //uuid 첨부파일 선택
 }

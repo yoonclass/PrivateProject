@@ -1,6 +1,7 @@
 package com.jafa.book_list.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -52,17 +53,12 @@ public class BookController {
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@PostMapping("/register")
 	public String register(BookVO book, RedirectAttributes rttr) {
+		log.info(book);
 		log.info(book.getAttachList());
 		bookService.register(book);
 		rttr.addFlashAttribute("result", book.getBno());
 		rttr.addFlashAttribute("operation", "register");
 		return "redirect:/book_list/list";
-	}
-	
-	@GetMapping("/getAttachList")
-	@ResponseBody
-	public ResponseEntity<List<BookAttachVO>> getAttachList(Long bno){
-		return new ResponseEntity<List<BookAttachVO>>(bookService.getAttachList(bno), HttpStatus.OK);
 	}
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -76,13 +72,23 @@ public class BookController {
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@PostMapping("/modify")
 	public String modify(BookVO book, RedirectAttributes rttr, Criteria criteria) {
-		log.info("/컨트롤러 수정 완료 : "+book);
-		if(bookService.modify(book)) {
-			rttr.addFlashAttribute("result", book.getBno());
-			rttr.addFlashAttribute("operation", "modify");
+		List<BookAttachVO> attachList = book.getAttachList();
+		log.info(book);
+		if(attachList!=null) {
+			List<BookAttachVO> insertList = attachList.stream()
+					.filter(attach -> attach.getBno()==null).collect(Collectors.toList());
+				log.info("새로 추가 : " + insertList);
+				List<BookAttachVO> delList = attachList.stream()
+						.filter(attach -> attach.getBno()!=null).collect(Collectors.toList());
+				log.info("삭제 목록 : " + delList);
+		}	
+			
+			if(bookService.modify(book)) {
+				rttr.addFlashAttribute("result", book.getBno());
+				rttr.addFlashAttribute("operation", "modify");
+			}
+			return "redirect:/book_list/list"+criteria.getListLink();
 		}
-		return "redirect:/book_list/list";
-	}
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@PostMapping("/remove")
@@ -95,5 +101,17 @@ public class BookController {
 		rttr.addAttribute("pageNum",criteria.getPageNum());
 		rttr.addAttribute("amount",criteria.getAmount());
 		return "redirect:/book_list/list"; 
+	}
+	
+	@GetMapping("/getAttachList")
+	@ResponseBody
+	public ResponseEntity<List<BookAttachVO>> getAttachList(Long bno){
+		return new ResponseEntity<List<BookAttachVO>>(bookService.getAttachList(bno), HttpStatus.OK);
+	}
+	
+	@GetMapping("/getAttachFileInfo")
+	@ResponseBody
+	public ResponseEntity<BookAttachVO> getAttach(String uuid){
+		return new ResponseEntity<>(bookService.getAttach(uuid),HttpStatus.OK); 
 	}
 }

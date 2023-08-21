@@ -1,8 +1,11 @@
 console.log('register.js');
-let uploadResultList = [];
-let showUploadResult = function(attachList){
+$(function(){
+	let uploadResultList = [];
+	
+	let showUploadResult = function(attachList){
 		let fileList = '';
 		$.each(attachList,function(i,e){
+			uploadResultList.push(e); // 첨부파일 배열의 요소로 추가
 			fileList += `
 			<li class="list-group-item" data-uuid="${e.uuid}">
 				<div class="float-left">`
@@ -33,7 +36,7 @@ let showUploadResult = function(attachList){
 	}
 
 // 파일 업로드 이벤트 //파일이 변할 때 formData, Files 생성
-	$('input[type="file"]').change(function(){
+	$('[type="file"]').change(function(){
 		let formData = new FormData(); //HTML 폼 데이터를 쉽게 생성하고 전송할 수 있는 객체 FormData 객체생성
 		let files = this.files;//파일 선택 요소에서 선택한 파일 목록 가져옴
 		
@@ -50,8 +53,8 @@ let showUploadResult = function(attachList){
 			data : formData, 
 			dataType : 'json', 
 			success : function(attachList){//서버 응답이 성공적으로 도착했을 때 실행할 콜백함수를 정의
-				//uploadResultList = attachList;
 				showUploadResult(attachList);	// 업로드 결과 표시
+				console.log(uploadResultList);
 			}
 		})
 	})
@@ -105,4 +108,5 @@ let showUploadResult = function(attachList){
 	});
 
 	$(this).closest('li').remove();
+	})
 })

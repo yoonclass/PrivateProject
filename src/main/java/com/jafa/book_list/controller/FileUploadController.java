@@ -3,6 +3,8 @@ package com.jafa.book_list.controller;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -10,12 +12,15 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -109,5 +114,27 @@ public class FileUploadController {
 			file.delete();
 		}
 		return new ResponseEntity<String>("success",HttpStatus.OK);
+	}
+	
+	@GetMapping("/download")
+	public ResponseEntity<Resource> dowonloadFile(
+		 @RequestHeader("User-Agent") String userAgent, String fileName){
+		Resource resource = new FileSystemResource("C:/storage/"+fileName);
+		HttpHeaders headers = new HttpHeaders(); 
+		
+		if(!resource.exists()) {
+			log.info("파일이 존재하지 않음");
+			return new ResponseEntity<Resource>(HttpStatus.NOT_FOUND);
+		}
+		String resourceName = resource.getFilename();
+		String resourceOriginalName = resourceName.substring(resourceName.indexOf("_")+1);
+		String downloadName = null; 
+		try {
+			downloadName = URLEncoder.encode(resourceOriginalName, "UTF-8");
+			headers.add("Content-Disposition", "attachment; fileName="+downloadName); // 다운로드 시 저장되는 이름
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		return new ResponseEntity<Resource>(resource,headers,HttpStatus.OK);
 	}
 }

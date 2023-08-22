@@ -4,8 +4,6 @@ var replyService = {
 	
 	//등록
 	add : function (reply, callback, error){
-		console.log('add');	
-		
 		$.ajax({
 			type : 'post',
 			url : `${ctxPath}/replies/new`,

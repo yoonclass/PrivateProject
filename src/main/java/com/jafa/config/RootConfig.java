@@ -1,6 +1,7 @@
 package com.jafa.config;
 
 import java.io.IOException;
+import java.util.Properties;
 
 import javax.sql.DataSource;
 
@@ -17,6 +18,7 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
@@ -88,5 +90,25 @@ public class RootConfig {
 	@Bean// 데이터베이스 트랜잭션을 관리하는 데 사용되며, Spring의 트랜잭션 기능을 활성화하기 위해 필요
 	public DataSourceTransactionManager transactionManager() {
 		return new DataSourceTransactionManager(dataSource());
+	}
+	
+	@Bean
+	public JavaMailSenderImpl mailSender() {
+	    JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+	    mailSender.setHost("smtp.naver.com");
+	    mailSender.setPort(465);
+	    mailSender.setUsername("sjsdjfcn@naver.com");
+	    mailSender.setPassword("rkehtps@00");
+
+	    Properties properties = new Properties();
+	    properties.put("mail.transport.protocol", "smtp");
+	    properties.put("mail.smtp.auth", "true");
+	    properties.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+	    properties.put("mail.smtp.starttls.enable", "true");
+	    properties.put("mail.debug", "true");
+	    properties.put("mail.smtp.ssl.trust", "smtp.naver.com");
+	    properties.put("mail.smtp.ssl.protocols", "TLSv1.2");
+	    mailSender.setJavaMailProperties(properties);
+	    return mailSender;
 	}
 }

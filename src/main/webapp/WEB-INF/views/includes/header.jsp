@@ -1,12 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
+
 <!-- jstl fmt 라이브러리에서 제공하는 날짜/시간, 다국어지원 등의 기능 사용  -->
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <!-- 사용자 정의 태그 라이브러리를 JSP 페이지에서 사용할 수 있도록 선언 -->
 <%@ taglib prefix="tf" tagdir="/WEB-INF/tags"%>
+
 <!-- 현재 사용자의 인증 정보를 가져오기 위한 태그 -->
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
+<%-- <form:form>이나 <form:input>과 같이 form 접두사를 사용하여 Spring의 폼 태그를 사용 --%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <c:set var="ctxPath" value="${pageContext.request.contextPath}"/>
 <sec:authorize access="isAuthenticated()">
@@ -63,41 +69,43 @@ function checkExtension(fileSize){
 </head>
 
 <body>
-<nav class="navbar navbar-expand-sm bg-light" justify-content-between">
-    <ul class="navbar-nav">
-        <li class="nav-item">
-            <a class="nav-link" href="${ctxPath == '' ? '/': ctxPath}">홈</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="${ctxPath}/book_report/list">독후감</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="${ctxPath}/book_list/list">도서목록</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="${ctxPath}/visitor/list">방명록</a>
-        </li>
-        
-    <ul class="navbar-nav">
-    	<sec:authorize access="isAnonymous()">
-	  	<li class="nav-item">
-	        <a class="nav-link" href="${ctxPath}/login">로그인</a>
-	    </li>
-	    </sec:authorize>
-	    <sec:authorize access="isAuthenticated()">
-	    <li class="nav-item">
-		  <a class="nav-link" href="${ctxPath}/myPage">${authInfo.memberId}</a>
-		</li>
-    	<li class="nav-item">
-       		<a class="nav-link logout" href="${ctxPath}/member/logout">로그아웃</a>
-     	</li>
-     	</sec:authorize>
-     	
-<!--      	form으로 post요청 처리하기 -->
-<!-- 	<form method="post" action="${ctxPath}/member/logout" class="logout"> 
-			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">	 
-			<button type="submit" class="nav-link logout-button">로그아웃</button> 	 
- 	    </form> -->
-    </ul>
+<nav class="navbar navbar-expand-sm bg-light">
+	<div class="container-fluid">
+    	<ul class="navbar-nav">
+	        <li class="nav-item">
+	            <a class="nav-link" href="${ctxPath == '' ? '/': ctxPath}">홈</a>
+	        </li>
+	        <li class="nav-item">
+	            <a class="nav-link" href="${ctxPath}/book_report/list">독후감</a>
+	        </li>
+	        <li class="nav-item">
+	            <a class="nav-link" href="${ctxPath}/book_list/list">도서목록</a>
+	        </li>
+	        <li class="nav-item">
+	            <a class="nav-link" href="${ctxPath}/visitor/list">방명록</a>
+	        </li>
+      </ul>
+      
+    <div class="collapse navbar-collapse justify-content-end">  
+   		<ul class="navbar-nav">
+	    	<sec:authorize access="isAnonymous()">
+		  	<li class="nav-item">
+	    		<a class="nav-link" href="${ctxPath}/join/step1">회원가입</a>
+			</li>
+		  	<li class="nav-item">
+		        <a class="nav-link" href="${ctxPath}/login">로그인</a>
+		    </li>
+		    </sec:authorize>
+		    <sec:authorize access="isAuthenticated()">
+		    <li class="nav-item">
+			  <a class="nav-link" href="${ctxPath}/myPage">${authInfo.memberId}</a>
+			</li>
+	    	<li class="nav-item">
+	       		<a class="nav-link logout" href="${ctxPath}/member/logout">로그아웃</a>
+	     	</li>
+	     	</sec:authorize>
+		</ul>
+    </div>
+	</div>
 </nav>
 

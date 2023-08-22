@@ -42,6 +42,10 @@ $(function(){
 		
 		//반복문을 통해서 파일을 받아옴(register.jsp-input 태그의 name 속성과 동일)
 		for(let f of files){	//선택한 파일 목록 순회하면서
+			if(!checkExtension(f.size)) {
+				$(this).val('');
+				return;
+			}
 			formData.append('uploadFile', f);//formData에 선택한 파일목록 추가
 		}							
 		

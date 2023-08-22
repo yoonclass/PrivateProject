@@ -9,10 +9,6 @@
 		values (#{uuid}, #{uploadPath}, #{fileName},#{fileType},#{bno})
     </insert>
     
-	<delete id="delete">
-		delete from tbl_attach where uuid=#{uuid}
-	</delete>
-	
 	<select id="selectByBno" resultType="bookAttachVO">
 		select * from tbl_attach where bno = #{bno}
 	</select>
@@ -21,4 +17,15 @@
 		select * from tbl_attach where uuid = #{uuid}
 	</select>
 	
+	<delete id="delete">
+		delete from tbl_attach where uuid=#{uuid}
+	</delete>
+	
+	<delete id="deleteAll">
+		delete from tbl_attach where bno = #{bno}
+	</delete>
+	
+	<select id="pastFiles" resultType="bookAttachVO">
+		select * from tbl_attach where uploadPath = to_char(sysdate-1, 'yyyy/MM/dd')
+	</select>	
 </mapper>

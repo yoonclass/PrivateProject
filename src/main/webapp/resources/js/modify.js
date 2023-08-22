@@ -85,6 +85,10 @@ $(function(){
 		let files = this.files;
 		
 		for(let f of files){
+			if(!checkExtension(f.size)){
+				$(this).val('');
+				return;
+			}
 			formData.append('uploadFile', f);
 		}
 		

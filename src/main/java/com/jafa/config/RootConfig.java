@@ -17,6 +17,7 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.zaxxer.hikari.HikariConfig;
@@ -28,6 +29,7 @@ import com.zaxxer.hikari.HikariDataSource;
 @PropertySource(value="classpath:database/db.properties")	//DB연결 정보, classpath 내에 위치하는 properties 파일 지정
 @EnableTransactionManagement	//트랜잭션 관리 활성화 @Transactional 사용 가능
 @Import({SecurityConfig.class})
+@EnableScheduling
 public class RootConfig {
 
 	@Value("${db.driver}")

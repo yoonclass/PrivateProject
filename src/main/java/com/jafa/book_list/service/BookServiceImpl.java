@@ -76,8 +76,14 @@ public class BookServiceImpl implements BookService {
 		return bookRepository.update(book) == 1;
 	}
 
+	@Transactional
 	@Override
 	public boolean remove(Long bno) {
+		List<BookAttachVO> attachList = getAttachList(bno);
+		if(attachList!=null) {
+			deleteFiles(attachList);
+			bookAttachRepository.deleteAll(bno);
+		}
 		log.info("(ServiceImpl)"+ bno + "번 게시물을 삭제하였습니다");
 		return bookRepository.delete(bno) == 1;
 	}

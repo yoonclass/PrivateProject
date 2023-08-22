@@ -50,6 +50,15 @@ $(function(){
 			.submit();
 	});
 })
+
+function checkExtension(fileSize){
+	let maxSize = 314572800; // 300MB
+	if(fileSize > maxSize) {
+		alert('파일크기는 최대 300MB까지 업로드 가능합니다.');
+		return false; 
+	}
+	return true;
+}	
 </script>
 </head>
 

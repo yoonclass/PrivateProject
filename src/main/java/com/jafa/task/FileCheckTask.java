@@ -35,7 +35,7 @@ public class FileCheckTask {
 		List<Path> fileListPath = fileList.stream()
 			.map(vo-> Paths.get("c:/storage",vo.getUploadPath(),vo.getUuid()+"_"+vo.getFileName()))
 			.collect(Collectors.toList());
-		log.info(fileListPath);
+//		log.info(fileListPath);
 		
 		// 썸네일 파일 경로
 		fileList.stream()
@@ -43,11 +43,16 @@ public class FileCheckTask {
 				.forEach(e-> fileListPath.add(e));
 		
 		// 어제 날짜 폴더 경로 
-		File targetDir = Paths.get("c:/storage", getYesterdayFolder()).toFile();
 		
 		// 어제 날짜 폴더에 있는 모든 파일 순회
 		// 데이터베이스에 기록된 파일 정보가 아니면 삭제 대상 파일
-		File[] delTagetList = targetDir.listFiles(file -> !fileListPath.contains(file.toPath()));
+		File targetDir = Paths.get("c:/storage", getYesterdayFolder()).toFile();
+		
+		File[] delTagetList = targetDir.listFiles(file-> !fileListPath.contains(file.toPath()));
+		log.info("Files to be deleted:");
+		for (File file : delTagetList) {
+		    log.info(file.getPath());
+		}
 		Arrays.stream(delTagetList).forEach(file->{
 			file.delete();
 		});

@@ -23,4 +23,6 @@ public class MemberVO {
 	private boolean enabled;  //회원 계정 활성화 상태 여부를 판별
 	
 	private List<AuthVO> authList;
+	
+	private String profileImagePath; // 프로필 이미지 파일 경로
 }

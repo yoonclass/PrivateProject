@@ -19,6 +19,15 @@
 				<input type="checkbox" name="remember-me" class="mr-2" id="rememberMeCheckbox" onclick="showRememberMeModal()">자동로그인
 			</label>
 			<button class="form-control btn btn-outline-primary" >로그인</button>
+			<br>
+			<div class="form-group">
+				회원가입을 아직 안 했어요
+				<a href="${ctxPath}/join/step1">회원가입하러 가기</a>
+			</div>
+			<div class="form-group">
+				아이디, 비밀번호가 기억나지 않아요
+				<a href="${ctxPath}/findMemberInfo">아이디 찾기/비밀번호 재발급</a>	
+			</div>
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 <!-- 			CSRF(Cross-Site Request Forgery) 보호를 위한 토큰을 HTML 폼에 포함 -->
 		</form>

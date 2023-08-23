@@ -1,8 +1,11 @@
 package com.jafa.member.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -19,8 +22,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.jafa.error.NotFoundMemberException;
 import com.jafa.error.PasswordMisMatchException;
 import com.jafa.member.domain.MemberVO;
 import com.jafa.member.service.MailSendService;
@@ -112,8 +117,34 @@ public class MemberController {
 	
 	//회원가입 처리
 	@PostMapping("/member/join")
-	public String join(MemberVO vo, RedirectAttributes rttr) {
-		memberService.join(vo);
+	public String join(MemberVO vo, RedirectAttributes rttr
+			,@RequestParam("profileImage") MultipartFile profileImage) {
+		
+		 if (!profileImage.isEmpty()) {
+		        try {
+		            // 프로필 이미지를 저장할 경로 설정 (실제 경로에 맞게 수정해야 함)
+		            String uploadPath = "c:/uploads/profiles/";
+		            
+		            // 파일 이름 설정 (UUID를 사용하여 중복 방지)
+		            String originalFilename = profileImage.getOriginalFilename();
+		            String uuid = UUID.randomUUID().toString();
+		            String savedFilename = uuid + "_" + originalFilename;
+		            
+		            // 파일 저장
+		            File savedFile = new File(uploadPath + savedFilename);
+		            profileImage.transferTo(savedFile);
+		            
+		            // 저장된 파일 경로를 memberVO에 설정
+		            vo.setProfileImagePath(savedFilename);
+		            
+		        } catch (IOException e) {
+		            e.printStackTrace();
+		            // 파일 저장 중 오류가 발생하면 처리할 내용 추가
+		        }
+		    }
+		 
+		memberService.join(vo, profileImage);
+		rttr.addFlashAttribute("message","회원가입이 완료되었습니다");
 		return "redirect:/";	//메인 페이지로 돌아감
 	}
 
@@ -140,12 +171,38 @@ public class MemberController {
 		return "member/findMemberInfo";
 	}
 
-	@PostMapping("/findMemberInfo")
+	// 아이디 찾기 메일 전송 
+	@PostMapping(value = "/findMemberId", produces = "plain/text; charset=utf-8")
 	@ResponseBody
-	public String findMemberInfo(String email) {
+	public ResponseEntity<String> findMemberId(String email){
 		String message = null;
-		return null;
+		try {
+			mailSendService.findIdEmail(email);			
+			message = "가입하신 이메일로 전송되었습니다.";
+		} catch (NotFoundMemberException e) {
+			message = "회원정보를 찾을 수 없습니다.";
+			return new ResponseEntity<String>(message,HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<String>(message,HttpStatus.OK);
 	}
+	
+	// 임시비밀번호 메일 전송 
+	@PostMapping(value = "/findMemberPwd", produces = "plain/text; charset=utf-8")
+	@ResponseBody
+	public ResponseEntity<String> findMemberPwd(String email){
+		String message = null;
+		try {
+			mailSendService.findPwdEmail(email);			
+			message = "가입하신 이메일로 전송되었습니다.";
+		} catch (Exception e) {
+			message = "회원정보를 찾을 수 없습니다.";
+			return new ResponseEntity<String>(message,HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<String>(message,HttpStatus.OK);
+	}
+
+
+	
 	@GetMapping("/accessDenied")
 	public String accessDenided() {
 		return "accessError";

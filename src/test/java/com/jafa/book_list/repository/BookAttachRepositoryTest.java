@@ -2,6 +2,7 @@ package com.jafa.book_list.repository;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.junit.Ignore;
@@ -41,10 +42,20 @@ public class BookAttachRepositoryTest extends AppTest {
 	}
 	
 	@Test
-//	@Ignore
+	@Ignore
 	public void testDelete() {
 		// 데이터베이스에 저장된 uuid값을 참고
 		String uuid = "b134b802-88e9-481c-9aca-8c7d033382cb";
 		bookAttachRepository.delete(uuid);
+	}
+	
+	@Test
+    public void testPastFiles() {
+        List<BookAttachVO> fileList = bookAttachRepository.pastFiles();
+        for (BookAttachVO attachVO : fileList) {
+            System.out.println("File UUID: " + attachVO.getUuid());
+            System.out.println("File Name: " + attachVO.getFileName());
+        // ... 등등 원하는 정보 출력
+	    }
 	}
 }

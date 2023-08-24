@@ -35,7 +35,7 @@ $(function(){
 		$('.uploadResultDiv ul').append(fileList);
 	}
 
-// 파일 업로드 이벤트 //파일이 변할 때 formData, Files 생성
+	// 파일 업로드 이벤트 //파일이 변할 때 formData, Files 생성
 	$('[type="file"]').change(function(){
 		let formData = new FormData(); //HTML 폼 데이터를 쉽게 생성하고 전송할 수 있는 객체 FormData 객체생성
 		let files = this.files;//파일 선택 요소에서 선택한 파일 목록 가져옴

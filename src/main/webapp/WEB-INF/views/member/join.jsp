@@ -20,55 +20,57 @@
 	<div class="col-6 mx-auto">
 		<h1 class="text-center py-3">회원가입</h1>
 		<form:form action="${ctxPath}/member/join" modelAttribute="memberVO">
+		
+		<!-- ID,이름 -->
 			<div class="form-group row">
-				<div class="col-9">
-					<form:input class="form-control" path="memberId" placeholder="아이디를 입력해주세요"/>
-				</div>
-				<div class="col-3">
-					<button type="button" class="btn btn-outline-info form-control idCheck">ID중복확인</button>
-				</div>
+			<div class="col-9">
+				<form:input class="form-control" path="memberId" placeholder="아이디를 입력해주세요"/>
+			</div>
+			<div class="col-3">
+				<button type="button" class="btn btn-outline-info form-control idCheck">ID중복확인</button>
+			</div>
 			</div>
 			<div class="form-group">
 				<form:input class="form-control" path="memberName" placeholder="이름"/>
 			</div>
 			
-		<!-- 이메일 인증 -->
+		<!-- 이메일 -->
 			<div class="form-group row">
-				<div class="col-9">
-					<input type="email" class="form-control" name="memberEmail" id="email" placeholder="이메일">
-				</div>				
-				<div class="col-3">
-					<button type="button" class="form-control btn btn-outline-info" id="emailCheckBtn">이메일 인증</button>
-				</div>
+			<div class="col-9">
+				<form:input class="form-control" path="memberEmail" placeholder="이메일"/>
+			</div>				
+			<div class="col-3">
+				<button type="button" class="form-control btn btn-outline-info" id="emailCheckBtn">이메일 인증</button>
+			</div>
 			</div>	
+			
+		<!-- 이메일 인증번호 -->
 			<div class="form-group row">
-				<div class="col-9">
-					<input class="form-control" id="checkInput" placeholder="인증번호를 입력해주세요" disabled="disabled" maxlength="6"/>
-				</div>				
-				<div class="col-3">
-					<button type="button" class="form-control btn btn-outline-primary InputCheckBtn">확인</button>
-				</div>
+			<div class="col-9">
+				<input class="form-control" id="checkInput" placeholder="인증번호를 입력해주세요" disabled="disabled" maxlength="6"/>
+			</div>				
+			<div class="col-3">
+				<button type="button" class="form-control btn btn-outline-primary InputCheckBtn">확인</button>
+			</div>
 			</div>
 			
+		<!-- 비밀번호 -->
 			<div class="form-group">
-				<input type="password" class="form-control memberPwd" name="memberPwd" placeholder="비밀번호를 입력해주세요">
+				<form:password class="form-control " path="memberPwd" name="memberPwd" placeholder="비밀번호를 입력해주세요"/>
 			</div>
 			<div class="form-group">
 				<input type="password" class="form-control confirmPwd" placeholder="비밀번호 확인">
 			</div>
-			<div class="form-group">
-			    <input type="file" class="form-control" name="profileImage" accept="image/*">
-			</div>
+			
+		<!-- 회원가입 -->
 			<button type="button" class="form-control btn btn-outline-primary join" >회원가입</button>
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 		</form:form>
 		</div>
 	</div>
 </div>
-
 <script>
 $(function(){
-	
 	
 	//아이디 중복 검사
 	let idCheckFlag = false;
@@ -123,7 +125,7 @@ $(function(){
 	}
 	
 	$('#emailCheckBtn').click(function(){
-		const email = $('#email').val(); //이메일
+		const email = $('#memberEmail').val(); //이메일
 		const checkInput = $('#checkInput')
 		
 		if(email==''){	//이메일 입력 없는 경우
@@ -162,7 +164,7 @@ $(function(){
 	$('.join').click(function(){
 		
 		//비밀번호 일치 확인
-		var newPwd = $('.memberPwd').val();
+		var newPwd = $('#memberPwd').val();
 	    var confirmPwd = $('.confirmPwd').val();
 	        
 	        if (newPwd !== confirmPwd) {
@@ -182,5 +184,10 @@ $(function(){
 	      }
 		$('#memberVO').submit();
 	});
+	 // 회원가입 성공 시 메시지 출력
+    const successMessage = "${message}";
+    if (successMessage) {
+        alert(successMessage);
+    }
 });
 </script>

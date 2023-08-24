@@ -1,11 +1,8 @@
 package com.jafa.member.controller;
 
-import java.io.File;
-import java.io.IOException;
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -21,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -54,7 +52,7 @@ public class MemberController {
 			request.getSession().setAttribute("prevPage", uri);
 		} 
 		
-//		인증정보가 존재한다면~
+		//인증정보가 존재한다면~
 		if (authentication!=null) {
 	        rttr.addFlashAttribute("duplicateLogin", "이미 로그인 중입니다.");
 	        return "redirect:/"; // 또는 다른 페이지로 이동
@@ -104,6 +102,7 @@ public class MemberController {
 	}
 	
 	// 약관동의 
+	@PreAuthorize("isAnonymous()")
 	@GetMapping("/join/step1")
 	public String step1() {
 		return "member/step1";
@@ -117,39 +116,16 @@ public class MemberController {
 	
 	//회원가입 처리
 	@PostMapping("/member/join")
-	public String join(MemberVO vo, RedirectAttributes rttr
-			,@RequestParam("profileImage") MultipartFile profileImage) {
+	public String join(MemberVO vo, RedirectAttributes rttr) {
 		
-		 if (!profileImage.isEmpty()) {
-		        try {
-		            // 프로필 이미지를 저장할 경로 설정 (실제 경로에 맞게 수정해야 함)
-		            String uploadPath = "c:/uploads/profiles/";
-		            
-		            // 파일 이름 설정 (UUID를 사용하여 중복 방지)
-		            String originalFilename = profileImage.getOriginalFilename();
-		            String uuid = UUID.randomUUID().toString();
-		            String savedFilename = uuid + "_" + originalFilename;
-		            
-		            // 파일 저장
-		            File savedFile = new File(uploadPath + savedFilename);
-		            profileImage.transferTo(savedFile);
-		            
-		            // 저장된 파일 경로를 memberVO에 설정
-		            vo.setProfileImagePath(savedFilename);
-		            
-		        } catch (IOException e) {
-		            e.printStackTrace();
-		            // 파일 저장 중 오류가 발생하면 처리할 내용 추가
-		        }
-		    }
-		 
-		memberService.join(vo, profileImage);
-		rttr.addFlashAttribute("message","회원가입이 완료되었습니다");
+		memberService.join(vo);
+		rttr.addFlashAttribute("message", "회원가입이 완료되었습니다.");
 		return "redirect:/";	//메인 페이지로 돌아감
 	}
 
+	@PreAuthorize("isAnonymous()")
 	@GetMapping("/join/step2")
-	public String joinForm() {
+	public String join() {
 		return "member/step1";
 	}
 	
@@ -163,7 +139,6 @@ public class MemberController {
 			new ResponseEntity<>(Boolean.TRUE,HttpStatus.OK)
 			: new ResponseEntity<>(Boolean.FALSE,HttpStatus.OK);
 	}
-	
 
 	//Id, Pwd 찾기
 	@GetMapping("/findMemberInfo")
@@ -200,8 +175,6 @@ public class MemberController {
 		}
 		return new ResponseEntity<String>(message,HttpStatus.OK);
 	}
-
-
 	
 	@GetMapping("/accessDenied")
 	public String accessDenided() {

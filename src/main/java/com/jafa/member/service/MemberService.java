@@ -15,5 +15,6 @@ public interface MemberService {
 
 	void delete(String memberId);
 
-	void join(MemberVO vo, MultipartFile profileImage);
+	void join(MemberVO vo);
+
 }

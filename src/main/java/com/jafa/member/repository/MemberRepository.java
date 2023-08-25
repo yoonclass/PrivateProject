@@ -2,6 +2,7 @@ package com.jafa.member.repository;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.jafa.member.domain.MemberAttachVO;
 import com.jafa.member.domain.MemberVO;
 
 public interface MemberRepository {
@@ -11,6 +12,9 @@ public interface MemberRepository {
 	
 	//회원 등록
 	void insert(MemberVO vo);
+	
+	//회원 이미지 등록
+	void insertImage(MemberAttachVO attachVO);
 	
 	//이메일로 회원 Id 조회
 	String selectByEmail(String memberEmail); 

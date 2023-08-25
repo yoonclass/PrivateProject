@@ -1,5 +1,7 @@
 package com.jafa.member.domain;
 
+import java.util.List;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -11,5 +13,6 @@ public class MemberAttachVO {
 	private String uuid; 
 	private String uploadPath; 
 	private String fileName; 
-	private Long mno;
+	private String mno;
+
 }

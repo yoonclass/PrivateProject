@@ -32,7 +32,7 @@ import net.coobird.thumbnailator.Thumbnailator;
 public class ProfileUploadController {
 	
 	@PostMapping("/upload")
-	public ResponseEntity<List<MemberAttachVO>> upload(@RequestParam("userImage") MultipartFile[] multipartFiles) {
+	public ResponseEntity<List<MemberAttachVO>> upload(@RequestParam("uploadFile") MultipartFile[] multipartFiles) {
 		List<MemberAttachVO> list = new ArrayList<MemberAttachVO>(); 
 		File uploadPath = new File("C:/storage", getFolder());	//파일 경로를 정의하고
 		if(!uploadPath.exists()) {	//존재하지 않는다면
@@ -40,23 +40,28 @@ public class ProfileUploadController {
 		}
 		for(MultipartFile multipartFile : multipartFiles) {	//멀티파일 객체코드의 반복문을 시작할건데
 			MemberAttachVO attachVO = new MemberAttachVO();  //회원첨부 필드를 쓸 것이다.
-
-			String filName = multipartFile.getOriginalFilename(); // 파일이름
-			String uuid = UUID.randomUUID().toString();	//랜덤으로 UUID 만듬
-			File saveFile = new File(uploadPath,uuid + "_" + filName);	//파일경로 uuid_ 파일명 = 저장파일
 			
-			log.info("filName : "+filName);
+			String fileName = multipartFile.getOriginalFilename(); // 파일이름
+			String uuid = UUID.randomUUID().toString();	//랜덤으로 UUID 만듬
+			File saveFile = new File(uploadPath,uuid + "_" + fileName);	//파일경로 uuid_ 파일명 = 저장파일
+			
+			log.info("filName : "+fileName);
 			log.info("savFile : "+saveFile);
 			
-			attachVO.setFileName(filName);	//파일이름 
+			attachVO.setFileName(fileName);	//파일이름 
 			attachVO.setUuid(uuid);	//uuid
 			attachVO.setUploadPath(getFolder());	//파일경로 설정
 			
 			try {//썸네일 생성
-				FileOutputStream tumbnail = new FileOutputStream(new File(uploadPath,"s_"+uuid+"_"+filName));
+				File thumnailFile = new File(uploadPath, "s_"+ uuid + "_" + fileName);
+				try(
+				FileOutputStream tumbnail = new FileOutputStream(thumnailFile)) {
 				Thumbnailator.createThumbnail(multipartFile.getInputStream(), tumbnail,40,40);
+				}
+				
 				multipartFile.transferTo(saveFile); // 파일 저장
 				list.add(attachVO); //회원첨부 테이블에 추가
+				log.info(attachVO);
 			} catch (IllegalStateException | IOException e) {
 				e.printStackTrace();
 			} 
@@ -72,7 +77,9 @@ public class ProfileUploadController {
 	// 파일 이름을 받아 해당 파일을 서버에서 읽어온 후, 바이트 배열 형태로 클라이언트에게 전송하는 역할을 수행
 	@GetMapping("/display")
 	public ResponseEntity<byte[]> getFile(String fileName){
-		File file = new File("C:/storage/"+fileName);
+		String folderPath = getFolder();
+		File file = new File("C:/storage/"+folderPath+"/"+fileName);
+		
 		ResponseEntity<byte[]> result = null; 
 		
 		HttpHeaders headers = new HttpHeaders();

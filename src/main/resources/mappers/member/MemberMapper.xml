@@ -43,6 +43,11 @@
 		where memberId = #{memberId}
 	</update>
 	
+	<insert id="insertImage">
+		insert into tbl_member_attach(uuid,uploadPath,FileName,mno)
+		values (#{uuid},#{uploadPath},#{fileName},#{mno})
+	</insert>
+	
 	<delete id="delete">
 		delete from tbl_member where memberId=#{memberId}
 	</delete>

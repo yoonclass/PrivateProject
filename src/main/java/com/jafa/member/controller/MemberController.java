@@ -76,21 +76,20 @@ public class MemberController {
 	}
 	
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_MEMBER')")
-	@PostMapping(value = "/member/changePwd", produces = "application/text; charset=utf-8")
-	@ResponseBody
-	public ResponseEntity<String> changePwd(MemberVO memberVO,
-	        @RequestParam String currentPwd, @RequestParam String newPwd) {
+	@PostMapping(value = "/member/changePwd")
+	public String changePwd(String memberId,
+	         String currentPwd,String newPwd) {
 	    try {
 	        Map<String, String> memberMap = new HashMap<>();
-	        memberMap.put("memberId", memberVO.getMemberId());
+	        memberMap.put("memberId", memberId);
 	        memberMap.put("newPwd", newPwd);
 	        memberMap.put("currentPwd", currentPwd);
 	        
-	        memberService.changePwd(memberMap);
+	        memberService.modify(memberMap);
 	    } catch (PasswordMisMatchException e) {
-	        return new ResponseEntity<String>("비밀번호가 일치하지 않음",HttpStatus.UNAUTHORIZED);
+	    	// TODO 예외처리
 	    }
-	    return new ResponseEntity<String>("success",HttpStatus.OK);
+	    return "redirect:/";
 	}
 	
 	//회원가입================

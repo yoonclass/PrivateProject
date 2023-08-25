@@ -24,5 +24,5 @@ public class MemberVO {
 	
 	private List<AuthVO> authList;
 	
-	private String profileImagePath; // 프로필 이미지 파일 경로
+	private List<MemberAttachVO> attachList;
 }

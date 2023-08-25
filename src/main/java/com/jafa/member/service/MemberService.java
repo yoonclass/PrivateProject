@@ -11,7 +11,7 @@ public interface MemberService {
 	
 	MemberVO read(String memberId);
 
-	void changePwd(Map<String, String> memberMap);
+	void modify(Map<String, String> memberMap);
 
 	void delete(String memberId);
 

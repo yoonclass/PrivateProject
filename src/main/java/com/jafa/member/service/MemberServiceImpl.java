@@ -1,15 +1,23 @@
 package com.jafa.member.service;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.jafa.error.PasswordMisMatchException;
+import com.jafa.member.controller.ProfileUploadController;
 import com.jafa.member.domain.AuthVO;
+import com.jafa.member.domain.MemberAttachVO;
 import com.jafa.member.domain.MemberVO;
 import com.jafa.member.repository.AuthRepository;
 import com.jafa.member.repository.MemberRepository;
@@ -28,6 +36,9 @@ public class MemberServiceImpl implements MemberService {
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	ProfileUploadController profile;
 	
 	@Override
 	public MemberVO read(String memberId) {
@@ -48,15 +59,27 @@ public class MemberServiceImpl implements MemberService {
 
 	@Transactional
 	@Override
-	public void changePwd(Map<String, String> memberMap) {
+	public void modify(Map<String, String> memberMap) {
 		String memberId = memberMap.get("memberId");
 		String newPwd = memberMap.get("newPwd");
 		String currentPwd = memberMap.get("currentPwd");
+		
 		MemberVO vo = memberRepository.selectById(memberId);
+		
 		if(!passwordEncoder.matches(currentPwd, vo.getMemberPwd())) {
 			throw new PasswordMisMatchException();
 		}
+		//회원 비번 수정
 		memberRepository.updatePwd(memberId, passwordEncoder.encode(newPwd));
+		
+		//첨부 파일 등록
+		List<MemberAttachVO> attachList = vo.getAttachList();//첨부파일 목록 가져옴
+		if(attachList!=null && !attachList.isEmpty()) {
+			for(MemberAttachVO attachFile : attachList) {
+				attachFile.setMno(memberId);//회원 아이디 설정
+				memberRepository.insertImage(attachFile);
+			};
+		}
 	}
 
 	@Override

@@ -2,6 +2,9 @@ package com.jafa.book_report.controller;
 
 import java.nio.file.AccessDeniedException;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -17,6 +20,8 @@ import com.jafa.book_report.domain.ReportVO;
 import com.jafa.book_report.service.ReportService;
 import com.jafa.common.Criteria;
 import com.jafa.common.Pagination;
+import com.jafa.member.domain.MemberAttachVO;
+import com.jafa.member.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;

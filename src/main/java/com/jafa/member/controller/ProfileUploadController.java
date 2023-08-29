@@ -10,9 +10,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.jafa.member.domain.MemberAttachVO;
+import com.jafa.member.repository.MemberRepository;
 
 import lombok.extern.log4j.Log4j;
 import net.coobird.thumbnailator.Thumbnailator;
@@ -31,9 +34,15 @@ import net.coobird.thumbnailator.Thumbnailator;
 @RequestMapping("/profile")
 public class ProfileUploadController {
 	
+	@Autowired
+	MemberRepository memberRepository;
+	
 	@PostMapping("/upload")
-	public ResponseEntity<List<MemberAttachVO>> upload(@RequestParam("uploadFile") MultipartFile[] multipartFiles) {
-		List<MemberAttachVO> list = new ArrayList<MemberAttachVO>(); 
+	public ResponseEntity<List<MemberAttachVO>> upload(@RequestParam("uploadFile") MultipartFile[] multipartFiles,
+					Authentication authentication) {
+		log.info(authentication.getName());
+		
+		List<MemberAttachVO> list = new ArrayList<MemberAttachVO>();
 		File uploadPath = new File("C:/storage", getFolder());	//파일 경로를 정의하고
 		if(!uploadPath.exists()) {	//존재하지 않는다면
 			uploadPath.mkdirs(); 	//만들어라
@@ -47,10 +56,15 @@ public class ProfileUploadController {
 			
 			log.info("filName : "+fileName);
 			log.info("savFile : "+saveFile);
-			
-			attachVO.setFileName(fileName);	//파일이름 
-			attachVO.setUuid(uuid);	//uuid
-			attachVO.setUploadPath(getFolder());	//파일경로 설정
+				
+			if(authentication.getName()!=null) {
+				log.info("이전 파일 삭제");
+				memberRepository.deleteImage(authentication.getName());
+				}
+				attachVO.setFileName(fileName);	//파일이름 
+				attachVO.setUuid(uuid);	//uuid
+				attachVO.setUploadPath(getFolder());	//파일경로 설정
+				attachVO.setMno(authentication.getName());
 			
 			try {//썸네일 생성
 				File thumnailFile = new File(uploadPath, "s_"+ uuid + "_" + fileName);
@@ -61,7 +75,8 @@ public class ProfileUploadController {
 				
 				multipartFile.transferTo(saveFile); // 파일 저장
 				list.add(attachVO); //회원첨부 테이블에 추가
-				log.info(attachVO);
+				memberRepository.insertImage(attachVO);
+				
 			} catch (IllegalStateException | IOException e) {
 				e.printStackTrace();
 			} 
@@ -95,11 +110,10 @@ public class ProfileUploadController {
 		return result; 
 	}
 	
-	@PostMapping("/deleteFile")
-	public ResponseEntity<String> deleteFile(MemberAttachVO vo){
-		File file = new File("C:/storage/"+vo.getUploadPath(),vo.getUuid() + "_" + vo.getFileName());
-		log.info(file);
-		file.delete();
-		return new ResponseEntity<String>("success",HttpStatus.OK);
+	@GetMapping("/getProfileImage")
+	public ResponseEntity<MemberAttachVO> getProfileImage(Authentication authentication) {
+	    String memberId = authentication.getName();
+	    MemberAttachVO profileImage = memberRepository.getImage(memberId);
+	    return new ResponseEntity<>(profileImage, HttpStatus.OK);
 	}
 }

@@ -1,7 +1,10 @@
 package com.jafa.member.repository;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
+import com.jafa.book_list.domain.BookAttachVO;
 import com.jafa.member.domain.MemberAttachVO;
 import com.jafa.member.domain.MemberVO;
 
@@ -12,6 +15,8 @@ public interface MemberRepository {
 	
 	//회원 등록
 	void insert(MemberVO vo);
+	
+	MemberAttachVO getImage(String mno);
 	
 	//회원 이미지 등록
 	void insertImage(MemberAttachVO attachVO);
@@ -26,4 +31,8 @@ public interface MemberRepository {
 	
 	//회원 탈퇴
 	void delete(String memberId);
+	
+	void deleteImage(String mno);
+	
+	List<MemberAttachVO> pastFiles();
 }

@@ -41,7 +41,8 @@
 				<div class="d-flex justify-content-between">
 				  <div class="d-flex">
 				    <div class="user_image mr-3" style="width: 75px">
-				      <img class="rounded-circle" src="${ctxPath}/resources/images/userImage.png" style="width: 100%">
+				    
+				      <img class="rounded-circle" src="${ctxPath}/resources/images/profile.jpg" style="width: 120px">
 				    </div>
 				    <div class="comment_wrap">
 				      <div class="comment_info">

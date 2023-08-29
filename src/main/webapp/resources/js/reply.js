@@ -37,7 +37,7 @@ $(function(){
 	
 	let showList = function(page){	//댓글 표시하는 함수이며, page 매개변수로 현재 페이지 번호 받음
 	let param = {bno:bnoValue, page : page||1};
-	console.log(param);
+	console.log("param"+param);
 	//요청에 필요한 파라미터를 객체 형태로 생성, bnoValue와 현재 페이지 번호인 page(기본값:1)를 포함
 		
 		replyService.getList(param,function(replyCount,list){	//댓글 목록 가져옴, 이 때 param은 콜백 함수 내에서 처리됨
@@ -57,7 +57,8 @@ $(function(){
 					<div class="d-flex justify-content-between">
 					  <div class="d-flex">
 					    <div class="user_image mr-3" style="width: 75px">
-					      <img class="rounded-circle" src="${ctxPath}/resources/images/userImage.png" style="width: 100%">
+					      <img class="rounded-circle" 
+					      src="${ctxPath}/resources/images/profile.jpg" style="width: 100%">
 					    </div>
 					    <div class="comment_wrap">
 					      <div class="comment_info">
@@ -185,7 +186,6 @@ $(function(){
 			});
 		})			
 		return; 
-	}
-});
-	
+		}
+	});
 })

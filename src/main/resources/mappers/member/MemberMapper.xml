@@ -32,7 +32,12 @@
 		insert into tbl_member(memberId,memberPwd,memberName,memberEmail)
 		values(#{memberId},#{memberPwd},#{memberName},#{memberEmail})
 	</insert>
+		
+	<delete id="delete">
+		delete from tbl_member where memberId=#{memberId}
+	</delete>
 	
+<!-- 	ID,PWD 찾기 -->
 	<select id="selectByEmail" resultType="String">
 		select memberId from tbl_member where memberEmail=#{memberEmail}
 	</select>
@@ -43,13 +48,21 @@
 		where memberId = #{memberId}
 	</update>
 	
+<!-- 	프로필 이미지 -->
+	<select id="getImage">
+		select uuid, uploadPath, fileName, mno from tbl_member_attach where mno =#{mno}
+	</select>
+
 	<insert id="insertImage">
-		insert into tbl_member_attach(uuid,uploadPath,FileName,mno)
+		insert into tbl_member_attach(uuid,uploadPath,fileName,mno)
 		values (#{uuid},#{uploadPath},#{fileName},#{mno})
 	</insert>
 	
-	<delete id="delete">
-		delete from tbl_member where memberId=#{memberId}
+	<delete id="deleteImage">
+		delete from tbl_member_attach where mno=#{mno}
 	</delete>
 	
+	<select id="pastFiles" resultType="MemberAttachVO">
+		select * from tbl_member_attach where uploadPath = to_char(sysdate-1, 'yyyy/MM/dd')
+	</select>	
 </mapper>

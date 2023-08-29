@@ -8,15 +8,14 @@
 			<div class="jumbotron">
 				<h3>내 정보</h3>
 			</div>
-			<div class="userImage d-flex justify-content-center my-3">
-				<label for="uploadFile">
-					<img id="resultImage" class="rounded-circle" src="${ctxPath}/resources/images/profile.jpg" style="width: 120px">
-				</label>
-				
-				<input type="file" name="userImage" id="uploadFile" style=" display: none; width: 100%;height: 100%">
-			</div>
-			
-			<form action="${ctxPath}/member/changePwd" method="post">
+				<div class="userImage d-flex justify-content-center my-3">
+					<label for="uploadFile">
+						<img id="resultImage" class="rounded-circle" src="${ctxPath}/resources/images/profile.jpg" style="width: 120px">
+					</label>
+					
+					<input type="file" name="userImage" id="uploadFile" style=" display: none; width: 100%;height: 100%">
+				</div>
+<%-- 			<form action="${ctxPath}/member/changePwd" method="post"> --%>
 				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 				<div class="form-group">
 					<input type="text" name="memberId" class="form-control form-control-lg" readonly="readonly" value="${vo.memberId}">
@@ -41,7 +40,7 @@
 				<div class="form-group">
 				    <button class="btn btn-outline-info btn-lg form-control changePwd">변경 완료</button>
 				</div>
-			</form>
+<!-- 			</form> -->
 		</div>
 	</div>
 	
@@ -51,7 +50,8 @@
 
 <script>
 $(function(){
-		
+	let uploadResultList = [];
+	
 	// 파일 업로드 이벤트 //파일이 변할 때 formData, Files 생성
 	$('[type="file"]').change(function(){
 		let formData = new FormData(); //HTML 폼 데이터를 쉽게 생성하고 전송할 수 있는 객체 FormData 객체생성
@@ -71,14 +71,25 @@ $(function(){
 			data : formData, 
 			dataType : 'json', 
 			success : function(result){//서버 응답이 성공적으로 도착했을 때 실행할 콜백함수를 정의
-				console.log(result);
 				const uuid = result[0].uuid
 				const fileName = result[0].fileName
 				$('#resultImage').attr('src','${ctxPath}/profile/display?fileName='+uuid+'_'+fileName)
 			}
 		});
 	})
-	
+	// 프로필 이미지 초기화
+    $(document).ready(function() {
+        $.ajax({
+            url: '${ctxPath}/profile/getProfileImage', // 새로 추가한 엔드포인트
+            type: 'get',
+            dataType: 'json',
+            success: function(result){
+                if (result.uuid && result.fileName) {
+                    $('#resultImage').attr('src', '${ctxPath}/profile/display?fileName=' + result.uuid + '_' + result.fileName);
+                }
+            }
+        });
+    });
 	/*
     $('.changePwd').click(function(){
         var memberId = $('[name="memberId"]').val();

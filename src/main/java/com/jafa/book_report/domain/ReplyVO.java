@@ -1,8 +1,10 @@
 package com.jafa.book_report.domain;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.jafa.member.domain.MemberAttachVO;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

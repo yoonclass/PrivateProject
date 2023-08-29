@@ -22,42 +22,40 @@ import lombok.extern.log4j.Log4j;
 
 @Log4j
 @Component
-public class FileCheckTask {
+public class profileCheckTask {
 	
 	@Autowired
-	BookAttachRepository bookAttachRepository; 
-	
+	MemberRepository memberRepository;
 	
 	@Scheduled(cron = "0 0 */1 * * *")
 	public void checkFile() {
 		
 		/* 데이터베이스에 기록된 파일 정보 */
-		List<BookAttachVO> fileList = bookAttachRepository.pastFiles();
+		List<MemberAttachVO> profileList = memberRepository.pastFiles();
 		
-		// 업로드 된 파일  
-		List<Path> fileListPath = fileList.stream()
-			.map(vo-> Paths.get("c:/storage",vo.getUploadPath(),vo.getUuid()+"_"+vo.getFileName()))
-			.collect(Collectors.toList());
-//		log.info(fileListPath);
-
+		List<Path> profileListPath = profileList.stream()
+				.map(vo-> Paths.get("c:/storage",vo.getUploadPath(),vo.getUuid()+"_"+vo.getFileName()))
+				.collect(Collectors.toList());
+		
 		// 썸네일 파일 경로
-		fileList.stream()
-				.map(vo-> Paths.get("c:/storage",vo.getUploadPath(),"s_"+vo.getUuid()+"_"+vo.getFileName()))
-				.forEach(e-> fileListPath.add(e));
+		profileList.stream()
+        .map(vo -> Paths.get("c:/storage", vo.getUploadPath(), "s_" + vo.getUuid() + "_" + vo.getFileName()))
+        .forEach(e -> profileListPath.add(e));
+
 		
 		// 어제 날짜 폴더 경로 
 		// 어제 날짜 폴더에 있는 모든 파일 순회
 		// 데이터베이스에 기록된 파일 정보가 아니면 삭제 대상 파일
-		File targetDir = Paths.get("c:/storage", getYesterdayFolder()).toFile();
+		File profileTargetDir = Paths.get("c:/storage", getYesterdayFolder(),"member").toFile();
 		
-		File[] delTagetList = targetDir.listFiles(file-> !fileListPath.contains(file.toPath()));
-		log.info("Files to be deleted:");
+		File[] profileDelTagetList = profileTargetDir.listFiles(file-> !profileListPath.contains(file.toPath()));
 		log.info("Profile Images to be deleted:");
 		
-		for (File file : delTagetList) {
-		    log.info(file.getPath());
+		for (File file : profileDelTagetList) {
+			log.info(file.getPath());
 		}
-		Arrays.stream(delTagetList).forEach(file->{
+		
+		Arrays.stream(profileDelTagetList).forEach(file->{
 			file.delete();
 		});
 	}

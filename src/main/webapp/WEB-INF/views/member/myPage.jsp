@@ -10,12 +10,15 @@
 			</div>
 				<div class="userImage d-flex justify-content-center my-3">
 					<label for="uploadFile">
-						<img id="resultImage" class="rounded-circle" src="${ctxPath}/resources/images/profile.jpg" style="width: 120px">
+						<img id="resultImage" class="rounded-circle" src="${ctxPath}/resources/images/profile.jpg" style="width: 200px">
 					</label>
 					
 					<input type="file" name="userImage" id="uploadFile" style=" display: none; width: 100%;height: 100%">
 				</div>
-<%-- 			<form action="${ctxPath}/member/changePwd" method="post"> --%>
+				<div class="form-group text-center">
+				    <button class="btn btn-outline-info btn-xs form-control deleteProfile" style="width: 100px;">사진 삭제</button>
+				</div>
+			<form action="${ctxPath}/member/changePwd" method="post">
 				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 				<div class="form-group">
 					<input type="text" name="memberId" class="form-control form-control-lg" readonly="readonly" value="${vo.memberId}">
@@ -40,7 +43,7 @@
 				<div class="form-group">
 				    <button class="btn btn-outline-info btn-lg form-control changePwd">변경 완료</button>
 				</div>
-<!-- 			</form> -->
+			</form>
 		</div>
 	</div>
 	
@@ -77,6 +80,7 @@ $(function(){
 			}
 		});
 	})
+	
 	// 프로필 이미지 초기화
     $(document).ready(function() {
         $.ajax({
@@ -86,10 +90,25 @@ $(function(){
             success: function(result){
                 if (result.uuid && result.fileName) {
                     $('#resultImage').attr('src', '${ctxPath}/profile/display?fileName=' + result.uuid + '_' + result.fileName);
+                } else {
+                    // 기본 사진으로 교체
+                    $('#resultImage').attr('src', '${ctxPath}/resources/images/profile.jpg');
                 }
-            }
+            },
         });
     });
+	
+	//사진 삭제
+	$('.deleteProfile').click(function(){
+		$.ajax({
+	        type: 'post',
+	        url: '${ctxPath}/profile/deleteProfileImage', // 새로 추가한 엔드포인트
+	        success: function(result){
+                // 사진 삭제 후, 기본 사진으로 교체
+                $('#resultImage').attr('src', '${ctxPath}/resources/images/profile.jpg');
+	        }
+	    });
+	})
 	/*
     $('.changePwd').click(function(){
         var memberId = $('[name="memberId"]').val();

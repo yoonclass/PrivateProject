@@ -17,6 +17,7 @@ import com.jafa.book_report.domain.ReplyPageDTO;
 import com.jafa.book_report.domain.ReplyVO;
 import com.jafa.book_report.service.ReplyService;
 import com.jafa.common.Criteria;
+import com.jafa.member.domain.MemberAttachVO;
 
 @RestController
 @RequestMapping("/replies")

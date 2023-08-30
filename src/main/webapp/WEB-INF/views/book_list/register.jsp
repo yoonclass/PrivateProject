@@ -10,6 +10,8 @@
 				<div class="card-body">
 					<form action="${ctxPath}/book_list/register" method="post">
 						<div class="form-group">
+						</div>
+						<div class="form-group">
 							<label>제목</label>
 							<input class="form-control" name="title" placeholder="제목을 입력하세요"/>
 						</div>
@@ -21,6 +23,7 @@
 							<label>작성자 </label>
 							<input class="form-control" name="writer" value="${authInfo.memberId}" readonly="readonly"/>
 						</div>
+						<input type="hidden" name="bno" value="${book.bno}"/>
 						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 						<button type="button" class="btn btn-light register">등록</button>						
 					</form>
@@ -38,7 +41,7 @@
 			</div>
 			<div class="card-body">
 				<div class="uploadDiv">
-					<input type="file" name="uploadFile" multiple="multiple">
+					<input type="file" name="uploadFile" multiple="multiple" data-bno="${book.bno}">
 				</div>
 				<div class="uploadResultDiv"> <!-- 파일업로드 결과 보여주기  -->
 					<ul class="list-group"></ul>

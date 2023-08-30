@@ -32,7 +32,6 @@ public interface MemberRepository {
 	//회원 탈퇴
 	void delete(String memberId);
 	
-	void deleteImage(String mno);
 	
-	List<MemberAttachVO> pastFiles();
+	void deleteImage(String mno);
 }

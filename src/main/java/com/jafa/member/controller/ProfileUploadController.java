@@ -63,7 +63,7 @@ public class ProfileUploadController {
 				}
 				attachVO.setFileName(fileName);	//파일이름 
 				attachVO.setUuid(uuid);	//uuid
-				attachVO.setUploadPath(getFolder());	//파일경로 설정
+				attachVO.setUploadPath("/member");	//파일경로 설정
 				attachVO.setMno(authentication.getName());
 			
 			try {//썸네일 생성
@@ -84,9 +84,8 @@ public class ProfileUploadController {
 		return new ResponseEntity<List<MemberAttachVO>>(list, HttpStatus.OK);	//list배열로 추가한다 
 	}
 
-	private String getFolder() {	//파일경로 설정방법 : 날짜 + member
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-		return sdf.format(new Date())+"/member";  
+	private String getFolder() {	//파일경로 설정
+		return "/member";  
 	}
 	
 	// 파일 이름을 받아 해당 파일을 서버에서 읽어온 후, 바이트 배열 형태로 클라이언트에게 전송하는 역할을 수행
@@ -115,5 +114,14 @@ public class ProfileUploadController {
 	    String memberId = authentication.getName();
 	    MemberAttachVO profileImage = memberRepository.getImage(memberId);
 	    return new ResponseEntity<>(profileImage, HttpStatus.OK);
+	}
+	
+	@PostMapping("/deleteProfileImage")
+	public ResponseEntity<String> deleteProfileImage(Authentication authentication) {
+		if(authentication.getName()!=null) {
+			log.info("기존 이미지 삭제");
+			memberRepository.deleteImage(authentication.getName());
+			}
+		return new ResponseEntity<>("success", HttpStatus.OK);
 	}
 }

@@ -14,5 +14,4 @@ public class MemberAttachVO {
 	private String uploadPath; 
 	private String fileName; 
 	private String mno;
-
 }

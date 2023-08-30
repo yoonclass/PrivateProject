@@ -61,8 +61,4 @@
 	<delete id="deleteImage">
 		delete from tbl_member_attach where mno=#{mno}
 	</delete>
-	
-	<select id="pastFiles" resultType="MemberAttachVO">
-		select * from tbl_member_attach where uploadPath = to_char(sysdate-1, 'yyyy/MM/dd')
-	</select>	
 </mapper>

@@ -53,6 +53,7 @@ public class BookController {
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@PostMapping("/register")
 	public String register(BookVO book, RedirectAttributes rttr) {
+		
 		log.info(book);
 		log.info(book.getAttachList());
 		bookService.register(book);

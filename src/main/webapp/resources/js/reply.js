@@ -50,16 +50,31 @@ $(function(){
 			
 			let replyList='';
 			$.each(list,function(idx,elem){	//idx : 인덱스 값 //elem : 댓글 정보
+				console.log(elem)
+				/*
+				<img class="rounded-circle" 
+					      src="${ctxPath}/profile/display?fileName=${elem.uuid}_${elem.fileName}"
+					       style="width: 100%">
+				*/
 			
 				//댓글 목록을 reply list에 추가
 				replyList += 
 				`<li class="list-group-item" data-rno="${elem.rno}" >
 					<div class="d-flex justify-content-between">
 					  <div class="d-flex">
-					    <div class="user_image mr-3" style="width: 75px">
-					      <img class="rounded-circle" 
-					      src="${ctxPath}/resources/images/profile.jpg" style="width: 100%">
-					    </div>
+					    <div class="user_image mr-3" style="width: 75px">`
+					    if (elem.uuid && elem.fileName) {
+					    replyList +=
+					   	`<img class="rounded-circle" 
+					      src="${ctxPath}/profile/display?fileName=${elem.uuid}_${elem.fileName}"
+					       style="width: 100%">`
+					     } else {
+					     replyList +=
+					   	`<img class="rounded-circle" 
+					      src="${ctxPath}/resources/images/profile.jpg" style="width: 100%">`
+						}											       
+					     replyList +=
+					    `</div>
 					    <div class="comment_wrap">
 					      <div class="comment_info">
 					        <span class="userName badge badge-pill badge-info mr-2">${elem.replyer}</span>
@@ -110,7 +125,6 @@ $(function(){
 	$('.submit button').click(function(){
 		let reply = { // 입력 데이터 객체  
 			bno : bnoValue, // 게시물 번호 
-			id : "YOON",
 			reply : $('.replyContent').val(), // 내용
 			replyer : $('.replyer').html()	// 작성자
 		}

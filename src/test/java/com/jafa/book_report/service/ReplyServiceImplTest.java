@@ -30,7 +30,6 @@ public class ReplyServiceImplTest extends AppTest{
 	public void testRegister() {
 		ReplyVO vo = ReplyVO.builder()
 				.bno(2L)
-				.id("YOON")
 				.reply("서비스 : 댓글 테스트")
 				.replyer("사용자")
 				.build();

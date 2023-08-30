@@ -6,12 +6,14 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -27,6 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.jafa.book_list.domain.BookAttachVO;
+import com.jafa.book_list.repository.BookRepository;
 
 import lombok.extern.log4j.Log4j;
 import net.coobird.thumbnailator.Thumbnailator;
@@ -36,15 +39,23 @@ import net.coobird.thumbnailator.Thumbnailator;
 @RequestMapping("/files")
 public class FileUploadController {
 	
+	@Autowired
+	BookRepository bookRepository;
+	
 	@PostMapping("/upload")
-	public ResponseEntity<List<BookAttachVO>> upload(@RequestParam("uploadFile") MultipartFile[] multipartFiles) {
+	public ResponseEntity<List<BookAttachVO>> 
+		upload(@RequestParam("uploadFile") MultipartFile[] multipartFiles) {
+		
 		List<BookAttachVO> list = new ArrayList<BookAttachVO>(); 
 		File uploadPath = new File("C:/storage", getFolder());
+		log.info(uploadPath);
 		if(!uploadPath.exists()) {
 			uploadPath.mkdirs(); 
 		}
 		for(MultipartFile multipartFile : multipartFiles) {
-			BookAttachVO attachVO = new BookAttachVO();  
+			BookAttachVO attachVO = new BookAttachVO();
+			Long bno = attachVO.getBno();
+			log.info(bno);
 
 			String filName = multipartFile.getOriginalFilename(); // 파일이름
 			String uuid = UUID.randomUUID().toString();
@@ -83,7 +94,7 @@ public class FileUploadController {
 	// 날짜별 디렉토리 생성 
 	private String getFolder() {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-		return sdf.format(new Date());  
+		return sdf.format(new Date());
 	}
 	
 	@GetMapping("/display")

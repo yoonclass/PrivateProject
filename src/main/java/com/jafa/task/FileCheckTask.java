@@ -52,7 +52,6 @@ public class FileCheckTask {
 		
 		File[] delTagetList = targetDir.listFiles(file-> !fileListPath.contains(file.toPath()));
 		log.info("Files to be deleted:");
-		log.info("Profile Images to be deleted:");
 		
 		for (File file : delTagetList) {
 		    log.info(file.getPath());

@@ -5,8 +5,8 @@
 <mapper namespace="com.jafa.book_report.repository.ReplyRepository">
 	
 	<insert id="insert">
-		insert into tbl_reply (rno,bno,id,reply,replyer)
-		values (seq_reply.nextval, #{bno},#{id},#{reply},#{replyer})
+		insert into tbl_reply (rno,bno,reply,replyer)
+		values (seq_reply.nextval, #{bno},#{reply},#{replyer})
 	</insert>
 	
 	<select id="read" resultType="replyVO">
@@ -27,14 +27,16 @@
 	<select id="getList" resultType="replyVO">
 		<![CDATA[
 		select * from(
-			select rownum as rn, bno, rno, reply, replyer, replyDate, updateDate
+			select rownum as rn,
+			 r.bno, r.rno, r.reply, r.replyer, r.replyDate, r.updateDate,
+			 m.uuid, m.fileName
 			FROM(
-				select /*+INDEX_DESC(tbl_reply rno)*/
+				select
 					rownum as rn, bno, rno, reply, replyer, replyDate, updateDate
 				from tbl_reply
-				where bno = #{bno}
-				ORDER BY rno DESC
-				)
+				where bno = #{bno} order by rn desc
+				) r
+			left outer join tbl_member_attach m on r.replyer = m.mno
 			where rownum <= #{criteria.maxRow} 
 		) 
 		where rn > #{criteria.minRow} 
@@ -44,5 +46,4 @@
 	<select id="getReplyCount" resultType="int">
 		select count(rno) from tbl_reply where bno = #{bno}
 	</select>
-    
 </mapper>

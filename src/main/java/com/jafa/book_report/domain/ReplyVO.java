@@ -21,7 +21,6 @@ import lombok.ToString;
 @ToString
 public class ReplyVO {
 	private Long bno; //게시물번호
-	private String id;
 	private Long rno; //댓글번호
 	private String reply; //댓글내용
 	private String replyer; //댓글 작성자
@@ -31,4 +30,8 @@ public class ReplyVO {
 	
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	private LocalDateTime updateDate;//댓글수정일
+	
+	private String uuid;
+	private String fileName;
+	
 }

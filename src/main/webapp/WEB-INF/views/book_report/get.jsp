@@ -22,12 +22,19 @@
 					<li>작성 ${report.regDate}</li>
 					<li>수정 ${report.updateDate}</li>
 				</ul>
-				<div class="getBtns">
-				<sec:authorize access="isAuthenticated() and principal.username==#report.writer or hasRole('ROLE_ADMIN')">
-					<button data-oper='modify' class="btn btn-light modify">변경</button>
-				</sec:authorize>
-					<button data-oper='list' class="btn btn-info list">목록</button>	
-				</div>					
+				<div class="getBtns d-flex justify-content-between">
+					<div>
+						<sec:authorize access="isAuthenticated() and principal.username==#report.writer or hasRole('ROLE_ADMIN')">
+							<button data-oper='modify' class="btn btn-light modify">변경</button>
+						</sec:authorize>
+						<button data-oper='list' class="btn btn-info list">목록</button>
+					</div>
+					<div>		
+						<sec:authorize access="isAuthenticated()">
+							<a class="btn btn-outline-danger like">추천</a>
+						</sec:authorize>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -98,7 +105,6 @@
 
 $(function(){
 	let getForm = $('form')
-	
 	// 수정+목록 페이지 이동 
 	$('.getBtns button').click(function(){
 		
@@ -123,6 +129,41 @@ $(function(){
             return false; // 등록 취소
         }
     });
+	
+	//추천
+	$('.like').click(function(e){
+		e.preventDefault();
+		let bno = $('[name="bno"]').val();
+		$.ajax({
+			type : 'post',
+			url : '${ctxPath}/book_report/like',
+			data : {id : '${authInfo.getMemberId()}', bno : bno},
+			success : function(message){
+				alert(message)
+				isLike() //요청 성공시 isLike 호출
+			}
+		})
+	})
+	
+	//추천여부
+	function isLike(){
+		let bno = $('[name="bno"]').val();
+		$.ajax({
+			type : 'post',
+			url : '${ctxPath}/book_report/islike',
+			data : {id : '${authInfo.getMemberId()}', bno : bno},
+			success : function(result){
+				if(result){
+					$('.like').html('추천취소')
+				} else {
+					$('.like').html('추천')
+				}
+			}
+		})
+	}
+	if('${authInfo.getMemberId()}'!=''){	//이미 호출했는지 확인
+		isLike();
+	}
 })
 </script>
 

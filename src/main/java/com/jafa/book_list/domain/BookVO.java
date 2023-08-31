@@ -28,8 +28,6 @@ public class BookVO {
 	private String content;
 	private String writer;
 	
-	private int likeBook;
-	
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDateTime regDate;
 	

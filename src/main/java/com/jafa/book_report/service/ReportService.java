@@ -2,6 +2,7 @@ package com.jafa.book_report.service;
 
 import java.util.List;
 
+import com.jafa.book_report.domain.LikeDTO;
 import com.jafa.book_report.domain.ReportVO;
 import com.jafa.common.Criteria;
 
@@ -25,6 +26,16 @@ public interface ReportService {
 	
 	//독후감 삭제
 	boolean remove(Long bno);
-	
+
+	//게시물 수
 	int totalCount();
+	
+	//독후감 추천
+	boolean hitLike(LikeDTO likeDTO);
+	
+	//추천여부
+	boolean isLike(LikeDTO likeDTO);
+	
+	//인기도서 조회
+	List<ReportVO> getRankList();
 }

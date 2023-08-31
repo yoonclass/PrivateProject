@@ -113,4 +113,11 @@ public class BookServiceImpl implements BookService {
 			}
 		});
 	}
+
+	@Override
+	public List<BookVO> getLatestBooks() {
+		int minRow = 0;
+		int maxRow = 5;
+		return bookRepository.getLatestBooks(minRow, maxRow);
+	}
 }

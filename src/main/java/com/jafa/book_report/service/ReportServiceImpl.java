@@ -2,9 +2,12 @@ package com.jafa.book_report.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.jafa.book_report.domain.LikeDTO;
 import com.jafa.book_report.domain.ReportVO;
+import com.jafa.book_report.repository.ReportLikeRepository;
 import com.jafa.book_report.repository.ReportRepository;
 import com.jafa.common.Criteria;
 
@@ -17,6 +20,9 @@ import lombok.extern.log4j.Log4j;
 public class ReportServiceImpl implements ReportService {
 
 	private final ReportRepository repository;
+	
+	@Autowired
+	private ReportLikeRepository reportLikeRepository;
 	
 	@Override
 	public List<ReportVO> getList(Criteria criteria) {
@@ -55,4 +61,28 @@ public class ReportServiceImpl implements ReportService {
 		return repository.getTotalCount();
 	}
 
+	@Override
+	public boolean hitLike(LikeDTO likeDTO) {
+		LikeDTO result = reportLikeRepository.get(likeDTO);
+		if(result==null) { //추천
+			reportLikeRepository.insert(likeDTO);
+			repository.updateLikeCnt(likeDTO.getBno(), 1);
+			return true;
+		} else { //추천 취소
+			reportLikeRepository.delete(likeDTO);
+			repository.updateLikeCnt(likeDTO.getBno(), -1);
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isLike(LikeDTO likeDTO) {
+		return reportLikeRepository.get(likeDTO)!=null;
+	}
+
+	@Override
+	public List<ReportVO> getRankList() {
+		int maxRow = 5;
+		return repository.getRankList(maxRow);
+	}
 }

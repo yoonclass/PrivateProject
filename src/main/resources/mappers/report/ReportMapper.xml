@@ -9,10 +9,24 @@
 		<![CDATA[
 		select * from 
 		(select /*+INDEX_DESC(tbl_report bno*/
-			ROWNUM as rn, bno, title, content, writer, replyCnt, regDate, updateDate
+			ROWNUM as rn, bno, title, content, writer, replyCnt, 
+			regDate, updateDate, likeHit
 			FROM tbl_report where ROWNUM <= #{maxRow} ORDER BY bno DESC) 
 		where rn > #{minRow}
 		]]>
+	</select>
+	
+<!-- 	인기 독후감 조회 -->
+	<select id="getRankList" resultType="report">
+	<![CDATA[
+		select bno, title, content, likeHit
+		from(
+			select /*+INDEX_DESC(tbl_book bno)*/
+			ROWNUM as rn, bno, title, content, likeHit
+			from tbl_report	where likeHit >=1 order by likeHit desc
+			)
+			where rn <= #{maxRow} 
+	]]>
 	</select>
 	
 <!-- 	seq_report.nextval을 사용하여 시퀀스 값을 직접 삽입 -->
@@ -55,5 +69,10 @@
 <!-- 	댓글 수 업데이트 -->
 	<update id="updateReplyCnt">
 	  	update tbl_report set replyCnt = replyCnt + #{amount} where bno = #{bno}
+	</update>
+	
+<!-- 	추천 수 업데이트 -->
+	<update id="updateLikeCnt">
+		update tbl_report set likeHit = likeHit + #{amount} where bno = #{bno}
 	</update>
 </mapper>

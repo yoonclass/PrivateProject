@@ -14,6 +14,9 @@ public interface ReportRepository {
 	//독후감 목록 조회
 	List<ReportVO> getList(Criteria criteria);
 	
+	//인기 독후감 조회
+	List<ReportVO> getRankList(@Param("maxRow") int maxRow);
+	
 	//독후감 추가
 	void insert(ReportVO report);
 	
@@ -36,4 +39,7 @@ public interface ReportRepository {
 	void updateReplyCnt(
 			@Param("bno") Long bno, 
 			@Param("amount") int amount);
+	
+	//추천 수
+	void updateLikeCnt(@Param("bno") Long bno, @Param("amount") int amount);
 }

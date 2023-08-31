@@ -115,4 +115,15 @@ public class BookController {
 	public ResponseEntity<BookAttachVO> getAttach(String uuid){
 		return new ResponseEntity<>(bookService.getAttach(uuid),HttpStatus.OK); 
 	}
+	
+	/*
+	@GetMapping("/latestBooks")
+	public String latestBooks(Model model){
+		List<BookVO> latestBooks = bookService.getLatestBooks();
+		model.addAttribute("latestBooks",latestBooks);
+		return "redirect:/";
+	}
+	*/
+	
+	
 }

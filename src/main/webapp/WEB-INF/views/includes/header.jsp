@@ -14,6 +14,8 @@
 <%-- <form:form>이나 <form:input>과 같이 form 접두사를 사용하여 Spring의 폼 태그를 사용 --%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <c:set var="ctxPath" value="${pageContext.request.contextPath}"/>
 <sec:authorize access="isAuthenticated()">
 	<sec:authentication property="principal.memberVO" var="authInfo"/>
@@ -80,9 +82,6 @@ function checkExtension(fileSize){
 	        </li>
 	        <li class="nav-item">
 	            <a class="nav-link" href="${ctxPath}/book_list/list">도서목록</a>
-	        </li>
-	        <li class="nav-item">
-	            <a class="nav-link" href="${ctxPath}/visitor/list">방명록</a>
 	        </li>
       </ul>
       

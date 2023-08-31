@@ -16,6 +16,19 @@
 	]]>
 	</select>
 	
+	<!-- 최신 도서 조회 -->
+	<select id="getLatestBooks" resultType="book">
+	<![CDATA[
+		select bno, title, content
+		from (
+			select /*+INDEX_DESC(tbl_book bno)*/
+			ROWNUM as rn, bno, title, content
+			from tbl_book where rownum <= #{maxRow} order by bno desc
+			)
+			where rn > #{minRow}
+		]]>
+	</select>
+	
 	<!-- 	seq_book.nextval을 사용하여 시퀀스 값을 직접 삽입 -->
 	<insert id="insert">
 	    INSERT INTO tbl_book(bno, title, content, writer) 

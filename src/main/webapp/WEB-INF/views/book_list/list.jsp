@@ -3,22 +3,21 @@
 <%@ include file="../includes/header.jsp"%>
 
 <div class="row">
-		<div class="col-12">
-			<h1 class="page-header">도서 목록</h1>
-		</div>
+	<div class="col-12">
+		<h1> </h1>
 	</div>
+</div>
 
 <div class="row">
 		<div class="col-12">
 			<div class="card">
-				<div class="card-header">도서 목록 페이지</div>
+				<div class="card-header">도서 목록</div>
 				<div class="card-body">
 					<table class="table table-striped table-bordered table-hover">
 						<thead>
 							<tr>
 								<th>번호</th> 
 								<th>제목</th>
-								<th>좋아요</th>
 								<th>등록일</th>
 							</tr>
 						</thead>
@@ -29,7 +28,6 @@
 									<td>
 									<a class="move" href="${book.bno}">${book.title }</a>
 									</td>
-								<td>1</td>
 								<td><tf:formatDateTime value="${book.regDate}" pattern="yyyy-MM-dd"/></td>
 							</tr>
 						</c:forEach>

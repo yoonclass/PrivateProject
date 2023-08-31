@@ -28,10 +28,12 @@ public class ReportVO {
 	private String writer;
 	
 	private int replyCnt;
-	private int likeReport;
+	
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDateTime regDate;
 	
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDateTime updateDate;
+
+	private int likeHit;
 }

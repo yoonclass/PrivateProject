@@ -2,7 +2,6 @@ package com.jafa.book_report.controller;
 
 import java.nio.file.AccessDeniedException;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -14,14 +13,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.jafa.book_report.domain.LikeDTO;
 import com.jafa.book_report.domain.ReportVO;
 import com.jafa.book_report.service.ReportService;
 import com.jafa.common.Criteria;
 import com.jafa.common.Pagination;
-import com.jafa.member.domain.MemberAttachVO;
-import com.jafa.member.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -103,5 +102,26 @@ public class ReportController {
 		rttr.addAttribute("pageNum",criteria.getPageNum());
 		rttr.addAttribute("amount",criteria.getAmount());
 		return "redirect:/book_report/list"; 
+	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@PostMapping(value="/like",produces="plain/text; charset=utf-8")
+	public ResponseEntity<String> hitLike(LikeDTO likeDTO){
+		log.info(likeDTO.getId());
+		log.info(likeDTO.getBno());
+		String message = likeDTO.getBno()+"번 ";
+		if(reportService.hitLike(likeDTO)) {
+			message += "게시글을 추천하였습니다.";
+		} else {
+			message += "게시글을 추천 취소하였습니다.";
+		}
+		return new ResponseEntity<String>(message,HttpStatus.OK);
+	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@ResponseBody
+	@PostMapping(value="/islike")
+	public ResponseEntity<Boolean> isLike(LikeDTO likeDTO){
+		return new ResponseEntity<Boolean>(reportService.isLike(likeDTO),HttpStatus.OK);
 	}
 }

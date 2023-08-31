@@ -30,4 +30,7 @@ public interface BookService {
 	
 	//첨부파일 UUID에 해당하는 첨부파일
 	BookAttachVO getAttach(String uuid);
+	
+	//최근 도서 조회
+	List<BookVO> getLatestBooks();
 }

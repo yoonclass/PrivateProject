@@ -57,8 +57,8 @@ public class ReportServiceImpl implements ReportService {
 	}
 
 	@Override
-	public int totalCount() {
-		return repository.getTotalCount();
+	public int totalCount(Criteria criteria) {
+		return repository.getTotalCount(criteria);
 	}
 
 	@Override

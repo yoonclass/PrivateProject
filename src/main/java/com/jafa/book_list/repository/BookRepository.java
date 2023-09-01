@@ -31,5 +31,5 @@ public interface BookRepository {
 	int delete(Long bno);
 	
 	//전체 도서 수
-	int getTotalCount();
+	int getTotalCount(Criteria criteria);
 }

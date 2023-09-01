@@ -28,7 +28,7 @@ public interface ReportService {
 	boolean remove(Long bno);
 
 	//게시물 수
-	int totalCount();
+	int totalCount(Criteria criteria);
 	
 	//독후감 추천
 	boolean hitLike(LikeDTO likeDTO);

@@ -22,6 +22,7 @@
 							</tr>
 						</thead>
 						<tbody>
+						<c:if test="${not empty list}">
 						<c:forEach items="${list}" var="book">
 							<tr>
 								<td>${book.bno}</td>
@@ -31,8 +32,31 @@
 								<td><tf:formatDateTime value="${book.regDate}" pattern="yyyy-MM-dd"/></td>
 							</tr>
 						</c:forEach>
+						</c:if>
+						<c:if test="${empty list}">
+							<tr><td colspan="5">게시물이 존재하지 않습니다.</td></tr>
+						</c:if>
 						</tbody>
 					</table>
+					
+					<!-- 검색조건 -->
+					<form class="my-3" id="searchForm" action="${ctxPath}/book_list/list">
+						<div class="d-inline-block">
+							<select name="type" class="form-control">
+								<option value="" ${page.criteria.type == null ? 'selected' : '' }>------</option>
+								<option value="T" ${page.criteria.type eq 'T' ? 'selected' : '' }>제목</option>
+								<option value="C" ${page.criteria.type eq 'C' ? 'selected' : '' }>내용</option>
+								<option value="TC" ${page.criteria.type eq 'TC' ? 'selected' : '' }>제목+내용</option>
+							</select>
+						</div>
+						<div class="d-inline-block col-4">
+							<input type="text" name="keyword" value="${page.criteria.keyword}" class="form-control">
+						</div>
+						<div class="d-inline-block">
+							<button class="btn btn-primary">검색</button>
+						</div>
+					</form>
+					
 					<!-- 페이징 -->
 					<ul class="pagination justify-content-center">
 						<!-- 시작 페이지 숫자에서 한 페이지에 표시되는 게시물 수만큼 차감하여 이동  -->
@@ -50,7 +74,7 @@
 						<!--  끝페이지에서 1을 더함 : 다음 페이지 번호-->
 						<c:if test="${page.next }">
 							<li class="page-item">
-								<a class="page-link" href="?pageNum=${page.endPage+1}">[다음페이지]</a>
+								<a class="page-link" href="${page.endPage+1}">[다음페이지]</a>
 							</li>
 						</c:if>
 					</ul>
@@ -96,12 +120,23 @@
 $(function(){
 	let result = "${result}"	//등록,수정,삭제 모델 객체
 	let listForm = $('#listForm');	//페이지 이동 Form
+	let searchForm = $('#searchForm')
+	let searchCondition = function(){
+		let selectedOption = searchForm.find('select[name="type"]').val();
+	    let keyword = searchForm.find('input[name="keyword"]').val();
+
+	    if (selectedOption && keyword) {
+	        listForm.append($('<input/>', { type: 'hidden', name: 'type', value: selectedOption }))
+	                .append($('<input/>', { type: 'hidden', name: 'keyword', value: keyword }));
+		}
+	}
 	
 	//페이지 이동
 	$('.pagination a').click(function(e){	//페이지 모든 a 링크에 이벤트 추가
 		e.preventDefault();	//기본동작 중지
 		let pageNum = $(this).attr('href');	//href 속성값 pageNum에 저장
 		listForm.find('input[name="pageNum"]').val(pageNum)
+		searchCondition();
 		listForm.submit();
 	})
 	
@@ -109,6 +144,7 @@ $(function(){
 	$('.move').click(function(e){
 		e.preventDefault();
 		let bnoValue = $(this).attr('href');
+		searchCondition();
 		listForm.append($('<input/>',{type : 'hidden', name : 'bno', value : bnoValue}))
 				.attr('action','${ctxPath}/book_list/get')
 				.submit();
@@ -119,7 +155,22 @@ $(function(){
 		self.location = "${ctxPath}/book_list/register"
 	})
 	
-// 모달
+	//검색이벤트 처리
+	$('#searchForm button').click(function(e){
+		e.preventDefault();
+		if(!searchForm.find('option:selected').val()){
+			alert('검색종류를 선택하세요')
+			return;
+		}
+		if(!searchForm.find('[name="keyword"]').val()){
+			alert('키워드를 입력하세요')
+			return
+		}
+		searchForm.find('[name="pageNum"]').val(1);
+		searchForm.submit();
+	})
+	
+	// 모달
 	checkModal(result)
 	
 	function checkModal(result){

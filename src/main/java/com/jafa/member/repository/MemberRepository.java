@@ -1,10 +1,7 @@
 package com.jafa.member.repository;
 
-import java.util.List;
-
 import org.apache.ibatis.annotations.Param;
 
-import com.jafa.book_list.domain.BookAttachVO;
 import com.jafa.member.domain.MemberAttachVO;
 import com.jafa.member.domain.MemberVO;
 
@@ -24,7 +21,7 @@ public interface MemberRepository {
 	//이메일로 회원 Id 조회
 	String selectByEmail(String memberEmail); 
 
-	//비밀번호 업데이트
+	//비밀번호 업데이트O
 	void updatePwd(
 			@Param("memberId") String memberId,  
 			@Param("memberPwd") String memberPwd);

@@ -36,7 +36,7 @@ public class BookController {
 	public void bookList(Model model, Criteria criteria) {
 		log.info("bookList");
 		model.addAttribute("list", bookService.getList(criteria));
-		model.addAttribute("page", new Pagination(criteria, bookService.totalCount()));
+		model.addAttribute("page", new Pagination(criteria, bookService.totalCount(criteria)));
 	}
 	
 	@GetMapping("/get")

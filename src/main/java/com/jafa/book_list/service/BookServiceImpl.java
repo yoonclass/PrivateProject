@@ -89,8 +89,8 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public int totalCount() {
-		return bookRepository.getTotalCount();
+	public int totalCount(Criteria criteria) {
+		return bookRepository.getTotalCount(criteria);
 	}
 
 	@Override

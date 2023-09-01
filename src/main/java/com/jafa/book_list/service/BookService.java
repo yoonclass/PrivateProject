@@ -23,7 +23,7 @@ public interface BookService {
 	boolean remove(Long bno);
 	
 	//게시물 수
-	int totalCount();
+	int totalCount(Criteria criteria);
 	
 	//게시물 번호에 해당하는 첨부파일 리스트
 	List<BookAttachVO> getAttachList(Long bno);

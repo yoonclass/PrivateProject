@@ -33,7 +33,7 @@ public interface ReportRepository {
 	int delete(Long bno);
 	
 	//전체 게시물 수
-	int getTotalCount();
+	int getTotalCount(Criteria criteria);
 	
 	//댓글 수 업데이트
 	void updateReplyCnt(

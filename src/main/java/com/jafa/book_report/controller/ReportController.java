@@ -37,7 +37,7 @@ public class ReportController {
 	public void reportList(Model model, Criteria criteria) {
 		log.info("reportList");
 		model.addAttribute("list", reportService.getList(criteria));
-		model.addAttribute("page", new Pagination(criteria, reportService.totalCount()));
+		model.addAttribute("page", new Pagination(criteria, reportService.totalCount(criteria)));
 	}
 	
 	@GetMapping("/get")

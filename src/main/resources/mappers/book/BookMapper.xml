@@ -4,16 +4,37 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jafa.book_list.repository.BookRepository">
 
+<sql id="criteria">
+	<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+		<foreach collection="types" item="type">
+			<trim prefix="OR">
+				<choose>
+					<when test="type=='T'.toString()">
+						TITLE like '%'||#{keyword}||'%'
+					</when>
+					<when test="type=='C'.toString()">
+						CONTENT like '%'||#{keyword}||'%'
+					</when>
+				</choose>
+			</trim>
+		</foreach>
+	</trim>
+</sql>	
+	
 	<!-- 도서 게시판 목록 조회 -->
 	<!-- 	<select id="getList" resultType="com.jafa.book_list.domain.BookVO"> -->
 	<select id="getList" resultType="book">
-	  <![CDATA[ 
+	<![CDATA[ 
 	  	select * from 
-		(select /*+INDEX_DESC(tbl_book bno)*/  
+		(select 
 	  		ROWNUM as rn, BNO, TITLE, CONTENT, WRITER, regDate, updateDate 
-	  		FROM tbl_book where rownum <= #{maxRow} ORDER BY bno DESC) 
-		where rn > #{minRow}
-	]]>
+	  		FROM tbl_book where 
+	  		]]>
+	<include refid="criteria"/>
+		<![CDATA[
+  		ROWNUM <= #{maxRow} 
+  		ORDER BY bno DESC) where rn > #{minRow}
+		]]>
 	</select>
 	
 	<!-- 최신 도서 조회 -->
@@ -63,6 +84,8 @@
 	
 	<!-- 	전체 게시물 수 -->
 	<select id="getTotalCount" resultType="int">
-		select count(bno) from tbl_book
+		select count(bno) from tbl_book where
+		<include refid="criteria"/>
+		bno > 0
 	</select>
 </mapper>

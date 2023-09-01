@@ -15,14 +15,15 @@ public class Criteria {
 	private int pageNum; // 현재 페이지
 	private int amount; // 한 페이지당 게시물 수
 	
-	private String boardType;//게시판 타입
 	private String type;//타입
 	private String keyword;//키워드
 	
+	//생성자로 1번은 무조건 실행된다
 	public Criteria() {
 		this(1,10);	//1페이지, 한 페이지당 게시물 수는 10개
 	}
 	
+	//매개변수로 들어오는 값을 이용하여 조정할 수 있다.
 	public Criteria(int pageNum, int amount) {
 		this.pageNum = pageNum;
 		this.amount = amount;

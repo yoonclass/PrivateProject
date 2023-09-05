@@ -104,22 +104,6 @@ function checkExtension(fileSize){
 	     	</li>
 	     	</sec:authorize>
 		</ul>
-		<table>
-		    <thead>
-		        <tr>
-		            <th>카테고리 ID</th>
-		            <th>카테고리 이름</th>
-		        </tr>
-		    </thead>
-		    <tbody>
-		        <c:forEach items="${categories}" var="category">
-		            <tr>
-		                <td>${category.categoryId}</td>
-		                <td>${category.categoryName}</td>
-		            </tr>
-		        </c:forEach>
-		    </tbody>
-		</table>
     </div>
 	</div>
 </nav>

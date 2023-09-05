@@ -39,15 +39,14 @@
 	
 	<!-- 최신 도서 조회 -->
 	<select id="getLatestBooks" resultType="book">
-	<![CDATA[
-		select bno, title, content
-		from (
-			select /*+INDEX_DESC(tbl_book bno)*/
-			ROWNUM as rn, bno, title, content
-			from tbl_book where rownum <= #{maxRow} order by bno desc
-			)
-			where rn > #{minRow}
-		]]>
+ 	<![CDATA[
+	    SELECT bno, title, content
+	    FROM (
+	        SELECT bno, title, content, ROW_NUMBER() OVER (ORDER BY bno DESC) AS rn
+	        FROM tbl_book
+	    )
+	    WHERE rn BETWEEN #{minRow} AND #{maxRow}
+    ]]>
 	</select>
 	
 	<!-- 	seq_book.nextval을 사용하여 시퀀스 값을 직접 삽입 -->

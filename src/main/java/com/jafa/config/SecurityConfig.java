@@ -44,12 +44,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	@Autowired
 	DataSource dataSource;
 	
-	 
 	//특정 URL에 대한 접근권한 설정
 	@Override
 		protected void configure(HttpSecurity http) throws Exception {
 	        http
-	            // 다른 권한 설정
 	        .formLogin()
 	            .loginPage("/login")
 	            .loginProcessingUrl("/member/login")
@@ -84,7 +82,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		jdbcTokenRepositoryImpl.setDataSource(dataSource);
 		return jdbcTokenRepositoryImpl;
 	}
-
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {

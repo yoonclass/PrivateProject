@@ -42,15 +42,15 @@
 	
 	<!-- 인기 독후감 조회 -->
 	<select id="getRankList" resultType="report">
-	<![CDATA[
-		select bno, title, content, likeHit
-		from(
-			select /*+INDEX_DESC(tbl_book bno)*/
-			ROWNUM as rn, bno, title, content, likeHit
-			from tbl_report	where likeHit >=1 order by likeHit desc
-			)
-			where rn <= #{maxRow} 
-	]]>
+	    <![CDATA[
+	    SELECT bno, title, content, likeHit
+	    FROM (
+	        SELECT bno, title, content, likeHit, ROW_NUMBER() OVER (ORDER BY likeHit DESC) AS rn
+	        FROM tbl_report
+	        WHERE likeHit >= 1
+	    )
+	    WHERE rn <= #{maxRow}
+	    ]]>
 	</select>
 	
 	<!-- seq_report.nextval을 사용하여 시퀀스 값을 직접 삽입 -->

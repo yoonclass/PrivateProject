@@ -48,7 +48,7 @@
 		where memberId = #{memberId}
 	</update>
 	
-<!-- 	프로필 이미지 -->
+	<!-- 프로필 이미지 -->
 	<select id="getImage">
 		select uuid, uploadPath, fileName, mno from tbl_member_attach where mno =#{mno}
 	</select>

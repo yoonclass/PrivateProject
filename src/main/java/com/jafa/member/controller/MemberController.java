@@ -17,12 +17,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.jafa.error.InvalidPasswordException;
 import com.jafa.error.NotFoundMemberException;
 import com.jafa.error.PasswordMisMatchException;
 import com.jafa.member.domain.MemberVO;
@@ -78,7 +76,7 @@ public class MemberController {
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_MEMBER')")
 	@PostMapping(value = "/member/changePwd")
 	public String changePwd(String memberId,
-	         String currentPwd,String newPwd) {
+	         String currentPwd,String newPwd, RedirectAttributes rttr) {
 	    try {
 	        Map<String, String> memberMap = new HashMap<>();
 	        memberMap.put("memberId", memberId);
@@ -86,8 +84,10 @@ public class MemberController {
 	        memberMap.put("currentPwd", currentPwd);
 	        
 	        memberService.modify(memberMap);
-	    } catch (PasswordMisMatchException e) {
-	    	// TODO 예외처리
+	        
+	    } catch (PasswordMisMatchException | InvalidPasswordException e) {
+	    	rttr.addFlashAttribute("errorMessage", e.getMessage());
+	    	return "redirect:/myPage";
 	    }
 	    return "redirect:/";
 	}

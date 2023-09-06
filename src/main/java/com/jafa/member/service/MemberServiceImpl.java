@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.jafa.error.InvalidPasswordException;
 import com.jafa.error.PasswordMisMatchException;
 import com.jafa.member.controller.ProfileUploadController;
 import com.jafa.member.domain.AuthVO;
@@ -67,11 +68,17 @@ public class MemberServiceImpl implements MemberService {
 		MemberVO vo = memberRepository.selectById(memberId);
 		
 		if(!passwordEncoder.matches(currentPwd, vo.getMemberPwd())) {
-			throw new PasswordMisMatchException();
-		}
-		//회원 비번 수정
-		memberRepository.updatePwd(memberId, passwordEncoder.encode(newPwd));
+			throw new PasswordMisMatchException("현재 비밀번호가 일치하지 않습니다.");
+		} 
 		
+		// 여기서 새 비밀번호 조건을 검증합니다.
+	    if (newPwd.length() < 4 || newPwd.length() > 6) {
+	        throw new InvalidPasswordException("새 비밀번호는 4글자 이상 6글자 이하이어야 합니다");
+	    }
+	    
+	    //회원 비번 수정
+	    memberRepository.updatePwd(memberId, passwordEncoder.encode(newPwd));
+	    
 		//첨부 파일 등록
 		List<MemberAttachVO> attachList = vo.getAttachList();//첨부파일 목록 가져옴
 		if(attachList!=null && !attachList.isEmpty()) {

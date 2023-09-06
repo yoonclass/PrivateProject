@@ -32,8 +32,8 @@
 				
 				<!-- 비밀번호 변경 -->
 				<div class="form-group">
-				    현재 비밀번호 : <input type="password" name="currentPwd" class="form-control currentPwd" autocomplete="current-password">				
-				   </div>
+				    현재 비밀번호 : <input type="password" name="currentPwd" class="form-control currentPwd" autocomplete="current-password">
+			   </div>
 				<div class="form-group">
 				    새 비밀번호 : <input type="password" name="newPwd" class="form-control newPwd" autocomplete="new-password">
 				</div>
@@ -59,7 +59,6 @@ $(function(){
 	$('[type="file"]').change(function(){
 		let formData = new FormData(); //HTML 폼 데이터를 쉽게 생성하고 전송할 수 있는 객체 FormData 객체생성
 		let files = this.files;	//파일 선택 요소에서 선택한 파일 목록 가져옴
-		
 		
 		//반복문을 통해서 파일을 받아옴(register.jsp-input 태그의 name 속성과 동일)
 		for(let f of files){	//선택한 파일 목록 순회하면서
@@ -109,12 +108,13 @@ $(function(){
 	        }
 	    });
 	})
-	/*
+	
+	let errorMessage = "${errorMessage}";
+	if(errorMessage){
+		alert(errorMessage)
+	}
+	
     $('.changePwd').click(function(){
-        var memberId = $('[name="memberId"]').val();
-        var memberName = $('[name="memberName"]').val();
-        var memberEmail = $('[name="memberEmail"]').val();
-        var currentPwd = $('.currentPwd').val();
         var newPwd = $('.newPwd').val();
         var confirmNewPwd = $('.confirmNewPwd').val();
         
@@ -122,7 +122,9 @@ $(function(){
             alert('새 비밀번호와 비밀번호 재확인이 일치하지 않습니다.');
             return;
         }
-        
+    })
+    
+     /*     
         $.ajax({
             type: 'post',
             url: '${ctxPath}/member/changePwd',

@@ -57,6 +57,7 @@
 		<!-- 비밀번호 -->
 			<div class="form-group">
 				<form:password class="form-control " path="memberPwd" name="memberPwd" placeholder="비밀번호를 입력해주세요"/>
+				<p style="color: red;font-size: 10px;">비밀번호는 '4글자 이상 6글자 이하'로 입력해주세요</p>
 			</div>
 			<div class="form-group">
 				<input type="password" class="form-control confirmPwd" placeholder="비밀번호 확인">

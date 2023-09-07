@@ -60,7 +60,7 @@ var replyService = {
 			}
 		});
 	},
-	
+	//댓글 삭제
 	remove : function(rno,callback,error){
 		$.ajax({
 			type : 'delete', 

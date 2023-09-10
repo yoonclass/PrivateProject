@@ -1,6 +1,5 @@
 console.log('get.js');
 $(function(){
-
 	let bnoValue = $('[name="bno"]').val();
 	$.getJSON(`${ctxPath}/book_list/getAttachList`,{bno:bnoValue},function(attachList){
 		
@@ -34,7 +33,7 @@ $(function(){
 		}); 
 		$('.uploadResultDiv ul').html(fileList);
 	}) //$(attachList).each(function(i,e)end
-	// 파일 다운로드 
+		// 파일 다운로드 
 		$('.uploadResultDiv ul').on('click','.download',function(e){
 			e.preventDefault();
 			self.location = `${ctxPath}/files/download?fileName=${$(this).attr('href')}`

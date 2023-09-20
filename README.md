@@ -61,20 +61,20 @@
 <details>
   <summary>게시글 관련</summary>
   <div markdown="1">
-    
+  <br>
   <b>1. 게시글 전체 목록</b><br>
     <img src="https://github.com/yoonclass/PrivateProject/assets/135006470/a4a6ae49-513f-421a-9c69-7c8996ba8047.png">
     전체 목록을 페이징 처리하여 조회할 수 있다.<br>
   
   <b>2. 게시글 조회</b><br>
     <img src="https://github.com/yoonclass/PrivateProject/assets/135006470/03a96b29-6514-4d59-a364-762505a9d3c1.png">
-    <img src="https://github.com/yoonclass/PrivateProject/assets/135006470/32d4f799-5333-44a8-9cbb-a356b5d6363d.png">
     로그인과 상관없이 누구나 글은 조회할 수 있다.
     <br>
   
   <b>3. 게시글 등록</b><br>  
     <img src="https://github.com/yoonclass/PrivateProject/assets/135006470/2830a193-c86c-4d4e-bd74-92c51143d967.png">
     로그인 한 사용자만 새로운 글을 작성할 수 있고, 작성 후 목록 화면으로 redirect한다.
+    <br>
 
   <b>4. 게시글 수정</b><br>  
     <img src="https://github.com/yoonclass/PrivateProject/assets/135006470/c9c7c7af-3bc2-468e-acac-47c251ede52e.png">

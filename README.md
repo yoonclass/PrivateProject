@@ -76,7 +76,7 @@
 
   <b>4. 게시글 수정</b><br>  
     <img src="https://github.com/yoonclass/PrivateProject/assets/135006470/c9c7c7af-3bc2-468e-acac-47c251ede52e.png">
-    본인이 작성한 글만 변경을 눌러 수정할 수 있으며 관리자 admin은 삭제만 가능하다.
+    <br>본인이 작성한 글만 변경을 눌러 수정할 수 있으며 관리자 admin은 삭제만 가능하다.
     <br><br>
     
     

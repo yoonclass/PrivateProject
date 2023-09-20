@@ -31,11 +31,14 @@
    /* 추가 스타일링: 내용 들여쓰기 */
   .table-content {
     padding: 20px;
+    
   }
   
   .table{
   	width: 50%;
+  	margin: 0 auto;
   }
+
 </style>
 <div class="h1-container">
 	<h1>최신 도서</h1>

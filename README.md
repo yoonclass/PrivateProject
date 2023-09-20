@@ -79,7 +79,7 @@
     본인이 작성한 글만 변경을 눌러 수정할 수 있으며 관리자 admin은 삭제만 가능하다.
     <br><br>
     
-    <img src="https://github.com/yoonclass/PrivateProject/assets/135006470/2151d8bf-971b-47e2-a3e7-49869ca75ba6.png">
+    
     제목과 내용만 수정할 수 있게 하고 수정 및 삭제할 경우 목록 화면으로 redirect 한다.<br> 
     목록 버튼을 누를 시 목록 화면으로 돌아간다.
     <br><br>

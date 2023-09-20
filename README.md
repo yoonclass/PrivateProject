@@ -64,7 +64,7 @@
     
   <b>1. 게시글 전체 목록</b><br>
     <img src="https://github.com/yoonclass/PrivateProject/assets/135006470/a4a6ae49-513f-421a-9c69-7c8996ba8047.png">
-    <br>
+    전체 목록을 페이징 처리하여 조회할 수 있다.<br>
   
   <b>2. 게시글 조회</b><br>
     <img src="https://github.com/yoonclass/PrivateProject/assets/135006470/03a96b29-6514-4d59-a364-762505a9d3c1.png">

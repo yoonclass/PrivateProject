@@ -62,7 +62,7 @@
     <summary>게시글 관련</summary>
     
     **1. 게시글 전체 목록**
-    ![게시글 전체 목록](https://github.com/yoonclass/PrivateProject/assets/135006470/a4a6ae49-513f-421a-9c69-7c8996ba8047)
+    ![게시글 관련](https://github.com/yoonclass/PrivateProject/assets/135006470/a4a6ae49-513f-421a-9c69-7c8996ba8047)
     전체 목록을 페이징 처리하여 조회할 수 있다. 
 
     **2. 게시글 조회**

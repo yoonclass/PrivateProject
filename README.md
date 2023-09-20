@@ -62,11 +62,11 @@
   <summary>게시글 관련</summary>
   <div markdown="1">
   <br>
-  <b>1. 게시글 전체 목록</b><br>
+  <b>1. 게시글 전체 목록</b><br><br>
     <img src="https://github.com/yoonclass/PrivateProject/assets/135006470/a4a6ae49-513f-421a-9c69-7c8996ba8047.png">
     전체 목록을 페이징 처리하여 조회할 수 있다.<br><br>
   
-  <b>2. 게시글 조회</b><br>
+  <b>2. 게시글 조회</b><br><br>
     <img src="https://github.com/yoonclass/PrivateProject/assets/135006470/03a96b29-6514-4d59-a364-762505a9d3c1.png">
     로그인과 상관없이 누구나 글은 조회할 수 있다.<br><br>
   
@@ -134,12 +134,19 @@
     회원가입 시 입력한 이메일로 아이디 및 임시 비밀번호 발급이 가능합니다.
     <br>
 
-  <b>4. 프로필 수정</b><br>
+  <b>4. 프로필 수정</b><br><br>
     <img src="https://github.com/yoonclass/PrivateProject/assets/135006470/a464b05a-b8f0-47d2-be2c-571c1b3cced7">
     <br>이미지 버튼을 눌러 프로필 이미지를 설정할 수 있고 현재 비밀번호 일치 여부를 확인하여<br>
-    새 비밀번호 변경이 가능합니다.<br><br>
-    
+    새 비밀번호 변경이 가능합니다.
+    <br><br>
   </div>
 </details>
 
+<details>
+  <summary>회원 관련</summary>   
+  <div markdown="1">
+  
+  9월 20일 작성중...
+  </div>
+</details>
     

@@ -113,18 +113,17 @@
   
   <br><b>1. 회원가입</b><br>  
     <img src="https://github.com/yoonclass/PrivateProject/assets/135006470/2634e2ed-6c98-4a3d-a2f1-de95ce306412">
-    이용약관, 개인정보 수집에 동의할 경우 회원가입을 진행할 수 있다.<br><br>
-    <img src="https://github.com/yoonclass/PrivateProject/assets/135006470/4f265613-8dfa-482a-8361-7bbae322d204.png">
+    <br>이용약관, 개인정보 수집에 동의할 경우 회원가입을 진행할 수 있다.<br><br>
     <img src="https://github.com/yoonclass/PrivateProject/assets/135006470/d87e8d59-4c63-4aa4-90d8-dc9dc4480e3c.png">
-    <br>ID 중복 확인, 이메일 인증, 비밀번호 유효성 검사를 진행하며 완료 시 회원 정보를 저장하고
+    <br>ID 중복 확인, 이메일 인증, 비밀번호 유효성 검사를 진행하며 완료 시 회원 정보를 저장하고<br>
     메인 화면으로 리디렉트합니다.
     <br>
     
   <b>2. 로그인</b><br>  
     <img src="https://github.com/yoonclass/PrivateProject/assets/135006470/04b5c153-6e47-44ac-b8a8-c2c2269ebae1.png">
-    <br>자동 로그인 클릭 시 7일 동안 로그인이 유지됩니다.<br>
+    <br>자동 로그인 클릭 시 7일 동안 로그인이 유지됩니다.<br><br>
     <img src="https://github.com/yoonclass/PrivateProject/assets/135006470/2552977e-a3fc-4cff-83b1-7d0797efdad6.png">
-    로그인 실패 시 빨간 글씨로 안내 문구가 출력됩니다.<br>
+    <br>로그인 실패 시 빨간 글씨로 안내 문구가 출력됩니다.<br>
     로그인 실패 여부와 상관없이 아이디 찾기 및 비밀번호 재발급 화면으로 이동할 수 있습니다.<br><br>
     <img src="https://github.com/yoonclass/PrivateProject/assets/135006470/c054435c-8843-48e1-a5aa-7e3b20d361fb.png">
     로그인에 성공하면 로그인 직전에 봤던 페이지로 이동하며 회원가입일 경우 접근이 거부됩니다.

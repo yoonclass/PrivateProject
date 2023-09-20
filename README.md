@@ -64,54 +64,51 @@
   <br>
   <b>1. 게시글 전체 목록</b><br>
     <img src="https://github.com/yoonclass/PrivateProject/assets/135006470/a4a6ae49-513f-421a-9c69-7c8996ba8047.png">
-    전체 목록을 페이징 처리하여 조회할 수 있다.<br>
+    전체 목록을 페이징 처리하여 조회할 수 있다.<br><br>
   
   <b>2. 게시글 조회</b><br>
     <img src="https://github.com/yoonclass/PrivateProject/assets/135006470/03a96b29-6514-4d59-a364-762505a9d3c1.png">
-    로그인과 상관없이 누구나 글은 조회할 수 있다.
-    <br>
+    로그인과 상관없이 누구나 글은 조회할 수 있다.<br><br>
   
   <b>3. 게시글 등록</b><br>  
     <img src="https://github.com/yoonclass/PrivateProject/assets/135006470/2830a193-c86c-4d4e-bd74-92c51143d967.png">
-    로그인 한 사용자만 새로운 글을 작성할 수 있고, 작성 후 목록 화면으로 redirect한다.
-    <br>
+    로그인 한 사용자만 새로운 글을 작성할 수 있고, 작성 후 목록 화면으로 redirect한다.<br><br>
 
   <b>4. 게시글 수정</b><br>  
     <img src="https://github.com/yoonclass/PrivateProject/assets/135006470/c9c7c7af-3bc2-468e-acac-47c251ede52e.png">
     본인이 작성한 글만 변경을 눌러 수정할 수 있으며 관리자 admin은 삭제만 가능하다.
-    <br>
+    <br><br>
+    
     <img src="https://github.com/yoonclass/PrivateProject/assets/135006470/2151d8bf-971b-47e2-a3e7-49869ca75ba6.png">
-    <br>
-    제목과 내용만 수정할 수 있게 하고 수정 및 삭제할 경우 목록 화면으로 redirect 한다.   
+    제목과 내용만 수정할 수 있게 하고 수정 및 삭제할 경우 목록 화면으로 redirect 한다.<br> 
     목록 버튼을 누를 시 목록 화면으로 돌아간다.
-    <br>
+    <br><br>
     
   <b>6. 게시글 검색 및 페이징</b><br>  
     <img src="https://github.com/yoonclass/PrivateProject/assets/135006470/b3b633d6-544a-4010-a3db-881fe92df8dc.png">
-    <br>
-    검색조건을 설정할 수 있다.
+    검색조건을 설정할 수 있다.<br><br>
     <img src="https://github.com/yoonclass/PrivateProject/assets/135006470/a62bfcb1-f8d9-4cb3-8096-03b8e5fe565b.png">
-    검색 키워드에 포함된 글을 모두 보여준다.
+    검색 키워드에 포함된 글을 모두 보여준다.<br>
     페이지 이동, 게시물 조회할 때 검색조건 값이 유지된다.
-    <br>
+    <br><br>
   
   <b>7. 게시글 추천</b><br>  
-    게시글 추천 기능은 독후감 게시판에 있습니다.
+    게시글 추천 기능은 독후감 게시판에 있습니다.<br><br>
     <img src="https://github.com/yoonclass/PrivateProject/assets/135006470/b114d9eb-34bf-466f-b8ba-68bb37d5b74b.png">
     <img src="https://github.com/yoonclass/PrivateProject/assets/135006470/9a1f9652-b388-4525-a198-8b6630348ce2.png">
-    게시글 조회화면에서 추천을 할 수 있고 추천된 상태에서 추천취소를 할 수 있다.
+    게시글 조회화면에서 추천을 할 수 있고 추천된 상태에서 추천취소를 할 수 있다.<br><br>
     <img src="https://github.com/yoonclass/PrivateProject/assets/135006470/48889e8f-198d-45e6-94ac-3282bdd49217.png">
-    <br>
+    <br><br>
   
   <b>8. 파일 업로드</b><br>  
     파일 업로드 기능은 도서목록 게시판에 있으며 관리자만 작업 가능하다.
     <img src="https://github.com/yoonclass/PrivateProject/assets/135006470/46b90aa8-cf13-4e10-9513-5e3fa7d72788.png">
-    도서 등록 화면에서 파일 추가 및 삭제가 가능하다.(관리자 가능)
+    도서 등록 화면에서 파일 추가 및 삭제가 가능하다.(관리자 가능)<br>
     <img src="https://github.com/yoonclass/PrivateProject/assets/135006470/46a718ec-511c-4e3e-b871-edc2b790c759.png">
-    도서 수정 화면에서 기존 파일 및 새 파일에 대한 추가, 삭제가 가능하다.
+    도서 수정 화면에서 기존 파일 및 새 파일에 대한 추가, 삭제가 가능하다.<br>
     <img src="https://github.com/yoonclass/PrivateProject/assets/135006470/daa77c7e-26ed-4fbe-8035-0d8d9c203944.png">
     도서 조회 화면에서 파일을 다운로드 할 수 있다.(관리자, 회원 가능)
-    <br>
+    <br><br>
   </div>
  </details>
 
@@ -121,7 +118,7 @@
   
   <b>1. 회원가입</b><br>  
     <img src="https://github.com/yoonclass/PrivateProject/assets/135006470/74c3fd1a-cf76-44c9-bae8-09166a8923c6.png">
-    이용약관, 개인정보 수집에 동의할 경우 회원가입을 진행할 수 있다.
+    이용약관, 개인정보 수집에 동의할 경우 회원가입을 진행할 수 있다.<br>
     <img src="https://github.com/yoonclass/PrivateProject/assets/135006470/4f265613-8dfa-482a-8361-7bbae322d204.png">
     <img src="https://github.com/yoonclass/PrivateProject/assets/135006470/d87e8d59-4c63-4aa4-90d8-dc9dc4480e3c.png">
     ID 중복 확인, 이메일 인증, 비밀번호 유효성 검사를 진행하며 완료 시 회원 정보를 저장하고

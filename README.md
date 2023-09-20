@@ -75,16 +75,9 @@
     로그인 한 사용자만 새로운 글을 작성할 수 있고, 작성 후 목록 화면으로 redirect한다.<br><br>
 
   <b>4. 게시글 수정</b><br>  
-    
-    <br>본인이 작성한 글만 변경을 눌러 수정할 수 있으며 관리자 admin은 삭제만 가능하다.
-    <br><br>
-    
-    <div markdown="1">
     <img src="https://github.com/yoonclass/PrivateProject/assets/135006470/c9c7c7af-3bc2-468e-acac-47c251ede52e.png">
-    제목과 내용만 수정할 수 있게 하고 수정 및 삭제할 경우 목록 화면으로 redirect 한다.<br> 
-    목록 버튼을 누를 시 목록 화면으로 돌아간다.
-    <br><br>
-    </div>
+    <br>본인이 작성한 글만 변경을 눌러 수정할 수 있으며 관리자 admin은 삭제만 가능하다.
+    <br><br>    
     
   <b>6. 게시글 검색 및 페이징</b><br>  
     <img src="https://github.com/yoonclass/PrivateProject/assets/135006470/b3b633d6-544a-4010-a3db-881fe92df8dc.png">

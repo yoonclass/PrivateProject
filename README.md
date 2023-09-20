@@ -56,6 +56,7 @@
 - Html/Css
 - Bootstrap
 - JS/jQuery
+![image](https://github.com/yoonclass/PrivateProject/assets/135006470/0ec77c08-23c1-454d-bbf8-7e7b87f61934)
 
 ### 4. 실행 화면
   <details>

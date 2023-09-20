@@ -67,7 +67,7 @@
 
     **2. 게시글 조회**
     ![image](https://github.com/yoonclass/PrivateProject/assets/135006470/03a96b29-6514-4d59-a364-762505a9d3c1)
-    https://github.com/yoonclass/PrivateProject/issues/1#issue-1904202649
+    ![image](https://github.com/yoonclass/PrivateProject/assets/135006470/32d4f799-5333-44a8-9cbb-a356b5d6363d)
     로그인과 상관없이 누구나 글은 조회할 수 있다.
     
     **3. 게시글 등록**

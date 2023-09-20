@@ -135,7 +135,10 @@
     <br>
 
   <b>4. 프로필 수정</b><br>
-  
+    <img src="https://github.com/yoonclass/PrivateProject/assets/135006470/a464b05a-b8f0-47d2-be2c-571c1b3cced7">
+    <br>이미지 버튼을 눌러 프로필 이미지를 설정할 수 있고 현재 비밀번호 일치 여부를 확인하여<br>
+    새 비밀번호 변경이 가능합니다.<br><br>
+    
   </div>
 </details>
 

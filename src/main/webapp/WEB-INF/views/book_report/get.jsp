@@ -102,20 +102,27 @@
 <%@ include file="../includes/footer.jsp" %>
 
 <script>
-
 $(function(){
 	let getForm = $('form')
+	
 	// 수정+목록 페이지 이동 
 	$('.getBtns button').click(function(){
-		
 		let operation = $(this).data('oper')
+		let type = '${criteria.type}'
+		let keyword = '${criteria.keyword}'
+		
 		getForm.append($('<input/>',{type : 'hidden', name : 'pageNum', value : '${criteria.pageNum}'}))
 			   .append($('<input/>',{type : 'hidden', name : 'amount', value : '${criteria.amount}'}))
 			   .attr('method','get')
 			
+		if(type&&keyword){
+		getForm.append($('<input/>',{type : 'hidden', name : 'type', value : '${criteria.type}'}))
+				.append($('<input/>',{type : 'hidden', name : 'keyword', value : '${criteria.keyword}'}))
+		}
+		
 		if(operation=='modify'){
 			getForm.attr('action','${ctxPath}/book_report/modify')
-		} else if(operation=='list'){
+		} else if (operation=='list'){
 			getForm.attr('action','${ctxPath}/book_report/list')
 		}
 		getForm.submit()

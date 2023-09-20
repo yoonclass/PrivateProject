@@ -79,13 +79,16 @@
   <b>4. 게시글 수정</b><br>  
     <img src="https://github.com/yoonclass/PrivateProject/assets/135006470/c9c7c7af-3bc2-468e-acac-47c251ede52e.png">
     본인이 작성한 글만 변경을 눌러 수정할 수 있으며 관리자 admin은 삭제만 가능하다.
+    <br>
     <img src="https://github.com/yoonclass/PrivateProject/assets/135006470/2151d8bf-971b-47e2-a3e7-49869ca75ba6.png">
+    <br>
     제목과 내용만 수정할 수 있게 하고 수정 및 삭제할 경우 목록 화면으로 redirect 한다.   
     목록 버튼을 누를 시 목록 화면으로 돌아간다.
     <br>
     
   <b>6. 게시글 검색 및 페이징</b><br>  
     <img src="https://github.com/yoonclass/PrivateProject/assets/135006470/b3b633d6-544a-4010-a3db-881fe92df8dc.png">
+    <br>
     검색조건을 설정할 수 있다.
     <img src="https://github.com/yoonclass/PrivateProject/assets/135006470/a62bfcb1-f8d9-4cb3-8096-03b8e5fe565b.png">
     검색 키워드에 포함된 글을 모두 보여준다.

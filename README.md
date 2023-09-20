@@ -56,17 +56,16 @@
 - Html/Css
 - Bootstrap
 - JS/jQuery
-![image](https://github.com/yoonclass/PrivateProject/assets/135006470/0ec77c08-23c1-454d-bbf8-7e7b87f61934)
 
 ### 4. 실행 화면
   <details>
     <summary>게시글 관련</summary>
     
-    1. 게시글 전체 목록
-    <img src="https://github.com/yoonclass/PrivateProject/assets/135006470/a4a6ae49-513f-421a-9c69-7c8996ba8047">
+    **1. 게시글 전체 목록**
+    ![게시글 전체 목록](https://github.com/yoonclass/PrivateProject/assets/135006470/a4a6ae49-513f-421a-9c69-7c8996ba8047)
     전체 목록을 페이징 처리하여 조회할 수 있다. 
 
-    2. 게시글 조회
+    **2. 게시글 조회**
     ![image](https://github.com/yoonclass/PrivateProject/assets/135006470/03a96b29-6514-4d59-a364-762505a9d3c1)
     ![image](https://github.com/yoonclass/PrivateProject/assets/135006470/32d4f799-5333-44a8-9cbb-a356b5d6363d)
     로그인과 상관없이 누구나 글은 조회할 수 있다.

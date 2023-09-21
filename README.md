@@ -166,26 +166,33 @@
   <summary>패키지 구조 보기</summary>  
   <br>
   <div markdown="1">
-    <img src="https://github.com/yoonclass/PrivateProject/assets/135006470/3193c30d-ce42-4a68-9d0b-f43902a585e3" alt="Image 1"><br>
+    <img src="https://github.com/yoonclass/PrivateProject/assets/135006470/06d4d5f4-af4b-47d0-914f-289e41ccb6c9" alt="Image 1"><br>
     <img src="https://github.com/yoonclass/PrivateProject/assets/135006470/d13c32f6-979c-4104-a3d6-1ab86352b56b" alt="Image 2"><br>
     <img src="https://github.com/yoonclass/PrivateProject/assets/135006470/bd0e4e77-8265-4922-afb2-ea330fa4a06e" alt="Image 3"><br>
     <img src="https://github.com/yoonclass/PrivateProject/assets/135006470/d9314876-49bc-41d4-9bb4-d98baacaa1f2" alt="Image 4"><br>
+    <b>test</b>
     <img src="https://github.com/yoonclass/PrivateProject/assets/135006470/d7c53d1f-e9e0-4cf0-bc2e-88afe5d7e68b" alt="Image 5"><br>
   </div>
 </details>
 
   ### 2. DB 설계
   #### ERD 설계
+  <div markdown="1">
     <img src="https://github.com/yoonclass/PrivateProject/assets/135006470/195b23f8-460e-42f7-ab88-73a81b6603ab">
+  </div>
     <br><br>
   
   #### 회원 테이블
+  <div markdown="1">
     <img src="https://github.com/yoonclass/PrivateProject/assets/135006470/ffee8c01-2adb-463f-a290-600eabe3a3c3">
+  </div>
     <br><br>
   
   #### 게시판 테이블
+  <div markdown="1">
     <img src="https://github.com/yoonclass/PrivateProject/assets/135006470/12351eaf-4c35-4b6c-9c2e-9e6979ec52dc">
     <img src="https://github.com/yoonclass/PrivateProject/assets/135006470/d8d62062-abf0-4a7d-be04-ad83ea620bb6">
+  </div>
     <br><br>
 
   ## 개발 내용

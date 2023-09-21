@@ -166,11 +166,11 @@
   <summary>패키지 구조 보기</summary>  
   <br>
   <div markdown="1">
-    <img src="https://github.com/yoonclass/PrivateProject/assets/135006470/3193c30d-ce42-4a68-9d0b-f43902a585e3" alt="Image 1">
-    <img src="https://github.com/yoonclass/PrivateProject/assets/135006470/d13c32f6-979c-4104-a3d6-1ab86352b56b" alt="Image 2">
-    <img src="https://github.com/yoonclass/PrivateProject/assets/135006470/bd0e4e77-8265-4922-afb2-ea330fa4a06e" alt="Image 3">
-    <img src="https://github.com/yoonclass/PrivateProject/assets/135006470/d9314876-49bc-41d4-9bb4-d98baacaa1f2" alt="Image 4">
-    <img src="https://github.com/yoonclass/PrivateProject/assets/135006470/d7c53d1f-e9e0-4cf0-bc2e-88afe5d7e68b" alt="Image 5">
+    <img src="https://github.com/yoonclass/PrivateProject/assets/135006470/3193c30d-ce42-4a68-9d0b-f43902a585e3" alt="Image 1"><br>
+    <img src="https://github.com/yoonclass/PrivateProject/assets/135006470/d13c32f6-979c-4104-a3d6-1ab86352b56b" alt="Image 2"><br>
+    <img src="https://github.com/yoonclass/PrivateProject/assets/135006470/bd0e4e77-8265-4922-afb2-ea330fa4a06e" alt="Image 3"><br>
+    <img src="https://github.com/yoonclass/PrivateProject/assets/135006470/d9314876-49bc-41d4-9bb4-d98baacaa1f2" alt="Image 4"><br>
+    <img src="https://github.com/yoonclass/PrivateProject/assets/135006470/d7c53d1f-e9e0-4cf0-bc2e-88afe5d7e68b" alt="Image 5"><br>
   </div>
 </details>
 

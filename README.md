@@ -143,10 +143,297 @@
 </details>
 
 <details>
-  <summary>회원 관련</summary>   
+  <summary>댓글 관련</summary>   
   <div markdown="1">
-  
-  9월 20일 작성중...
+  <b>1. 댓글 작성</b><br><br>   
+  <br>미로그인 사용자 화면<br>   
+  <img src="https://github.com/yoonclass/PrivateProject/assets/135006470/d836e13d-6df6-4e73-b209-0b8a060c44b9">
+  <br>댓글은 로그인한 사용자만 달 수 있다.<br><br>
+
+  <b>2. 댓글 수정/삭제</b><br><br>
+  <img src="https://github.com/yoonclass/PrivateProject/assets/135006470/0286406a-1d86-4537-b51a-b61ebf145e96">
+  <br>사용자는 자신이 작성한 댓글만 수정/삭제할 수 있다.<br><br>
+  <img src="https://github.com/yoonclass/PrivateProject/assets/135006470/397f6528-5253-4484-a162-49d9307badee">
+  <br>관리자는 다른 사용자의 댓글 삭제가 가능하지만 수정은 할 수 없다.<br><br>
   </div>
 </details>
-    
+
+## 구조 및 설계   
+   
+### 1. 패키지 구조
+   
+<details>
+  
+<summary>패키지 구조 보기</summary>  
+<br>
+src
+├─main
+│  ├─java
+│  │  └─com
+│  │      └─jafa
+│  │          ├─book_list
+│  │          │  ├─controller
+│  │          │  │      BookController.java
+│  │          │  │      FileUploadController.java
+│  │          │  │      
+│  │          │  ├─domain
+│  │          │  │      BookAttachVO.java
+│  │          │  │      BookVO.java
+│  │          │  │      
+│  │          │  ├─repository
+│  │          │  │      BookAttachRepository.java
+│  │          │  │      BookRepository.java
+│  │          │  │      
+│  │          │  └─service
+│  │          │          BookService.java
+│  │          │          BookServiceImpl.java
+│  │          │          
+│  │          ├─book_report
+│  │          │  ├─controller
+│  │          │  │      ReplyController.java
+│  │          │  │      ReportController.java
+│  │          │  │      
+│  │          │  ├─domain
+│  │          │  │      LikeDTO.java
+│  │          │  │      ReplyPageDTO.java
+│  │          │  │      ReplyVO.java
+│  │          │  │      ReportVO.java
+│  │          │  │      
+│  │          │  ├─repository
+│  │          │  │      ReplyRepository.java
+│  │          │  │      ReportLikeRepository.java
+│  │          │  │      ReportRepository.java
+│  │          │  │      
+│  │          │  └─service
+│  │          │          ReplyService.java
+│  │          │          ReplyServiceImpl.java
+│  │          │          ReportService.java
+│  │          │          ReportServiceImpl.java
+│  │          │          
+│  │          ├─category
+│  │          │  ├─controller
+│  │          │  │      CategoryController.java
+│  │          │  │      
+│  │          │  ├─domain
+│  │          │  │      BoardCategory.java
+│  │          │  │      
+│  │          │  ├─repository
+│  │          │  │      BoardCategoryRepository.java
+│  │          │  │      
+│  │          │  └─service
+│  │          │          BoardCategoryService.java
+│  │          │          BoardCategoryServiceImpl.java
+│  │          │          
+│  │          ├─common
+│  │          │      Criteria.java
+│  │          │      HomeController.java
+│  │          │      Pagination.java
+│  │          │      
+│  │          ├─config
+│  │          │      RootConfig.java
+│  │          │      SecurityConfig.java
+│  │          │      SecurityInitializer.java
+│  │          │      ServletConfig.java
+│  │          │      WebConfig.java
+│  │          │      
+│  │          ├─error
+│  │          │      CommonExceptionAdvice.java
+│  │          │      InvalidPasswordException.java
+│  │          │      NotFoundMemberException.java
+│  │          │      PasswordMisMatchException.java
+│  │          │      
+│  │          ├─member
+│  │          │  ├─controller
+│  │          │  │      MemberController.java
+│  │          │  │      ProfileUploadController.java
+│  │          │  │      
+│  │          │  ├─domain
+│  │          │  │      AuthVO.java
+│  │          │  │      MemberAttachVO.java
+│  │          │  │      MemberVO.java
+│  │          │  │      
+│  │          │  ├─repository
+│  │          │  │      AuthRepository.java
+│  │          │  │      MemberRepository.java
+│  │          │  │      
+│  │          │  └─service
+│  │          │          MailSendService.java
+│  │          │          MemberService.java
+│  │          │          MemberServiceImpl.java
+│  │          │          
+│  │          ├─security
+│  │          │      CustomAuthenticationFailureHandler.java
+│  │          │      CustomAuthenticationSuccessHandler.java
+│  │          │      CustomUser.java
+│  │          │      CustomUserDetailService.java
+│  │          │      
+│  │          └─task
+│  │                  FileCheckTask.java
+│  │                  
+│  ├─resources
+│  │  │  log4jdbc.log4j2.properties
+│  │  │  
+│  │  ├─database
+│  │  │      db.properties
+│  │  │      
+│  │  ├─mappers
+│  │  │  │  BoardCategoryMapper.xml
+│  │  │  │  TestMapper.xml
+│  │  │  │  
+│  │  │  ├─book
+│  │  │  │      BookAttachMapper.xml
+│  │  │  │      BookMapper.xml
+│  │  │  │      
+│  │  │  ├─member
+│  │  │  │      AuthMapper.xml
+│  │  │  │      MemberMapper.xml
+│  │  │  │      
+│  │  │  └─report
+│  │  │          ReplyMapper.xml
+│  │  │          ReportLikeMapper.xml
+│  │  │          ReportMapper.xml
+│  │  │          
+│  │  └─message
+│  │          label.properties
+│  │          
+│  └─webapp
+│      ├─resources
+│      │  ├─images
+│      │  │      attach.png
+│      │  │      google.png
+│      │  │      profile.jpg
+│      │  │      
+│      │  └─js
+│      │          get.js
+│      │          modify.js
+│      │          register.js
+│      │          reply.js
+│      │          replyService.js
+│      │          
+│      └─WEB-INF
+│          ├─tags
+│          │      formatDateTime.tag
+│          │      
+│          └─views
+│              │  accessError.jsp
+│              │  home.jsp
+│              │  
+│              ├─book_list
+│              │      get.jsp
+│              │      list.jsp
+│              │      modify.jsp
+│              │      register.jsp
+│              │      
+│              ├─book_report
+│              │      get.jsp
+│              │      list.jsp
+│              │      modify.jsp
+│              │      register.jsp
+│              │      
+│              ├─includes
+│              │      footer.jsp
+│              │      header.jsp
+│              │      
+│              └─member
+│                      findMemberInfo.jsp
+│                      join.jsp
+│                      login.jsp
+│                      myPage.jsp
+│                      step1.jsp
+│                      
+└─test
+    └─java
+        └─com
+            └─jafa
+                ├─book_list
+                │  ├─controller
+                │  │      BookControllerTest.java
+                │  │      
+                │  ├─repository
+                │  │      BookAttachRepositoryTest.java
+                │  │      BookData.java
+                │  │      BookRepositoryTest.java
+                │  │      
+                │  └─service
+                │          BookServiceImplTest.java
+                │          
+                ├─book_report
+                │  │  AppTest.java
+                │  │  
+                │  ├─controller
+                │  │      ReplyControllerTest.java
+                │  │      ReportControllerTest.java
+                │  │      
+                │  ├─repository
+                │  │      ReplyRepositoryTest.java
+                │  │      ReportData.java
+                │  │      ReportRepositoryTest.java
+                │  │      
+                │  └─service
+                │          ReplyServiceImplTest.java
+                │          ReportServiceImplTest.java
+                │          
+                └─member
+                    ├─repository
+                    │      MemberRepositoryTest.java
+                    │      
+                    └─service
+                            MemberServiceImplTest.java
+  </details> 
+
+  ### 2. DB 설계
+  #### ERD 설계
+  <img src="https://github.com/yoonclass/PrivateProject/assets/135006470/195b23f8-460e-42f7-ab88-73a81b6603ab">
+  <br><br>
+  
+  #### 회원 테이블
+  <img src="https://github.com/yoonclass/PrivateProject/assets/135006470/ffee8c01-2adb-463f-a290-600eabe3a3c3">
+  <br><br>
+  
+  #### 게시판 테이블
+  <img src="https://github.com/yoonclass/PrivateProject/assets/135006470/12351eaf-4c35-4b6c-9c2e-9e6979ec52dc">
+  <img src="https://github.com/yoonclass/PrivateProject/assets/135006470/d8d62062-abf0-4a7d-be04-ad83ea620bb6">
+  <br><br>
+
+  ## 개발 내용
+  - <a href="https://yoon-class.tistory.com/107">화면설계</a>
+  - <a href="https://yoon-class.tistory.com/123">게시판 CRUD 작업</a>
+  - <a href="https://yoon-class.tistory.com/135">게시판 페이징 처리</a>
+  - <a href="https://yoon-class.tistory.com/138">댓글 구현</a>
+  - <a href="https://yoon-class.tistory.com/139">댓글 페이징 처리</a>
+  - <a href="https://yoon-class.tistory.com/147">로그인/로그아웃 구현</a>
+  - <a href="https://yoon-class.tistory.com/153">중복 로그인/로그인 실패 메세지/자동 로그인 구현</a>
+  - <a href="https://yoon-class.tistory.com/157">Security 게시판별 권한 설정</a>
+  - <a href="https://yoon-class.tistory.com/161">댓글 보안,마이 페이지 구현</a>
+  - <a href="https://yoon-class.tistory.com/168">첨부파일 기능 구현</a>
+  - <a href="https://yoon-class.tistory.com/172">회원가입,ID/PWD 찾기 구현</a>
+  - <a href="https://yoon-class.tistory.com/181">프로필 이미지 수정기능 구현</a>
+  - <a href="https://yoon-class.tistory.com/182">프로필 이미지 댓글 적용 처리</a>
+  - <a href="https://yoon-class.tistory.com/184">메인 페이지 최신글/인기글 구현</a>
+  - <a href="https://yoon-class.tistory.com/187">게시판별 검색기능 구현</a>
+
+  ## 마치며   
+  ### 1. 프로젝트 보완사항   
+
+  <details>
+  <summary>보완사항</summary>
+    - 헤더에서 카테고리별 검색 기능 추가
+    - 방명록 게시판 추가
+    - 게시물 조회화면 날짜 표현형식 수정
+  </details>    
+   
+  ### 2. 후기   
+
+  처음 만들어본 프로젝트이기 때문에 설레는 마음도 있었지만 그 이상으로 아쉬움도 크게 남았습니다.
+  스스로 고민하며 코드를 넣고 블로그에 최대한 직관적으로 정리하려고 노력하는 과정 속에서 공부할 수 있는 부분이 많았습니다.
+  강의시간에 공부한 예제랑 비슷한 부분도 직접 설계한 프로젝트에 적용하면서 많은 오류를 마주쳤고,
+  '이 데이터를 화면에 보이려면 어떻게 해야지?', '이 부분에서 ajax 방식을 사용하는 것이 맞나?'를
+  비롯하여 많은 오류를 만나며 2,3일이 걸리더라도 항상 해결하려는 시도를 멈추지 않은 덕분에 원하는 결과물을 조금씩이나마 만들어갔던 것 같습니다.
+  그리고 '이 코드는 왜 여기서 쓰여야하는가?', '이 화면은 다른 코드로 구현할 수 있을까?' 등
+  프로젝트 작업일지를 쓰다가 의문을 느끼고 재작업을 한 시간도 많았지만 결과적으로 스스로 1번이라도 더 고민하는 습관을 가지게 되었습니다.
+
+  이번 프로젝트는 완성도 수준을 떠나 저에게 좋은 경험이 되었다고 생각합니다.
+  이 프로젝트는 저에게 있어서 '실력이 부족하다'라는 단편적인 생각에서 '이렇게 발전해가야겠다'라는 생각으로 바뀌는 좋은 계기가 되었습니다.
+  방향성 있는 지속적인 노력을 통해 더 나은 웹 애플리케이션을 만들 수 있도록 할 것입니다.
+
+  긴 글 읽어주셔서 감사합니다.

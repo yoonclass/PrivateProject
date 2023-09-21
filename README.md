@@ -180,20 +180,20 @@
   <div markdown="1">
     <img src="https://github.com/yoonclass/PrivateProject/assets/135006470/195b23f8-460e-42f7-ab88-73a81b6603ab">
   </div>
-    <br><br>
+
   
   #### 회원 테이블
   <div markdown="1">
     <img src="https://github.com/yoonclass/PrivateProject/assets/135006470/ffee8c01-2adb-463f-a290-600eabe3a3c3">
   </div>
-    <br><br>
+    
   
   #### 게시판 테이블
   <div markdown="1">
     <img src="https://github.com/yoonclass/PrivateProject/assets/135006470/12351eaf-4c35-4b6c-9c2e-9e6979ec52dc">
     <img src="https://github.com/yoonclass/PrivateProject/assets/135006470/d8d62062-abf0-4a7d-be04-ad83ea620bb6">
   </div>
-    <br><br>
+  
 
   ## 개발 내용
   - <a href="https://yoon-class.tistory.com/107">화면설계</a>
@@ -216,7 +216,6 @@
   ### 1. 프로젝트 보완사항   
 
   <details>
-  <summary>보완사항</summary>
     - 헤더에서 카테고리별 검색 기능 추가
     - 방명록 게시판 추가
     - 게시물 조회화면 날짜 표현형식 수정

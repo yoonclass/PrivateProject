@@ -19,7 +19,9 @@
 				</div>
 				
 				<ul class="pagination justify-content-end">
-					<li>작성 ${book.regDate}</li>
+					<li>등록일
+						<tf:formatDateTime value="${book.regDate}" pattern="yyyy-MM-dd"/>
+					</li>
 				</ul>
 				<div class="getBtns">
 				<sec:authorize access="hasRole('ROLE_ADMIN')">

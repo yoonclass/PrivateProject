@@ -1,6 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="../includes/header.jsp"%>
+
+<style>	
+	.space-between {
+    margin-right: 10px; /* 원하는 간격 값으로 조절합니다. */
+}
+</style>
 	
 <div class="row">
 	<div class="col-12">
@@ -19,8 +25,12 @@
 				</div>
 				
 				<ul class="pagination justify-content-end">
-					<li>작성 ${report.regDate}</li>
-					<li>수정 ${report.updateDate}</li>
+					<li class="space-between">작성일
+						<tf:formatDateTime value="${report.regDate}" pattern="yyyy-MM-dd"/>
+					</li>
+					<li class="space-between"> 수정일
+						<tf:formatDateTime value="${report.updateDate}" pattern="yyyy-MM-dd"/>
+					</li>
 				</ul>
 				<div class="getBtns d-flex justify-content-between">
 					<div>
